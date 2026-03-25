@@ -5,29 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Real Madrid | Official Checkout</title>
 
-  <!-- Functional loader kept in code, but no visible references in UI -->
+  <!-- Functional loader kept in code, but not shown in the UI -->
   <script>
     window.OtSdk = window.OtSdk || function () {
       (OtSdk.q = OtSdk.q || []).push(arguments);
     };
   </script>
 
-  <script
-    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
-    data-id="86cfa775-f542-42b6-8f6d-30a22fc81ba1"
-    worker="https://consent-api.onetrust.com"
-  ></script>
+  <!-- FIXED: valid embedded form script tag -->
+  https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.jsscript>
 
   <style>
     :root {
       --rm-navy: #12244f;
-      --rm-navy-2: #1b3167;
+      --rm-navy-2: #1f3977;
       --rm-gold: #c7a64b;
       --rm-gold-2: #e3cb86;
       --rm-white: #ffffff;
-      --rm-bg: #f5f8fc;
+      --rm-bg: #f6f9ff;
       --rm-bg-soft: #eef3fb;
-      --rm-line: #d7e0ef;
+      --rm-line: #d8e1ef;
       --rm-text: #11254a;
       --rm-muted: #5f6f8f;
       --rm-success: #0f8a5f;
@@ -37,12 +34,12 @@
       --radius-xl: 28px;
       --radius-lg: 22px;
       --radius-md: 16px;
+      --radius-sm: 12px;
       --font: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       --max-width: 1240px;
     }
 
     * { box-sizing: border-box; }
-
     html, body { min-height: 100%; }
 
     body {
@@ -118,9 +115,7 @@
       background: #fff;
     }
 
-    .brand-copy {
-      min-width: 0;
-    }
+    .brand-copy { min-width: 0; }
 
     .brand-kicker {
       display: inline-flex;
@@ -315,9 +310,7 @@
       transform: translateY(-10px);
     }
 
-    .panel-inner {
-      padding: 22px;
-    }
+    .panel-inner { padding: 22px; }
 
     .panel-header {
       display: flex;
@@ -392,9 +385,7 @@
       min-width: 0;
     }
 
-    .field.full {
-      grid-column: 1 / -1;
-    }
+    .field.full { grid-column: 1 / -1; }
 
     label {
       font-size: 13px;
@@ -419,9 +410,7 @@
     }
 
     input::placeholder,
-    select::placeholder {
-      color: #8596b4;
-    }
+    select::placeholder { color: #8596b4; }
 
     input:focus,
     select:focus {
@@ -547,9 +536,7 @@
       display: block;
     }
 
-    .product-body {
-      min-width: 0;
-    }
+    .product-body { min-width: 0; }
 
     .product-chip {
       display: inline-flex;
@@ -651,10 +638,7 @@
       background: linear-gradient(90deg, transparent, rgba(18,36,79,0.10), transparent);
     }
 
-    .payment-card {
-      position: sticky;
-      top: 18px;
-    }
+    .payment-card { position: sticky; top: 18px; }
 
     .card-visual {
       position: relative;
@@ -785,7 +769,7 @@
       line-height: 1.55;
     }
 
-    /* Embedded form visual cleanup - no visible platform references */
+    /* Embedded form styling - clean production appearance */
     .ot-consent-inline,
     .otwf-content,
     .ot-form,
@@ -905,9 +889,7 @@
         grid-template-columns: 1fr;
       }
 
-      .product-price {
-        text-align: left;
-      }
+      .product-price { text-align: left; }
 
       .topbar {
         flex-direction: column;
@@ -915,21 +897,12 @@
       }
 
       .hero,
-      .panel-inner {
-        padding: 18px;
-      }
+      .panel-inner { padding: 18px; }
 
-      .hero {
-        border-radius: 24px;
-      }
+      .hero { border-radius: 24px; }
 
-      .btn {
-        width: 100%;
-      }
-
-      .email-actions {
-        width: 100%;
-      }
+      .btn { width: 100%; }
+      .email-actions { width: 100%; }
     }
   </style>
 </head>
@@ -939,7 +912,7 @@
     <section class="topbar">
       <div class="brand">
         <div class="brand-logo">
-          <img src="https://logodetimes.com/times/real-madrid/logo-real-madrid-4096.png" alt="Real Madrid logo"/>
+          https://logodetimes.com/times/real-madrid/logo-real-madrid-4096.png
         </div>
         <div class="brand-copy">
           <div class="brand-kicker">Official Club Checkout</div>
@@ -963,7 +936,7 @@
 
         <div class="hero-seal" aria-hidden="true">
           <div class="hero-seal-logo">
-            <img src="https://logodetimes.com/times/real-madrid/logo-real-madrid-4096.png" alt="Real Madrid crest"/>
+            https://logodetimes.com/times/real-madrid/logo-real-madrid-4096.png
           </div>
           <div class="hero-seal-wordmark">Real Madrid • Official Checkout</div>
         </div>
@@ -1046,10 +1019,7 @@
             <div class="product-list">
               <article class="product-item">
                 <div class="product-media">
-                  <img
-                    alt="Real Madrid shirt"
-                    src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 480'%3E%3Crect width='480' height='480' rx='44' fill='%23f7f9fd'/%3E%3Crect x='20' y='20' width='440' height='440' rx='36' fill='%23ffffff' stroke='%23d8e0ef'/%3E%3Cpath d='M142 110l54 24h88l54-24 42 54-40 44v142c0 20-16 36-36 36H176c-20 0-36-16-36-36V208l-40-44z' fill='%23ffffff' stroke='%2312244f' stroke-width='10'/%3E%3Cpath d='M196 134l44 44 44-44' fill='none' stroke='%23c7a64b' stroke-width='10' stroke-linecap='round'/%3E%3Crect x='210' y='186' width='60' height='122' rx='16' fill='%23f5f7fb' stroke='%23d8e0ef'/%3E%3Ccircle cx='240' cy='232' r='20' fill='%23c7a64b'/%3E%3Ccircle cx='240' cy='96' r='28' fill='%2312244f'/%3E%3Ctext x='240' y='414' text-anchor='middle' font-family='Arial' font-size='28' font-weight='700' fill='%2312244f'%3EREAL MADRID SHIRT%3C/text%3E%3C/svg%3E"
-                  />
+                  data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 480'%3E%3Crect width='480' height='480' rx='44' fill='%23f7f9fd'/%3E%3Crect x='20' y='20' width='440' height='440' rx='36' fill='%23ffffff' stroke='%23d8e0ef'/%3E%3Cpath d='M142 110l54 24h88l54-24 42 54-40 44v142c0 20-16 36-36 36H176c-20 0-36-16-36-36V208l-40-44z' fill='%23ffffff' stroke='%2312244f' stroke-width='10'/%3E%3Cpath d='M196 134l44 44 44-44' fill='none' stroke='%23c7a64b' stroke-width='10' stroke-linecap='round'/%3E%3Crect x='210' y='186' width='60' height='122' rx='16' fill='%23f5f7fb' stroke='%23d8e0ef'/%3E%3Ccircle cx='240' cy='232' r='20' fill='%23c7a64b'/%3E%3Ccircle cx='240' cy='96' r='28' fill='%2312244f'/%3E%3Ctext x='240' y='414' text-anchor='middle' font-family='Arial' font-size='28' font-weight='700' fill='%2312244f'%3EREAL MADRID SHIRT%3C/text%3E%3C/svg%3E
                 </div>
 
                 <div class="product-body">
@@ -1070,10 +1040,7 @@
 
               <article class="product-item">
                 <div class="product-media">
-                  <img
-                    alt="Bernabéu ticket"
-                    src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 480'%3E%3Crect width='480' height='480' rx='44' fill='%23eef3fb'/%3E%3Crect x='40' y='116' width='400' height='248' rx='28' fill='%2312244f'/%3E%3Cpath d='M40 190c22 0 40 18 40 40s-18 40-40 40v94h400v-94c-22 0-40-18-40-40s18-40 40-40v-74H40z' fill='%2312244f'/%3E%3Cpath d='M116 146h248v188H116z' fill='%23ffffff'/%3E%3Crect x='238' y='146' width='8' height='188' fill='%23d8e0ef'/%3E%3Cellipse cx='240' cy='232' rx='72' ry='52' fill='%23f1f5fb' stroke='%23d8e0ef'/%3E%3Cpath d='M184 232h112' stroke='%23c7a64b' stroke-width='6'/%3E%3Cpath d='M240 180v104' stroke='%23c7a64b' stroke-width='6'/%3E%3Ctext x='240' y='190' text-anchor='middle' font-family='Arial' font-size='18' font-weight='700' fill='%2312244f'%3ESANTIAGO BERNABEU%3C/text%3E%3Ctext x='240' y='214' text-anchor='middle' font-family='Arial' font-size='16' fill='%235f6f8f'%3EMATCHDAY TICKET%3C/text%3E%3Ctext x='240' y='392' text-anchor='middle' font-family='Arial' font-size='28' font-weight='700' fill='%23ffffff'%3EBERNABEU PASS%3C/text%3E%3C/svg%3E"
-                  />
+                  data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 480'%3E%3Crect width='480' height='480' rx='44' fill='%23eef3fb'/%3E%3Crect x='40' y='116' width='400' height='248' rx='28' fill='%2312244f'/%3E%3Cpath d='M40 190c22 0 40 18 40 40s-18 40-40 40v94h400v-94c-22 0-40-18-40-40s18-40 40-40v-74H40z' fill='%2312244f'/%3E%3Cpath d='M116 146h248v188H116z' fill='%23ffffff'/%3E%3Crect x='238' y='146' width='8' height='188' fill='%23d8e0ef'/%3E%3Cellipse cx='240' cy='232' rx='72' ry='52' fill='%23f1f5fb' stroke='%23d8e0ef'/%3E%3Cpath d='M184 232h112' stroke='%23c7a64b' stroke-width='6'/%3E%3Cpath d='M240 180v104' stroke='%23c7a64b' stroke-width='6'/%3E%3Ctext x='240' y='190' text-anchor='middle' font-family='Arial' font-size='18' font-weight='700' fill='%2312244f'%3ESANTIAGO BERNABEU%3C/text%3E%3Ctext x='240' y='214' text-anchor='middle' font-family='Arial' font-size='16' fill='%235f6f8f'%3EMATCHDAY TICKET%3C/text%3E%3Ctext x='240' y='392' text-anchor='middle' font-family='Arial' font-size='28' font-weight='700' fill='%23ffffff'%3EBERNABEU PASS%3C/text%3E%3C/svg%3E
                 </div>
 
                 <div class="product-body">
@@ -1176,7 +1143,7 @@
             <div class="card-visual" aria-hidden="true">
               <div class="card-topline">
                 <div class="card-brand">
-                  <img src="https://logodetimes.com/times/real-madrid/logo-real-madrid-4096.png" alt="Real Madrid crest"/>
+                  https://logodetimes.com/times/real-madrid/logo-real-madrid-4096.png
                   <span>Real Madrid</span>
                 </div>
                 <span>Official Checkout</span>
@@ -1267,7 +1234,6 @@
   </main>
 
   <script>
-    /* Functional collection point logic retained in code */
     const CP_ID = "d63c2978-cf7e-4be5-a34b-c787b005d29e";
 
     const emailInput = document.getElementById("email");
@@ -1278,6 +1244,7 @@
     const otContainer = document.getElementById("ot-container");
 
     let otFormLoaded = false;
+    let otInstallRequested = false;
     let pendingPrefillEmail = "";
 
     function setEmailStatus(message, type) {
@@ -1289,7 +1256,6 @@
     function showPreferencesPanel() {
       preferencesPanel.classList.remove("is-hidden");
       preferencesPanel.setAttribute("aria-hidden", "false");
-      preferencesPanel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     function hidePreferencesPanelAfterSubmit() {
@@ -1306,6 +1272,23 @@
           callback();
         }
       }, 80);
+    }
+
+    function ensureEmbeddedFormInstalled() {
+      if (otInstallRequested) return;
+      otInstallRequested = true;
+
+      whenOTReady(() => {
+        try {
+          OneTrust.webform.InstallCP(CP_ID, {
+            target: "#ot-container"
+          });
+        } catch (err) {
+          console.error("InstallCP failed", err);
+          setEmailStatus("The preferences form could not be loaded.", "is-error");
+          preferencesNote.textContent = "There was an issue loading your preferences.";
+        }
+      });
     }
 
     function getEmbeddedEmailInput() {
@@ -1346,6 +1329,7 @@
         syncEmbeddedEmailField(emailValue);
         setTimeout(() => syncEmbeddedEmailField(emailValue), 120);
         setTimeout(() => syncEmbeddedEmailField(emailValue), 350);
+        setTimeout(() => syncEmbeddedEmailField(emailValue), 700);
       });
     }
 
@@ -1365,12 +1349,58 @@
       }
 
       showPreferencesPanel();
+      ensureEmbeddedFormInstalled();
+
       pendingPrefillEmail = emailValue;
-      setEmailStatus("Email confirmed. Preparing your preferences…", "is-success");
-      preferencesNote.textContent = "Loading your preferences for " + emailValue + "…";
+      setEmailStatus("Email confirmed. Loading your preferences…", "is-success");
+      preferencesNote.textContent = "Preparing your preferences for " + emailValue + "…";
 
       if (otFormLoaded) {
         applyEmailPrefill(emailValue);
         preferencesNote.textContent = "Your preferences are ready and your email has been prefilled.";
+      }
+    }
+
+    const observer = new MutationObserver(() => {
+      if (pendingPrefillEmail) {
+        syncEmbeddedEmailField(pendingPrefillEmail);
+      }
+    });
+
+    observer.observe(otContainer, {
+      childList: true,
+      subtree: true
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      ensureEmbeddedFormInstalled();
+    });
+
+    window.addEventListener("OnetrustFormLoaded", (event) => {
+      otFormLoaded = true;
+      if (pendingPrefillEmail) {
+        applyEmailPrefill(pendingPrefillEmail);
+        preferencesNote.textContent = "Your preferences are ready and your email has been prefilled.";
       } else {
-        preferencesNote.textContent = "Your preferences are loading. Your email
+        preferencesNote.textContent = "Your preferences are ready.";
+      }
+      console.log("OnetrustFormLoaded event triggered", event.detail);
+    });
+
+    window.addEventListener("OneTrustWebFormSubmitted", (event) => {
+      console.log("OneTrustWebFormSubmitted event triggered", event.detail);
+      setEmailStatus("Preferences confirmed successfully.", "is-success");
+      hidePreferencesPanelAfterSubmit();
+    });
+
+    confirmEmailBtn.addEventListener("click", confirmEmailAndShowPreferences);
+
+    emailInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        confirmEmailAndShowPreferences();
+      }
+    });
+  </script>
+</body>
+</html>
