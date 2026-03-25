@@ -93,4 +93,16 @@ OneTrust.webform.preFill({
     "State": "FL"
 }, "collection point id")
 The field I want you to prefill is called Email.
+Move the Consent div (class="panel-inner consent-wrap") of the page to right below the email one (Customer Contact) and on top of the cart one. Move the card details to on top of the order summary.
 Return a single HTML file, and make sure it works as expected, do not change anything else regarding the branding and functionality.
+
+Aditional comments:
+Add a confirm button next to the Email field so when clicked we show the consent banner accordingly with the prefilled email.
+When consent is confirmed remove the Consent div, you can use this documentation to track the completion listener:
+	<script>
+        window.addEventListener('OneTrustWebFormSubmitted', (event) => {
+            // value can be accessed here
+            console.log('OneTrustWebFormSubmitted event triggered', event.detail);
+         });
+    </script>
+Remove all the references to Onetrust from the website render so it looks production like.
