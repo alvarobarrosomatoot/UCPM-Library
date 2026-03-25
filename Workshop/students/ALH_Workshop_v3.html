@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Football Ticket Checkout | OneTrust Embedded Form Demo</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED SCRIPTS
+       Preserved from the original implementation
+  ========================================================== -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.jsscript>
+
+  <!-- =========================================================
+       2) PAGE STYLES
+       Branding/layout preserved from the premium football design
+       Only consent/email interaction behavior is enhanced
+  ========================================================== -->
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-deep: #030914;
+      --card: rgba(11, 23, 40, 0.88);
+      --card-strong: rgba(9, 19, 33, 0.95);
+      --card-soft: rgba(255, 255, 255, 0.06);
+      --text: #f5f7fb;
+      --muted: #9aa9c0;
+      --border: rgba(255, 255, 255, 0.12);
+      --line: rgba(255, 255, 255, 0.08);
+      --primary: #21c45d;
+      --primary-2: #00e0ff;
+      --accent: #ffd54a;
+      --danger: #ff7a7a;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      --radius: 20px;
+      --radius-sm: 14px;
+      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --max-width: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(0, 224, 255, 0.15), transparent 28%),
+        radial-gradient(circle at top right, rgba(33, 196, 93, 0.12), transparent 25%),
+        radial-gradient(circle at center bottom, rgba(255, 213, 74, 0.08), transparent 22%),
+        linear-gradient(180deg, #091427 0%, #07111f 45%, #030914 100%);
+      padding: 30px 16px 44px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.35), rgba(0,0,0,0));
+      opacity: 0.25;
+    }
+
+    .checkout-shell {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      padding: 28px 28px 22px;
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(120deg, rgba(0, 224, 255, 0.09), rgba(33, 196, 93, 0.06));
+      border: 1px solid rgba(255,255,255,0.11);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -10% -70px -10%;
+      height: 180px;
+      background:
+        radial-gradient(circle at center, rgba(33,196,93,0.3) 0, rgba(33,196,93,0.15) 22%, rgba(33,196,93,0.04) 45%, transparent 70%);
+      filter: blur(12px);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #d9f7e4;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 5vw, 46px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      max-width: 760px;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 20px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+      transition: opacity .28s ease, transform .28s ease, max-height .28s ease, margin .28s ease, padding .28s ease;
+    }
+
+    .panel.is-hidden {
+      display: none;
+    }
+
+    .panel.is-collapsing {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    .panel-inner {
+      padding: 22px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-2);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-sub {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .email-banner {
+      background:
+        linear-gradient(135deg, rgba(0,224,255,0.08), rgba(33,196,93,0.08)),
+        rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .email-grid {
+      display: grid;
+      grid-template-columns: 1.2fr auto;
+      gap: 14px;
+      align-items: end;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #dbe6f5;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-width: 0;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font: inherit;
+      transition: 0.2s ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    input::placeholder,
+    select::placeholder {
+      color: #8ca0bb;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(0,224,255,0.6);
+      box-shadow:
+        0 0 0 4px rgba(0,224,255,0.12),
+        0 8px 22px rgba(0,0,0,0.22);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .field-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .email-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .email-cta,
+    .confirm-email-btn {
+      min-width: 180px;
+      border: none;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font: inherit;
+      font-weight: 800;
+      color: #041018;
+      cursor: pointer;
+    }
+
+    .email-cta {
+      background: linear-gradient(135deg, var(--accent), #fff1b3);
+      box-shadow:
+        0 10px 28px rgba(255, 213, 74, 0.22),
+        inset 0 1px 0 rgba(255,255,255,0.75);
+    }
+
+    .confirm-email-btn {
+      background: linear-gradient(135deg, var(--primary), #0fd7b8);
+      box-shadow:
+        0 10px 28px rgba(18, 201, 124, 0.24),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+
+    .email-cta:hover,
+    .confirm-email-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .email-status {
+      margin-top: 10px;
+      min-height: 20px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #dbe6f5;
+    }
+
+    .email-status.is-error { color: #ffb0b0; }
+    .email-status.is-success { color: #d9f7e4; }
+    .email-status.is-info { color: #b8ebff; }
+
+    .consent-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .consent-wrap::after {
+      content: "";
+      position: absolute;
+      top: -80px;
+      right: -70px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,224,255,0.2), transparent 62%);
+      pointer-events: none;
+    }
+
+    .consent-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .ticket-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .ticket-item {
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--line);
+    }
+
+    .ticket-media {
+      width: 104px;
+      height: 104px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #08111d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ticket-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .ticket-body {
+      min-width: 0;
+    }
+
+    .ticket-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #d2fff0;
+      background: rgba(33,196,93,0.12);
+      border: 1px solid rgba(33,196,93,0.24);
+      margin-bottom: 10px;
+    }
+
+    .ticket-title {
+      margin: 0 0 6px;
+      font-size: 18px;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+    }
+
+    .ticket-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .ticket-price {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .ticket-price .qty {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: #dce7f7;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .ticket-price .amount {
+      display: block;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .summary-box {
+      padding: 18px;
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.035));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 0;
+      font-size: 14px;
+      color: #dbe6f5;
+    }
+
+    .summary-row + .summary-row {
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .summary-row.total {
+      margin-top: 4px;
+      padding-top: 16px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .summary-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .payment-card {
+      position: sticky;
+      top: 18px;
+    }
+
+    .card-visual {
+      position: relative;
+      padding: 18px;
+      border-radius: 20px;
+      min-height: 210px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.22), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(0,224,255,0.18), transparent 34%),
+        linear-gradient(135deg, #0a1830 0%, #0f2740 42%, #12311e 100%);
+      border: 1px solid rgba(255,255,255,0.13);
+      margin-bottom: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .card-visual::after {
+      content: "";
+      position: absolute;
+      inset: auto -20px -45px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(33,196,93,0.28), transparent 62%);
+      filter: blur(10px);
+    }
+
+    .card-topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      font-weight: 800;
+    }
+
+    .chip {
+      width: 48px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f8d57d, #c89d33);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.42);
+      margin: 18px 0 22px;
+      position: relative;
+    }
+
+    .chip::before,
+    .chip::after {
+      content: "";
+      position: absolute;
+      background: rgba(85, 55, 0, 0.35);
+      border-radius: 999px;
+    }
+
+    .chip::before {
+      width: 18px;
+      height: 100%;
+      left: 12px;
+      top: 0;
+    }
+
+    .chip::after {
+      width: 100%;
+      height: 6px;
+      left: 0;
+      top: 14px;
+    }
+
+    .card-number {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      margin: 0 0 20px;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 12px;
+    }
+
+    .card-meta small {
+      display: block;
+      color: rgba(255,255,255,0.72);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .card-meta strong {
+      font-size: 14px;
+      letter-spacing: 0.03em;
+    }
+
+    .payment-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .section-rule {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      margin: 18px 0;
+    }
+
+    .mini-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #dbe6f5;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* =========================================================
+       ONETRUST CONTAINER
+       Preserved target element ID so existing logic still works
+    ========================================================== */
+    #ot-container {
+      margin-top: 16px;
+      position: relative;
+      z-index: 1;
+      min-height: 12px;
+    }
+
+    /* =========================================================
+       ONETRUST VISUAL CLEANUP
+       Same behavior, only restyled
+    ========================================================== */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
+    }
+
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 14px !important;
+      line-height: 1.6 !important;
+      font-weight: 500 !important;
+      color: #d7e3f4 !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      margin-bottom: 10px !important;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 6px;
+      border: 1.5px solid rgba(255,255,255,0.22);
+      margin-top: 1px;
+      background: rgba(255,255,255,0.05);
+      transition: all 0.18s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--primary);
+      background:
+        linear-gradient(135deg, rgba(33,196,93,0.96), rgba(0,224,255,0.9));
+      box-shadow:
+        0 0 0 3px rgba(33,196,93,0.12),
+        0 6px 16px rgba(33,196,93,0.18);
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 3px rgba(0, 224, 255, 0.18);
+    }
+
+    /* Embedded email input visual alignment */
+    #ot-container .ot-email input[type="email"],
+    #ot-container input[type="email"] {
+      width: 100% !important;
+      min-width: 0 !important;
+      border: 1px solid rgba(255,255,255,0.12) !important;
+      background: rgba(255,255,255,0.05) !important;
+      color: var(--text) !important;
+      border-radius: 16px !important;
+      padding: 14px 15px !important;
+      font: inherit !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02) !important;
+    }
+
+    #ot-container .ot-email input[type="email"]:focus,
+    #ot-container input[type="email"]:focus {
+      outline: none !important;
+      border-color: rgba(0,224,255,0.6) !important;
+      box-shadow:
+        0 0 0 4px rgba(0,224,255,0.12),
+        0 8px 22px rgba(0,0,0,0.22) !important;
+      background: rgba(255,255,255,0.07) !important;
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 13px !important;
+      margin-top: 4px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 18px !important;
+      padding: 14px 18px !important;
+      border-radius: 16px !important;
+      border: 0 !important;
+      background:
+        linear-gradient(135deg, var(--primary), #0fd7b8) !important;
+      color: #031018 !important;
+      font-weight: 900 !important;
+      letter-spacing: 0.02em !important;
+      cursor: pointer !important;
+      box-shadow:
+        0 14px 30px rgba(18, 201, 124, 0.22),
+        inset 0 1px 0 rgba(255,255,255,0.45) !important;
+    }
+
+    .ot-submit:hover {
+      filter: brightness(1.03) !important;
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 980px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .payment-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .field-grid,
+      .email-grid,
+      .ticket-item {
+        grid-template-columns: 1fr;
+      }
+
+      .ticket-price {
+        text-align: left;
+      }
+
+      .hero {
+        padding: 22px 20px 18px;
+      }
+
+      .panel-inner {
+        padding: 18px;
+      }
+
+      .card-number {
+        font-size: 20px;
+      }
+
+      .email-actions {
+        width: 100%;
+      }
+
+      .email-cta,
+      .confirm-email-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="checkout-shell">
+    <section class="hero">
+      <div class="hero-badge">⚽ Match Night Checkout</div>
+      <h1>Secure Your Seat for the Big Match</h1>
+      <p>
+        A premium football ticket checkout experience with your attendee details, cart, payment preview,
+        and OneTrust consent collection embedded directly in the flow.
+      </p>
+    </section>
+
+    <div class="checkout-grid">
+      <!-- LEFT COLUMN -->
+      <div class="stack">
+
+        <!-- EMAIL TOP SECTION -->
+        <section class="panel email-banner">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow">Step 01 · Contact</div>
+                <h2 class="panel-title">Enter your email</h2>
+                <p class="panel-sub">
+                  Confirm your email first, then the consent section will appear with the OneTrust embedded Email field prefilled.
+                </p>
+              </div>
+              <div class="mini-pill">Fast Checkout</div>
+            </div>
+
+            <div class="email-grid">
+              <div class="field">
+                <label for="email">Email</label>
+                <!-- Must remain without a prefilled value -->
+                <input id="email" type="email" placeholder="you@example.com" required />
+                <div class="field-note">
+                  This field remains empty until the user types it. On confirmation, its value is pushed into the embedded OneTrust Email field.
+                </div>
+                <div id="email-status" class="email-status" aria-live="polite"></div>
+              </div>
+
+              <div class="email-actions">
+                <button class="confirm-email-btn" id="confirm-email-btn" type="button" aria-label="Confirm email and show consent">
+                  Confirm Email
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ONETRUST CONSENT -->
+        <section class="panel consent-wrap is-hidden" id="consent-panel" aria-hidden="true">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow">Step 02 · Consent</div>
+                <h2 class="panel-title">Privacy & preferences</h2>
+                <p class="panel-sub">
+                  The OneTrust embedded form is mounted on page load and displayed once the email is confirmed.
+                </p>
+              </div>
+              <div class="mini-pill">OneTrust Embedded</div>
+            </div>
+
+            <div class="consent-note" id="consent-note">
+              Confirm your email to show the consent options with the embedded Email field prefilled.
+            </div>
+
+            <!-- IMPORTANT: OneTrust renders the consent form inside this div -->
+            <div id="ot-container"></div>
+          </div>
+        </section>
+
+        <!-- CART / PRODUCTS -->
+        <section class="panel">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow">Step 03 · Your Cart</div>
+                <h2 class="panel-title">Match tickets in your basket</h2>
+                <p class="panel-sub">
+                  Premium seating for the football night, presented in a richer shopping layout with product imagery.
+                </p>
+              </div>
+              <div class="mini-pill">2 items</div>
+            </div>
+
+            <div class="ticket-list">
+              <article class="ticket-item">
+                <div class="ticket-media">
+                  data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g1' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%230d2746'/%3E%3Cstop offset='100%25' stop-color='%2311a34f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' rx='34' fill='url(%23g1)'/%3E%3Ccircle cx='310' cy='86' r='62' fill='rgba(255,255,255,0.15)'/%3E%3Crect x='42' y='275' width='316' height='38' rx='19' fill='rgba(255,255,255,0.2)'/%3E%3Cpath d='M82 248c30-82 76-124 118-124s88 42 118 124' fill='none' stroke='rgba(255,255,255,0.28)' stroke-width='16' stroke-linecap='round'/%3E%3Ccircle cx='200' cy='178' r='46' fill='white'/%3E%3Cpath d='M200 142l18 13-7 22h-22l-7-22z' fill='%2311a34f'/%3E%3Cpath d='M169 188l20-11h22l20 11-7 21h-48z' fill='%230d2746'/%3E%3Ctext x='50%25' y='355' text-anchor='middle' fill='white' font-family='Arial' font-size='34' font-weight='700'%3EVIP MATCH PASS%3C/text%3E%3C/svg%3E
+                </div>
+
+                <div class="ticket-body">
+                  <div class="ticket-chip">Champions Night</div>
+                  <h3 class="ticket-title">West Stand · VIP Ticket</h3>
+                  <div class="ticket-meta">
+                    <span>Gate A · Premium access</span>
+                    <span>Hospitality included</span>
+                    <span>Row 03 · Seat 14</span>
+                  </div>
+                </div>
+
+                <div class="ticket-price">
+                  <span class="qty">Qty 1</span>
+                  <span class="amount">€180</span>
+                </div>
+              </article>
+
+              <article class="ticket-item">
+                <div class="ticket-media">
+                  data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3ClinearGradient id='g2' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23091524'/%3E%3Cstop offset='100%25' stop-color='%2300a0d1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='400' height='400' rx='34' fill='url(%23g2)'/%3E%3Crect x='54' y='62' width='292' height='210' rx='24' fill='rgba(255,255,255,0.1)' stroke='rgba(255,255,255,0.18)'/%3E%3Ccircle cx='200' cy='160' r='52' fill='white'/%3E%3Cpath d='M200 124l17 12-6 20h-22l-6-20z' fill='%2300a0d1'/%3E%3Cpath d='M170 170l19-10h22l19 10-7 20h-46z' fill='%23091524'/%3E%3Crect x='72' y='296' width='256' height='34' rx='17' fill='rgba(255,255,255,0.18)'/%3E%3Ctext x='50%25' y='355' text-anchor='middle' fill='white' font-family='Arial' font-size='30' font-weight='700'%3EGENERAL ADMISSION%3C/text%3E%3C/svg%3E
+                </div>
+
+                <div class="ticket-body">
+                  <div class="ticket-chip" style="background: rgba(0,224,255,0.12); border-color: rgba(0,224,255,0.2); color: #dff8ff;">Supporter Zone</div>
+                  <h3 class="ticket-title">East Stand · Standard Ticket</h3>
+                  <div class="ticket-meta">
+                    <span>Fast mobile entry</span>
+                    <span>Row 18 · Seat 42</span>
+                    <span>Matchday digital pass</span>
+                  </div>
+                </div>
+
+                <div class="ticket-price">
+                  <span class="qty">Qty 2</span>
+                  <span class="amount">€120</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="section-rule"></div>
+
+            <div class="summary-box">
+              <div class="summary-row">
+                <span>VIP Ticket</span>
+                <strong>€180</strong>
+              </div>
+              <div class="summary-row">
+                <span>Standard Tickets (x2)</span>
+                <strong>€120</strong>
+              </div>
+              <div class="summary-row">
+                <span>Service fee</span>
+                <strong>€12</strong>
+              </div>
+              <div class="summary-row total">
+                <span>Total</span>
+                <strong>€312</strong>
+              </div>
+              <div class="summary-note">
+                Visual cart presentation only. Consent submission is still handled by the OneTrust embedded form.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ATTENDEE DETAILS -->
+        <section class="panel">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow">Step 04 · Attendee Details</div>
+                <h2 class="panel-title">Match attendee information</h2>
+                <p class="panel-sub">
+                  Original standard HTML inputs retained and restyled.
+                </p>
+              </div>
+              <div class="mini-pill">Original IDs kept</div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" type="text" placeholder="John Smith" />
+              </div>
+
+              <div class="field">
+                <label for="nationality">Nationality</label>
+                <input id="nationality" type="text" placeholder="Spanish" />
+              </div>
+
+              <div class="field">
+                <label for="country">Country</label>
+                <input id="country" type="text" placeholder="Spain" />
+              </div>
+
+              <div class="field">
+                <label for="notes">Additional Notes</label>
+                <input id="notes" type="text" placeholder="Extra attribute for the demo" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="stack payment-card">
+        <section class="panel">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow">Payment Preview</div>
+                <h2 class="panel-title">Card details</h2>
+                <p class="panel-sub">
+                  Prefilled with demo/test values only for layout convenience. No persistence logic added.
+                </p>
+              </div>
+              <div class="mini-pill">Demo Data Only</div>
+            </div>
+
+            <div class="card-visual" aria-hidden="true">
+              <div class="card-topline">
+                <span>Matchday Pass</span>
+                <span>Visa Demo</span>
+              </div>
+              <div class="chip"></div>
+              <div class="card-number">4242 4242 4242 4242</div>
+              <div class="card-meta">
+                <div>
+                  <small>Card Holder</small>
+                  <strong>ALVARO LOPEZ</strong>
+                </div>
+                <div>
+                  <small>Expires</small>
+                  <strong>12/30</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field full">
+                <label for="cc-name">Cardholder Name</label>
+                <input id="cc-name" type="text" value="ALVARO LOPEZ" autocomplete="cc-name" />
+              </div>
+
+              <div class="field full">
+                <label for="cc-number">Card Number</label>
+                <input id="cc-number" type="text" value="4242 4242 4242 4242" autocomplete="cc-number" inputmode="numeric" />
+              </div>
+
+              <div class="field">
+                <label for="cc-expiry">Expiry</label>
+                <input id="cc-expiry" type="text" value="12/30" autocomplete="cc-exp" inputmode="numeric" />
+              </div>
+
+              <div class="field">
+                <label for="cc-cvv">CVV</label>
+                <input id="cc-cvv" type="password" value="123" autocomplete="cc-csc" inputmode="numeric" />
+              </div>
+            </div>
+
+            <div class="payment-note">
+              Demo/test values are shown only to make repeated UI testing easier. No storage or persistence has been added.
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow">Order Summary</div>
+                <h2 class="panel-title">Ready for confirmation</h2>
+                <p class="panel-sub">
+                  The consent step appears after the email is confirmed and disappears once consent is submitted.
+                </p>
+              </div>
+            </div>
+
+            <div class="summary-box">
+              <div class="summary-row">
+                <span>Tickets</span>
+                <strong>3</strong>
+              </div>
+              <div class="summary-row">
+                <span>Delivery</span>
+                <strong>E-ticket</strong>
+              </div>
+              <div class="summary-row">
+                <span>Consent</span>
+                <strong>Embedded OT</strong>
+              </div>
+              <div class="summary-row total">
+                <span>Total payable</span>
+                <strong>€312</strong>
+              </div>
+            </div>
+
+            <div class="payment-note">
+              No additional checkout submit logic was introduced here. The OneTrust embedded flow remains the consent action.
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <!-- =========================================================
+       4) PAGE JAVASCRIPT
+       - Installs the OneTrust embedded form on page load
+       - Prefills the embedded Email field from #email when confirmed
+       - Shows consent section only after confirm
+       - Removes consent section on OneTrust submission
+  ========================================================== -->
+  <script>
+    /* The Collection Point ID to load */
+    const CP_ID = "d63c2978-cf7e-4be5-a34b-c787b005d29e";
+
+    const emailInput = document.getElementById("email");
+    const confirmEmailBtn = document.getElementById("confirm-email-btn");
+    const consentPanel = document.getElementById("consent-panel");
+    const consentNote = document.getElementById("consent-note");
+    const emailStatus = document.getElementById("email-status");
+    const otContainer = document.getElementById("ot-container");
+
+    let otFormInstalled = false;
+    let otFormLoaded = false;
+    let pendingPrefillEmail = "";
+
+    function setEmailStatus(message, type) {
+      emailStatus.textContent = message || "";
+      emailStatus.className = "email-status";
+      if (type) emailStatus.classList.add(type);
+    }
+
+    function showConsentPanel() {
+      consentPanel.classList.remove("is-hidden");
+      consentPanel.setAttribute("aria-hidden", "false");
+    }
+
+    function hideConsentPanelAfterSubmit() {
+      if (!consentPanel) return;
+      consentPanel.classList.add("is-collapsing");
+      setTimeout(() => {
+        consentPanel.remove();
+      }, 280);
+    }
+
+    function whenOTReady(callback) {
+      const timer = setInterval(() => {
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          callback();
+        }
+      }, 80);
+    }
+
+    function getEmbeddedEmailInput() {
+      return (
+        otContainer.querySelector(".ot-email input[type='email']") ||
+        otContainer.querySelector("input[type='email']")
+      );
+    }
+
+    function syncEmbeddedEmailField(emailValue) {
+      const embeddedEmailInput = getEmbeddedEmailInput();
+      if (!embeddedEmailInput) return false;
+
+      embeddedEmailInput.value = emailValue;
+      embeddedEmailInput.setAttribute("value", emailValue);
+
+      embeddedEmailInput.dispatchEvent(new Event("input", { bubbles: true }));
+      embeddedEmailInput.dispatchEvent(new Event("change", { bubbles: true }));
+      embeddedEmailInput.dispatchEvent(new Event("blur", { bubbles: true }));
+
+      return true;
+    }
+
+    function applyEmailPrefill(emailValue) {
+      if (!emailValue) return;
+
+      pendingPrefillEmail = emailValue;
+
+      if (window.OneTrust && window.OneTrust.webform && typeof window.OneTrust.webform.preFill === "function") {
+        try {
+          /* Official pattern provided by OneTrust docs:
+             OneTrust.webform.preFill({ "FieldLabel": "value" }, "collection point id")
+          */
+          OneTrust.webform.preFill({
+            "Email": emailValue
+          }, CP_ID);
+        } catch (error) {
+          console.error("OneTrust preFill failed", error);
+        }
+      }
+
+      /* Also update the rendered Email textbox inside the embedded form,
+         including the .ot-email container the user referenced */
+      requestAnimationFrame(() => {
+        syncEmbeddedEmailField(emailValue);
+        setTimeout(() => syncEmbeddedEmailField(emailValue), 120);
+        setTimeout(() => syncEmbeddedEmailField(emailValue), 350);
+      });
+    }
+
+    function confirmEmailAndShowConsent() {
+      const emailValue = emailInput.value.trim();
+
+      if (!emailValue) {
+        emailInput.reportValidity();
+        setEmailStatus("Please enter your email first.", "is-error");
+        return;
+      }
+
+      if (!emailInput.checkValidity()) {
+        emailInput.reportValidity();
+        setEmailStatus("Please provide a valid email address.", "is-error");
+        return;
+      }
+
+      showConsentPanel();
+      pendingPrefillEmail = emailValue;
+      setEmailStatus("Email confirmed. Preparing your consent section…", "is-success");
+      consentNote.textContent = "Loading consent options for " + emailValue + "…";
+
+      if (otFormLoaded) {
+        applyEmailPrefill(emailValue);
+        consentNote.textContent = "Consent options ready. The embedded Email field has been prefilled.";
+      } else {
+        consentNote.textContent = "The consent form is loading. Your email will be prefilled automatically once ready.";
+      }
+    }
+
+    /* Observe OT container so the embedded email box gets updated even if it renders asynchronously */
+    const observer = new MutationObserver(() => {
+      if (pendingPrefillEmail) {
+        syncEmbeddedEmailField(pendingPrefillEmail);
+      }
+    });
+
+    observer.observe(otContainer, {
+      childList: true,
+      subtree: true
+    });
+
+    /* Install the OT form on page load, preserving original behavior */
+    window.addEventListener("DOMContentLoaded", () => {
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+        otFormInstalled = true;
+      });
+    });
+
+    /* Listen for the OT embedded form load event */
+    window.addEventListener("OnetrustFormLoaded", (event) => {
+      otFormLoaded = true;
+      if (pendingPrefillEmail) {
+        applyEmailPrefill(pendingPrefillEmail);
+        consentNote.textContent = "Consent options ready. The embedded Email field has been prefilled.";
+      }
+      console.log("OnetrustFormLoaded event triggered", event.detail);
+    });
+
+    /* Listen for embedded form submission and remove the consent panel */
+    window.addEventListener("OneTrustWebFormSubmitted", (event) => {
+      console.log("OneTrustWebFormSubmitted event triggered", event.detail);
+      setEmailStatus("Consent confirmed successfully.", "is-success");
+      hideConsentPanelAfterSubmit();
+    });
+
+    confirmEmailBtn.addEventListener("click", confirmEmailAndShowConsent);
+
+    /* Optional convenience: Enter key in email field behaves like confirm */
+    emailInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        confirmEmailAndShowConsent();
+      }
+    });
+  </script>
+</body>
+</html>
