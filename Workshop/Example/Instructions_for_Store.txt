@@ -105,4 +105,9 @@ When consent is confirmed remove the Consent div, you can use this documentation
             console.log('OneTrustWebFormSubmitted event triggered', event.detail);
          });
     </script>
-Remove all the references to Onetrust from the website render so it looks production like.
+
+Final Comment:
+The brand that I am representing is called Zara, attached is the logo (https://icon-icons.com/download-file?file=https%3A%2F%2Fimages.icon-icons.com%2F2845%2FPNG%2F512%2Fzara_logo_icon_181327.png&id=181327&pack_or_individual=pack) and 2 sku's :
+https://www.zara.com/es/en/100-cupro-kimono-shirt-p04387001.html?v1=511360218&v2=2536906, https://www.zara.com/es/en/leather-shoes-p12493720.html?v1=511015240&v2=2536906
+Remove all the references to Onetrust from the website render so it looks production like for zara (regarding look and feel).
+Make the backgorund white as the logo is black and have the styling look as close to zara as possible.
