@@ -1,0 +1,96 @@
+First Prompt:
+I want you to design a prompt that I will need to use with you and this information to transform this whole layout with this instructions: Create a Shoe Store checkout Page where we collect consent (I want to have a very cool look and feel). Show the products from the cart, with images and add a section for the credit card details (have those already filled so I do not need to do it all the time) and on top a part where I insert the email. Then i want to have the OT form load when at the start like before. Make sure that you keep the functionality as it was before.
+Share the first HTML I built.
+
+Result and Recommended Prompt:
+I want you to transform the following HTML into a fully working demo page for a Shoe Store checkout with OneTrust embedded consent.
+
+OBJECTIVE
+Create a visually impressive, modern, cool-looking Shoe Store checkout page that feels realistic and polished, while preserving the OneTrust embedded form functionality exactly as it works today.
+
+MAIN LAYOUT REQUIREMENTS
+Please redesign the page as a checkout experience with these sections in this order:
+
+1. TOP SECTION
+- A clearly visible email input at the top of the page
+- Keep the existing email input ID exactly as it is if it already exists
+- This should feel like the customer contact section
+
+2. MAIN CHECKOUT CONTENT
+- A cart / order summary section showing products from the cart
+- Include product images
+- Include realistic shoe product names, short descriptions, quantity, size, and price
+- Include subtotal / total summary
+- Make it visually appealing and modern
+
+3. PAYMENT SECTION
+- Add a credit card details section
+- Pre-fill the fields so I do not need to type them every time during demos
+- Include realistic fields like:
+  - Cardholder name
+  - Card number
+  - Expiry date
+  - CVV
+  - Billing address if appropriate
+- This is demo content only, so mock values are fine
+
+4. CONSENT SECTION
+- The OneTrust embedded form must still load automatically on page load like before
+- The OneTrust form should appear lower on the page, after the cart and payment details
+- Keep the OT container and functionality intact
+
+FUNCTIONAL REQUIREMENTS (VERY IMPORTANT)
+- Keep the OneTrust functionality working exactly as before
+- Use InstallCP automatically on load
+- Do NOT add a “Load consent form” button
+- Do NOT add prefill logic
+- Keep all existing IDs, key elements, and OneTrust configuration unchanged unless absolutely necessary
+- Do NOT change anything that would require me to reconfigure the OneTrust setup
+- Keep the same CP_ID
+- Keep the same ot-container ID
+- Keep the same email input ID if present
+- Preserve the required OneTrust scripts and behavior
+- Make sure the final HTML is fully working
+
+CODE ORGANIZATION REQUIREMENTS
+Please structure the final HTML so it is very easy to explain in a workshop:
+- Clearly separate the file into commented sections:
+  1) OneTrust required scripts
+  2) Page styles
+  3) Page HTML structure
+  4) Page JavaScript
+- Add very simple comments that explain:
+  - what is normal HTML
+  - what is OneTrust-specific
+  - where the OT form is mounted
+  - where InstallCP is called
+- Keep comments beginner-friendly and short
+
+DESIGN REQUIREMENTS
+- Make it look premium, modern, and visually engaging
+- The look and feel should resemble a stylish ecommerce checkout page
+- Use strong layout hierarchy, nice spacing, cards, shadows, and modern buttons/inputs
+- Make the page demo-friendly and easy to understand
+- The design should still be simple enough that workshop attendees can quickly identify the key OneTrust elements
+
+OUTPUT REQUIREMENTS
+- Return only the final fully working HTML
+- Do not explain the code before or after
+- Do not omit any required code
+- Do not shorten the HTML
+- Make sure the script tags are correctly written and complete
+- Preserve functionality first, then improve the design
+
+Here is the source HTML to transform:
+
+[PASTE SOURCE HTML HERE]
+
+
+Second Innstructions (Prefill) -> (https://developer.onetrust.com/onetrust/docs/embedded-web-forms-methods-and-events):
+Now I want you to make it even better as I want to use the Email field that we are capturing with the html element: <input id="email" and use it to prefill the Onetrust embedded form, do not have this html field with a prefilled value and when completed by the user prefill the webform using this information from the official documentation: // Pre-fill country and state fields by passing country and state codes
+OneTrust.webform.preFill({
+    "Country": "US",
+    "State": "FL"
+}, "collection point id")
+The field I want you to prefill is called Email.
+Return a single HTML file, and make sure it works as expected, do not change anything else regarding the branding and functionality.
