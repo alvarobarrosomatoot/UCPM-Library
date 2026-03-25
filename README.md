@@ -262,4 +262,4 @@ Otherwise, generate the HTML file.
 ---
 
 Created and maintained by **Alvaro Barroso**  
-Madrid, Españita 🇪🇸
+Madrid, Spain 🇪🇸
