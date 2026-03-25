@@ -94,10 +94,6 @@ OneTrust.webform.preFill({
     "State": "FL"
 }, "collection point id")
 The field I want you to prefill is called Email.
-Move the Consent div (class="panel-inner consent-wrap") of the page to right below the email one (Customer Contact) and on top of the cart one. Move the card details to on top of the order summary.
-Return a single HTML file, and make sure it works as expected, do not change anything else regarding the branding and functionality.
-
-Aditional comments:
 Add a confirm button next to the Email field so when clicked we show the consent banner accordingly with the prefilled email.
 When consent is confirmed remove the Consent div, you can use this documentation to track the completion listener:
 	<script>
@@ -106,6 +102,12 @@ When consent is confirmed remove the Consent div, you can use this documentation
             console.log('OneTrustWebFormSubmitted event triggered', event.detail);
          });
     </script>
+Return a single HTML file, and make sure it works as expected, do not change anything else regarding the branding and functionality.
+
+Aditional comments:
+Move the Consent div (class="panel-inner consent-wrap") of the page to right below the email one (Customer Contact) and on top of the cart one. Move the card details to on top of the order summary.
+
+
 
 Final Comment:
 The brand that I am representing is called Zara, attached is the logo (https://icon-icons.com/download-file?file=https%3A%2F%2Fimages.icon-icons.com%2F2845%2FPNG%2F512%2Fzara_logo_icon_181327.png&id=181327&pack_or_individual=pack) and 2 sku's :
