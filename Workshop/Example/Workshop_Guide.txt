@@ -1,6 +1,7 @@
 First Prompt:
 I want you to design a prompt that I will need to use with you and this information to transform this whole layout with this instructions: Create a Shoe Store checkout Page where we collect consent (I want to have a very cool look and feel). Show the products from the cart, with images and add a section for the credit card details (have those already filled so I do not need to do it all the time) and on top a part where I insert the email. Then i want to have the OT form load when at the start like before. Make sure that you keep the functionality as it was before.
-Share the first HTML I built.
+
+
 
 Result and Recommended Prompt:
 I want you to transform the following HTML into a fully working demo page for a Shoe Store checkout with OneTrust embedded consent.
