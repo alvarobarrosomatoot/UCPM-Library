@@ -1,0 +1,1283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Complete Your Subscription</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED SCRIPTS
+       KEEP THIS SECTION INTACT
+  ========================================================== -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="89af9315-196c-45ad-88ea-1b8ec3fe5a51"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <style>
+    /* =========================================================
+       KPN-INSPIRED TYPOGRAPHY
+       Uses KPN-hosted font assets if available, with safe fallbacks.
+       If these URLs are blocked in your environment, the fallback stack
+       still keeps the layout stable.
+    ========================================================== */
+    @font-face {
+      font-family: "KPN Metric";
+      src: url("https://www.kpn.com/public/fonts/KPN-Metric/metric-light.woff2") format("woff2");
+      font-weight: 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "KPN Metric";
+      src: url("https://www.kpn.com/public/fonts/KPN-Metric/metric-semibold.woff2") format("woff2");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "KPN Metric";
+      src: url("https://www.kpn.com/public/fonts/KPN-Metric/metric-bold.woff2") format("woff2");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      /* KPN-inspired palette */
+      --kpn-green: #00c300;
+      --kpn-green-soft: #cbf900;
+      --kpn-blue: #0014a9;
+      --kpn-sky: #00aaff;
+      --white: #ffffff;
+      --off-white: #f7fafc;
+      --surface: #ffffff;
+      --surface-2: #f4f8fb;
+      --surface-3: #eef4f8;
+      --border: #d7e2ea;
+      --text: #11263a;
+      --text-soft: #4d6a82;
+      --text-muted: #6c8397;
+      --danger: #c93752;
+      --success: #00a85a;
+      --shadow-xl: 0 30px 80px rgba(0, 32, 71, 0.12);
+      --shadow-lg: 0 18px 44px rgba(0, 32, 71, 0.10);
+      --shadow-md: 0 10px 26px rgba(0, 32, 71, 0.08);
+      --radius-xl: 32px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --max: 1400px;
+      --font: "KPN Metric", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      color-scheme: light;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(0, 195, 0, 0.12), transparent 22%),
+        radial-gradient(circle at top right, rgba(0, 170, 255, 0.14), transparent 24%),
+        linear-gradient(180deg, #eef9f1 0%, #f6fbff 46%, #eef5fb 100%);
+      padding: 24px;
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    /* =========================================================
+       TV APP FRAME
+    ========================================================== */
+    .tv-frame {
+      position: relative;
+      overflow: hidden;
+      border-radius: 36px;
+      background: linear-gradient(180deg, #fbfdff 0%, #f4f9fc 100%);
+      border: 1px solid rgba(0, 20, 169, 0.08);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .tv-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 12%, rgba(0, 195, 0, 0.10), transparent 18%),
+        radial-gradient(circle at 85% 15%, rgba(0, 170, 255, 0.11), transparent 20%);
+      pointer-events: none;
+    }
+
+    /* =========================================================
+       APP HERO / FEATURED BANNER
+    ========================================================== */
+    .app-hero {
+      position: relative;
+      padding: 28px 28px 24px;
+      background:
+        linear-gradient(135deg, rgba(0, 195, 0, 0.98) 0%, rgba(51, 213, 51, 0.95) 18%, rgba(0, 170, 255, 0.95) 100%);
+      color: white;
+    }
+
+    .app-hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -40px;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.32), rgba(255,255,255,0.06) 45%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.28);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.02em;
+      box-shadow: 0 12px 28px rgba(0, 20, 169, 0.16);
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      opacity: 0.94;
+    }
+
+    .brand-name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .tv-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tv-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.24);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 1.2fr 0.95fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 3vw, 3.3rem);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      max-width: 760px;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.68;
+      max-width: 720px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .hero-badge {
+      padding: 11px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.25);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .featured-screen {
+      position: relative;
+      overflow: hidden;
+      border-radius: 26px;
+      background:
+        linear-gradient(180deg, rgba(0, 20, 169, 0.92), rgba(0, 65, 150, 0.86));
+      border: 1px solid rgba(255,255,255,0.20);
+      box-shadow: 0 20px 50px rgba(0, 33, 100, 0.18);
+      min-height: 220px;
+      display: flex;
+      align-items: flex-end;
+      padding: 22px;
+    }
+
+    .featured-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0, 195, 0, 0.30), transparent 22%),
+        radial-gradient(circle at 80% 30%, rgba(0, 170, 255, 0.32), transparent 24%),
+        linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.18) 100%);
+      pointer-events: none;
+    }
+
+    .featured-meta {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      max-width: 420px;
+    }
+
+    .featured-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.24);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .featured-title {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .featured-text {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.88);
+    }
+
+    /* =========================================================
+       APP BODY
+    ========================================================== */
+    .app-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) 380px;
+      gap: 24px;
+      padding: 24px;
+      align-items: start;
+    }
+
+    .app-main {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .app-side {
+      min-width: 0;
+    }
+
+    .panel,
+    .summary-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .panel-inner,
+    .summary-inner {
+      padding: 22px;
+    }
+
+    .panel-accent {
+      background:
+        linear-gradient(180deg, rgba(0, 195, 0, 0.05), rgba(0, 170, 255, 0.04)),
+        var(--surface);
+      border-color: rgba(0, 170, 255, 0.24);
+      box-shadow:
+        0 0 0 1px rgba(0,170,255,0.06) inset,
+        var(--shadow-lg);
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #eef7f0;
+      color: #0b7e33;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .section-heading h2,
+    .summary-title {
+      margin: 0;
+      font-size: 1.25rem;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .section-copy {
+      margin: 0 0 18px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-soft);
+      max-width: 840px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: #f2f7fb;
+      border: 1px solid #dbe5ec;
+      color: #32516d;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* =========================================================
+       FORM FIELDS
+    ========================================================== */
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      margin: 0 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: #fbfdff;
+      color: var(--text);
+      font: inherit;
+      transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.18s ease,
+        background 0.18s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    input::placeholder,
+    select::placeholder {
+      color: #7a90a3;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(0, 170, 255, 0.7);
+      background: #ffffff;
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 0 4px rgba(0, 170, 255, 0.14),
+        0 8px 22px rgba(0, 37, 91, 0.08);
+    }
+
+    .email-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      align-items: end;
+    }
+
+    .email-note {
+      margin-top: 10px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .promo-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .promo-card {
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(0, 195, 0, 0.10), rgba(0, 170, 255, 0.07));
+      border: 1px solid rgba(0, 170, 255, 0.18);
+      padding: 14px;
+      min-height: 82px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .promo-card strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.2;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .promo-card span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+
+    /* =========================================================
+       TV APP CONTENT ROW / POSTERS
+    ========================================================== */
+    .content-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .poster-card {
+      position: relative;
+      min-height: 130px;
+      padding: 16px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid #dbe5ec;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.06)),
+        linear-gradient(135deg, #f6fff7 0%, #f1fbff 100%);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .poster-card:nth-child(1) {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(135deg, rgba(0,195,0,0.24), rgba(0,170,255,0.18));
+    }
+
+    .poster-card:nth-child(2) {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(135deg, rgba(0,20,169,0.18), rgba(0,170,255,0.16));
+    }
+
+    .poster-card:nth-child(3) {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+        linear-gradient(135deg, rgba(203,249,0,0.24), rgba(0,195,0,0.16));
+    }
+
+    .poster-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .poster-copy strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .poster-copy span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    /* =========================================================
+       ONETRUST AREA
+    ========================================================== */
+    .demo-box {
+      margin-top: 8px;
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(180deg, #fbfdff 0%, #f3f8fb 100%);
+    }
+
+    .hint {
+      margin: 0 0 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    #ot-container {
+      margin-top: 2px;
+      min-height: 40px;
+    }
+
+    /* OneTrust visual cleanup only */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
+    }
+
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 14px !important;
+      line-height: 1.6 !important;
+      font-weight: 400 !important;
+      color: var(--text-soft) !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox {
+      margin-bottom: 12px !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      padding: 3px 0;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      border: 2px solid #a9c4d4;
+      background: #fff;
+      transition: all 0.16s ease;
+      margin-top: 1px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--kpn-green);
+      background:
+        radial-gradient(circle at center, #ffffff 0 24%, transparent 26%),
+        linear-gradient(135deg, var(--kpn-green), var(--kpn-sky));
+      box-shadow: 0 0 0 4px rgba(0, 195, 0, 0.14);
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 4px rgba(0, 170, 255, 0.16);
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 13px !important;
+      margin-top: 6px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 20px !important;
+      padding: 15px 18px !important;
+      border-radius: 999px !important;
+      border: none !important;
+      background: linear-gradient(135deg, var(--kpn-green), #37d637 35%, var(--kpn-sky)) !important;
+      color: #ffffff !important;
+      font-size: 15px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      box-shadow:
+        0 14px 30px rgba(0, 145, 70, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.24) !important;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease !important;
+    }
+
+    .ot-submit:hover {
+      transform: translateY(-1px) !important;
+      filter: brightness(1.02) !important;
+      box-shadow:
+        0 18px 36px rgba(0, 145, 70, 0.22),
+        inset 0 1px 0 rgba(255,255,255,0.24) !important;
+    }
+
+    /* =========================================================
+       SUMMARY RAIL
+    ========================================================== */
+    .summary-panel {
+      position: sticky;
+      top: 18px;
+      overflow: hidden;
+    }
+
+    .summary-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .summary-feature {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(0,20,169,0.92), rgba(0,170,255,0.90));
+      color: #fff;
+      margin-bottom: 16px;
+      min-height: 170px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .summary-feature::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.28), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(0,195,0,0.24), transparent 28%);
+      pointer-events: none;
+    }
+
+    .summary-feature-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .summary-overline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.92;
+      margin-bottom: 8px;
+    }
+
+    .summary-feature h3 {
+      margin: 0 0 8px;
+      font-size: 1.18rem;
+      line-height: 1.14;
+      letter-spacing: -0.02em;
+    }
+
+    .summary-feature p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 13px 14px;
+      border-radius: 18px;
+      background: #f5f9fc;
+      border: 1px solid #dfe8ef;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .summary-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #d9e5ed, transparent);
+      margin: 14px 0;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .price-row.total {
+      padding-top: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .summary-foot {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: #f6fafc;
+      border: 1px solid #dfe8ef;
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       CTA AREA
+    ========================================================== */
+    .cta-panel {
+      background:
+        linear-gradient(180deg, rgba(0,170,255,0.04), rgba(0,195,0,0.04)),
+        var(--surface);
+    }
+
+    .cta-title {
+      margin: 0 0 10px;
+      font-size: 1.24rem;
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-copy {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-soft);
+    }
+
+    .cta-link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid #d5e1e8;
+      color: var(--text);
+      background: #ffffff;
+      box-shadow: var(--shadow-md);
+    }
+
+    .cta-link.primary {
+      color: #fff;
+      border: none;
+      background: linear-gradient(135deg, var(--kpn-green), var(--kpn-sky));
+      box-shadow: 0 14px 32px rgba(0, 145, 70, 0.18);
+    }
+
+    .helper-note {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================== */
+    @media (max-width: 1140px) {
+      .app-body {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-panel {
+        position: static;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 14px;
+      }
+
+      .tv-frame {
+        border-radius: 24px;
+      }
+
+      .app-hero {
+        padding: 18px 16px 16px;
+      }
+
+      .app-body {
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .panel-inner,
+      .summary-inner {
+        padding: 18px;
+      }
+
+      .field-grid,
+      .email-layout,
+      .content-row {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <section class="tv-frame">
+      <!-- =========================================================
+           A) HEADER / HERO CHECKOUT INTRO
+      ========================================================== -->
+      <header class="app-hero">
+        <div class="hero-topbar">
+          <div class="brand-row">
+            <div class="brand-mark">TV</div>
+            <div class="brand-copy">
+              <div class="eyebrow">Smart TV checkout experience</div>
+              <div class="brand-name">Stream+ App Checkout</div>
+            </div>
+          </div>
+
+          <nav class="tv-nav" aria-label="App sections">
+            <span class="tv-chip">Home</span>
+            <span class="tv-chip">Live</span>
+            <span class="tv-chip">My List</span>
+            <span class="tv-chip">Checkout</span>
+          </nav>
+        </div>
+
+        <div class="hero-content">
+          <div class="hero-copy">
+            <h1>Complete your subscription</h1>
+            <p>
+              You’re one step away from streaming. This layout now feels like a smart-TV app:
+              a featured content banner, clean app rails, and a clearer checkout flow inspired by
+              modern telecom streaming experiences.
+            </p>
+
+            <div class="hero-badges">
+              <span class="hero-badge">TV app layout</span>
+              <span class="hero-badge">KPN-inspired colors</span>
+              <span class="hero-badge">OneTrust preserved</span>
+            </div>
+          </div>
+
+          <aside class="featured-screen" aria-label="Featured streaming panel">
+            <div class="featured-meta">
+              <div class="featured-kicker">Featured experience</div>
+              <h2 class="featured-title">A smart-TV style checkout with app-first polish</h2>
+              <p class="featured-text">
+                Wide featured surfaces, clear sections, premium trust signals, and the same
+                consent loading behavior as before.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <div class="app-body">
+        <main class="app-main">
+          <!-- =========================================================
+               B) EMAIL SECTION (TOP PRIORITY PLACEMENT)
+               Keeps original #email
+          ========================================================== -->
+          <section class="panel panel-accent">
+            <div class="panel-inner">
+              <div class="section-kicker">Step 1 · account</div>
+              <div class="section-heading">
+                <h2>Where should we send your subscription details?</h2>
+                <div class="badge">Top priority</div>
+              </div>
+              <p class="section-copy">
+                This now behaves like the first focused step inside a TV app onboarding flow, while
+                preserving the existing email field and validation behavior.
+              </p>
+
+              <div class="email-layout">
+                <div class="field">
+                  <label for="email">Email</label>
+                  <!-- Keep this ID exactly -->
+                  <input id="email" type="email" placeholder="you@example.com" required />
+                  <div class="email-note">
+                    Same field ID, same HTML validation, just moved higher and styled more prominently.
+                  </div>
+                </div>
+
+                <div class="promo-stack" aria-hidden="true">
+                  <div class="promo-card">
+                    <strong>Subscription receipts</strong>
+                    <span>Keep billing and account confirmation in one place.</span>
+                  </div>
+                  <div class="promo-card">
+                    <strong>Smart-TV setup updates</strong>
+                    <span>Make activation and onboarding feel app-ready from the start.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content-row" aria-hidden="true">
+                <div class="poster-card">
+                  <div class="poster-copy">
+                    <strong>Continue Watching</strong>
+                    <span>Familiar TV app structure with big content surfaces.</span>
+                  </div>
+                </div>
+                <div class="poster-card">
+                  <div class="poster-copy">
+                    <strong>Live & Replay</strong>
+                    <span>Clearer path from discovery to activation.</span>
+                  </div>
+                </div>
+                <div class="poster-card">
+                  <div class="poster-copy">
+                    <strong>Profiles & Preferences</strong>
+                    <span>Consent and setup placed early in the flow.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- =========================================================
+               C) OT FORM / CONSENT AREA
+               SAME target #ot-container
+               SAME InstallCP() behavior
+          ========================================================== -->
+          <section class="panel">
+            <div class="panel-inner">
+              <div class="section-kicker">Step 2 · privacy & consent</div>
+              <div class="section-heading">
+                <h2>Review your consent preferences</h2>
+                <div class="st embedded form is still initialized exactly as before and mounted into the
+                same target container below.
+              </p>
+
+              <div class="demo-box">
+                <p class="hint">
+                  This is still the <strong>OneTrust target container</strong>. The consent form is inserted
+                  here automatically by <strong>InstallCP()</strong> with the same mount behavior as before.
+                </p>
+
+                <div id="ot-container"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Existing demo fields preserved -->
+          <section class="panel">
+            <div class="panel-inner">
+              <div class="section-kicker">Step 3 · profile details</div>
+              <div class="section-heading">
+                <h2>Complete your viewer profile</h2>
+                <div class="badge">Original fields preserved</div>
+              </div>
+              <p class="section-copy">
+                Your original fields are still here, now grouped more like account setup inside a TV app.
+              </p>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input id="name" type="text" placeholder="John Smith" />
+                </div>
+
+                <div class="field">
+                  <label for="nationality">Nationality</label>
+                  <input id="nationality" type="text" placeholder="Spanish" />
+                </div>
+
+                <div class="field">
+                  <label for="country">Country</label>
+                  <input id="country" type="text" placeholder="Spain" />
+                </div>
+
+                <div class="field">
+                  <label for="notes">Additional Notes</label>
+                  <input id="notes" type="text" placeholder="Extra attribute for the demo" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- =========================================================
+               E) PAYMENT SECTION
+               Demo values only
+          ========================================================== -->
+          <section class="panel">
+            <div class="panel-inner">
+              <div class="section-kicker">Step 4 · payment</div>
+              <div class="section-heading">
+                <h2>Add payment details</h2>
+                <div class="badge">Demo test values</div>
+              </div>
+              <p class="section-copy">
+                These are visual demo defaults only, so you don’t have to re-enter them repeatedly in a test setup.
+              </p>
+
+              <div class="field-grid">
+                <div class="field full">
+                  <label for="cardholder-name">Cardholder Name</label>
+                  <input id="cardholder-name" type="text" value="Demo User" autocomplete="off" />
+                </div>
+
+                <div class="field full">
+                  <label for="card-number">Card Number</label>
+                  <input id="card-number" type="text" value="4242 4242 4242 4242" autocomplete="off" inputmode="numeric" />
+                </div>
+
+                <div class="field">
+                  <label for="card-expiry">Expiry</label>
+                  <input id="card-expiry" type="text" value="12/30" autocomplete="off" inputmode="numeric" />
+                </div>
+
+                <div class="field">
+                  <label for="card-cvv">CVV</label>
+                  <input id="card-cvv" type="password" value="123" autocomplete="off" inputmode="numeric" />
+                </div>
+              </div>
+
+              <div class="helper-note">
+                Demo/test values only. Do not use or store real payment information in this workshop/demo page.
+              </div>
+            </div>
+          </section>
+
+          <!-- =========================================================
+               F) CTA / COMPLETION AREA
+               OT submit remains the actual functional submission flow.
+          ========================================================== -->
+          <section class="panel cta-panel">
+            <div class="panel-inner">
+              <div class="section-kicker">Step 5 · complete</div>
+              <h2 class="cta-title">Finish your subscription setup</h2>
+              <p class="cta-copy">
+                The actual submission behavior remains the OneTrust-generated submit button inside the consent
+                section above. This preserves your current submission flow without replacing it.
+              </p>
+
+              <div class="cta-link-row">
+                #ot-containerGo to consent & complete</a>
+                #emailReview account email</a>
+              </div>
+
+              <div class="helper-note">
+                The green OneTrust submit button remains the real functional CTA. These links only help navigate
+                the app-style layout and do not replace your existing behavior.
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <!-- =========================================================
+             D) CART SUMMARY
+             UI slot only unless real cart logic exists elsewhere
+        ========================================================== -->
+        <aside class="app-side">
+          <section class="summary-panel">
+            <div class="summary-inner">
+              <div class="summary-top">
+                <h2 class="summary-title">Your package</h2>
+                <div class="badge">Checkout rail</div>
+              </div>
+
+              <div class="summary-feature">
+                <div class="summary-feature-copy">
+                  <div class="summary-overline">Featured plan</div>
+                  <h3>Premium Stream Pass</h3>
+                  <p>
+                    A TV app-inspired summary rail that feels like a modern subscription package screen.
+                  </p>
+                </div>
+              </div>
+
+              <div id="cart-summary-slot">
+                <div class="summary-list">
+                  <div class="summary-item">
+                    <span>Monthly plan</span>
+                    <strong>€12.99</strong>
+                  </div>
+                  <div class="summary-item">
+                    <span>HD / 4K access</span>
+                    <strong>Included</strong>
+                  </div>
+                  <div class="summary-item">
+                    <span>Multi-device streaming</span>
+                    <strong>Included</strong>
+                  </div>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="price-row">
+                  <span>Plan subtotal</span>
+                  <span>€12.99</span>
+                </div>
+                <div class="price-row">
+                  <span>Fees</span>
+                  <span>€0.00</span>
+                </div>
+                <div class="price-row total">
+                  <span>Total due today</span>
+                  <span>€12.99</span>
+                </div>
+              </div>
+
+              <div class="summary-foot">
+                If you already have real cart rendering, inject it into <strong>#cart-summary-slot</strong>
+                without changing the OneTrust logic above.
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================================================
+       4) PAGE JAVASCRIPT
+       PRESERVED ONETRUST LOADING BEHAVIOR
+  ========================================================== -->
+  <script>
+    const CP_ID = "4b181d4b-c8f9-422d-ace7-f83010301ddc";
+
+    function whenOTReady(callback) {
+      const timer = setInterval(() => {
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          callback();
+        }
+      }, 80);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+      });
+    });
+  </script>
+</body>
+</html>
