@@ -1,164 +1,189 @@
-<!-- Description: Simple demo page for a OneTrust Embedded Form workshop (basic HTML attributes are displayed at the top for training purposes, and the consent form is loaded automatically at the bottom using InstallCP so users can clearly identify the key OneTrust elements). -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>OneTrust Embedded Form Demo</title>
+  <title>Hardware Store Checkout</title>
 
   <!-- =========================================================
-       1) ONETRUST REQUIRED SCRIPTS
-       These scripts are required for the embedded OneTrust form.
-       For workshop purposes:
-       - Leave this section as-is
-       - Think of it as the "OneTrust loader"
-       - Make sure to replace with your own ID's (from your trial environment)
+       1) ONETRUST REQUIRED SCRIPTS (UNCHANGED)
   ========================================================== -->
-
-  <!-- Required OneTrust bootstrap -->
   <script>
     window.OtSdk = window.OtSdk || function () {
       (OtSdk.q = OtSdk.q || []).push(arguments);
     };
   </script>
 
-  <!-- OneTrust embedded form library -->
   <script
-  src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
-  data-id="f7fe861d-66c3-467c-b74c-c2532fab3f33"
-  worker="https://consent-api.onetrust.com"
-  ></script>
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="f7fe861d-66c3-467c-b74c-c2532fab3f33"
+    worker="https://consent-api.onetrust.com">
+  </script>
 
   <!-- =========================================================
-       2) PAGE STYLES
-       This section only controls how the page looks.
-       It does NOT load the OneTrust form.
+       2) STYLES – HOME DEPOT–LIKE CHECKOUT
   ========================================================== -->
   <style>
     :root {
-      --bg: #f4f6f8;
+      --orange: #f96302;
+      --dark: #111;
+      --muted: #6b7280;
+      --bg: #f4f5f7;
       --card: #ffffff;
-      --text: #111;
-      --muted: #666;
-      --primary: #2563eb;
       --border: #e5e7eb;
-      --danger: #d9534f;
-      --radius: 12px;
+      --radius: 10px;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 40px 16px;
-      background: var(--bg);
-      color: var(--text);
       font-family: var(--font);
-      display: flex;
-      justify-content: center;
+      background: var(--bg);
+      color: var(--dark);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: #000;
+      color: #fff;
+      padding: 18px 24px;
+    }
+
+    header strong {
+      color: var(--orange);
+      font-size: 22px;
+      letter-spacing: 0.5px;
+    }
+
+    header span {
+      font-size: 14px;
+      margin-left: 12px;
+      color: #d1d5db;
+    }
+
+    /* ===== LAYOUT ===== */
+    main {
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 0 16px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
     }
 
     .card {
-      width: 100%;
-      max-width: 720px;
       background: var(--card);
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
     }
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: 22px;
+    h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
       font-weight: 800;
     }
 
-    .sub {
-      margin: 0 0 24px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
+    /* ===== EMAIL ===== */
+    .email-field input {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      font-size: 15px;
     }
 
-    .section-title {
-      margin: 24px 0 10px;
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-
-    .field-grid {
+    /* ===== CART ===== */
+    .cart-item {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 80px 1fr auto;
       gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
     }
 
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #ddd;
+    }
+
+    .cart-item strong {
+      font-size: 14px;
+    }
+
+    .cart-item span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ===== PAYMENT ===== */
     .field {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .field.full {
-      grid-column: 1 / -1;
+      margin-bottom: 12px;
     }
 
     label {
-      margin: 0 0 6px;
+      font-size: 13px;
       font-weight: 600;
-      font-size: 14px;
+      display: block;
+      margin-bottom: 4px;
     }
 
-    input,
-    select {
+    input {
       width: 100%;
       padding: 12px;
       border-radius: var(--radius);
       border: 1px solid var(--border);
-      font: inherit;
-      background: #fff;
     }
 
-    input:focus,
-    select:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-    .hint {
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
+    /* ===== SUMMARY ===== */
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 14px;
     }
 
-    .demo-box {
-      margin-top: 8px;
-      padding: 16px;
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      background: #fafafa;
+    .summary-row.total {
+      font-weight: 800;
+      font-size: 16px;
+      margin-top: 14px;
     }
 
-    /* =========================================================
-       ONETRUST CONTAINER
-       This is where OneTrust will render the consent form.
-       The JS will target this exact element.
-  ========================================================== */
-    #ot-container {
+    .cta {
       margin-top: 18px;
+      background: var(--orange);
+      border: none;
+      color: #fff;
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: var(--radius);
+      cursor: pointer;
     }
 
-    /* =========================================================
-       OPTIONAL ONETRUST VISUAL CLEANUP
-       These styles make the OneTrust form look simpler for demos.
-       They do not change the functional behavior.
-  ========================================================== */
+    /* ===== ONETRUST VISUAL CLEANUP (UNCHANGED FUNCTIONALLY) ===== */
+    #ot-container {
+      margin-top: 16px;
+    }
+
     .ot-consent-inline,
     .otwf-content,
     .ot-form,
@@ -169,174 +194,127 @@
       box-shadow: none !important;
       padding: 0 !important;
       font-family: inherit !important;
-      color: inherit !important;
-    }
-
-    #ot-container .ot-label,
-    #ot-container label,
-    #ot-container span.ot-label {
-      font-size: 14px !important;
-      line-height: 1.5 !important;
-      font-weight: 400 !important;
-      color: var(--muted) !important;
-    }
-
-    #ot-container input[type="checkbox"] {
-      position: absolute !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-
-    #ot-container .otwf-chkbox label {
-      display: flex !important;
-      align-items: flex-start;
-      gap: 10px;
-      cursor: pointer;
-      position: relative;
-    }
-
-    #ot-container .otwf-chkbox label::before {
-      content: "";
-      width: 18px;
-      height: 18px;
-      min-width: 18px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      margin-top: 2px;
-      transition: all 0.15s ease;
-      background: #fff;
-    }
-
-    #ot-container input[type="checkbox"]:checked + label::before {
-      border-color: var(--primary);
-      background: radial-gradient(circle at center, var(--primary) 45%, transparent 47%);
-    }
-
-    #ot-container input[type="checkbox"]:focus + label::before {
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-    }
-
-    .ot-error {
-      color: var(--danger) !important;
-      font-size: 13px !important;
-      margin-top: 4px !important;
-    }
-
-    .ot-submit {
-      width: 100% !important;
-      margin-top: 16px !important;
-      padding: 14px !important;
-      border-radius: var(--radius) !important;
-      border: 1px solid var(--border) !important;
-      background: #fff !important;
-      color: var(--text) !important;
-      font-weight: 700 !important;
-      cursor: pointer !important;
-    }
-
-    .ot-submit:hover {
-      background: #f9f9f9 !important;
-    }
-
-    @media (max-width: 640px) {
-      .field-grid {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
 
 <body>
-  <!-- =========================================================
-       3) PAGE HTML
-       This is the visible page content.
-       We show:
-       - Simple HTML fields first
-       - The OneTrust container at the bottom
-  ========================================================== -->
+
+<header>
+  <strong>HARDWARE PRO</strong>
+  <span>Secure Checkout · Easy Returns</span>
+</header>
+
+<main>
+
+  <!-- LEFT COLUMN -->
   <section class="card">
-    <h1>Embedded Form Demo</h1>
-    <p class="sub">
-      This page shows standard HTML fields first and the OneTrust embedded consent form underneath.
-    </p>
+    <h2>Contact</h2>
+    <div class="email-field">
+      <!-- ID PRESERVED -->
+      <input id="email" type="email" placeholder="you@example.com" required />
+    </div>
 
-    <!-- Standard HTML fields -->
-    <div class="section-title">Example HTML Fields</div>
+    <h2 style="margin-top:24px;">Your Cart</h2>
 
-    <div class="field-grid">
-      <div class="field">
-        <label for="name">Name</label>
-        <input id="name" type="text" placeholder="John Smith" />
+    <!-- Demo cart items -->
+    <div class="cart-item">
+      <img alt="">
+      <div>
+        <strong>18V Cordless Drill</strong><br>
+        <span>Qty: 1</span>
       </div>
+      <strong>€129.00</strong>
+    </div>
 
-      <div class="field">
-        <label for="nationality">Nationality</label>
-        <input id="nationality" type="text" placeholder="Spanish" />
+    <div class="cart-item">
+      <img alt="">
+      <div>
+        <strong>Heavy‑Duty Tool Box</strong><br>
+        <span>Qty: 1</span>
       </div>
+      <strong>€59.00</strong>
+    </div>
 
+    <h2 style="margin-top:24px;">Payment</h2>
+
+    <!-- Dummy / Prefilled -->
+    <div class="field">
+      <label>Card number</label>
+      <input value="4242 4242 4242 4242">
+    </div>
+
+    <div class="field">
+      <label>Name on card</label>
+      <input value="JOHN SMITH">
+    </div>
+
+    <div class="grid-2">
       <div class="field">
-        <label for="email">Email</label>
-        <!-- Keep this ID as requested -->
-        <input id="email" type="email" placeholder="you@example.com" required />
+        <label>Expiry</label>
+        <input value="12/28">
       </div>
-
       <div class="field">
-        <label for="country">Country</label>
-        <input id="country" type="text" placeholder="Spain" />
-      </div>
-
-      <div class="field full">
-        <label for="notes">Additional Notes</label>
-        <input id="notes" type="text" placeholder="Extra attribute for the demo" />
+        <label>CVC</label>
+        <input value="123">
       </div>
     </div>
 
-    <!-- OneTrust area -->
-    <div class="section-title">OneTrust Embedded Form</div>
-
-    <div class="demo-box">
-      <div class="hint">
-        This box contains the <strong>OneTrust target container</strong>.  
-        The consent form will be inserted here automatically using <strong>InstallCP()</strong>.
-      </div>
-
-      <!-- IMPORTANT:
-           OneTrust renders the consent form inside this div -->
-      <div id="ot-container"></div>
-    </div>
+    <h2 style="margin-top:24px;">Consent</h2>
+    <!-- OneTrust mounts here -->
+    <div id="ot-container"></div>
   </section>
 
-  <!-- =========================================================
-       4) PAGE JAVASCRIPT
-       This section controls the behavior.
-       For the workshop, the key idea is:
-       - Wait until OneTrust is ready
-       - Call InstallCP()
-       - Mount the form into #ot-container
-  ========================================================== -->
-  <script>
-    /* The Consent Profile ID to load */
-    const CP_ID = "8dc37d20-2061-422b-b45e-a3f01fa12a10";
+  <!-- RIGHT COLUMN -->
+  <aside class="card">
+    <h2>Order Summary</h2>
 
-    /* Wait until the OneTrust library is fully available */
-    function whenOTReady(callback) {
-      const timer = setInterval(() => {
-        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
-          clearInterval(timer);
-          callback();
-        }
-      }, 80);
-    }
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <span>€188.00</span>
+    </div>
+    <div class="summary-row">
+      <span>Shipping</span>
+      <span>€9.95</span>
+    </div>
+    <div class="summary-row">
+      <span>Tax</span>
+      <span>€19.80</span>
+    </div>
 
-    /* When the page is ready, load the OneTrust form automatically */
-    window.addEventListener("DOMContentLoaded", () => {
-      whenOTReady(() => {
-        OneTrust.webform.InstallCP(CP_ID, {
-          target: "#ot-container"
-        });
+    <div class="summary-row total">
+      <span>Total</span>
+      <span>€217.75</span>
+    </div>
+
+    <button class="cta">Place Order</button>
+  </aside>
+
+</main>
+
+<!-- =========================================================
+     4) JAVASCRIPT – UNCHANGED FUNCTIONALITY
+========================================================== -->
+<script>
+  const CP_ID = "8dc37d20-2061-422b-b45e-a3f01fa12a10";
+
+  function whenOTReady(callback) {
+    const timer = setInterval(() => {
+      if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+        clearInterval(timer);
+        callback();
+      }
+    }, 80);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    whenOTReady(() => {
+      OneTrust.webform.InstallCP(CP_ID, {
+        target: "#ot-container"
       });
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
-``
