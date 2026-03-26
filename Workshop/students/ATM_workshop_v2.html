@@ -1,0 +1,1143 @@
+<!-- Description: Premium streaming-style demo page for a OneTrust Embedded Form workshop.
+     The OneTrust consent form still loads automatically using InstallCP and mounts into
+     the same #ot-container target as before. The page has been reorganized into a premium
+     checkout flow without changing the OneTrust initialization logic. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Complete Your Subscription</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED SCRIPTS
+       KEEP THIS SECTION INTACT
+       These scripts are required for the embedded OneTrust form.
+  ========================================================== -->
+
+  <!-- Required OneTrust bootstrap -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <!-- OneTrust embedded form library -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="89af9315-196c-45ad-88ea-1b8ec3fe5a51"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <!-- =========================================================
+       2) PAGE STYLES
+       Premium streaming / telecom checkout feel
+       Visual only — does NOT change OneTrust loading behavior
+  ========================================================== -->
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-2: #0b1630;
+      --surface: rgba(11, 22, 48, 0.78);
+      --surface-2: rgba(18, 31, 63, 0.92);
+      --surface-3: rgba(255, 255, 255, 0.05);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #f8fbff;
+      --muted: #a8b5d1;
+      --muted-2: #7f90b4;
+      --primary: #6d7cff;
+      --primary-2: #8d5cff;
+      --accent: #20d4ff;
+      --success: #6ef0a7;
+      --danger: #ff7c8f;
+      --input-bg: rgba(255, 255, 255, 0.05);
+      --input-border: rgba(255, 255, 255, 0.12);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 18px 45px rgba(0, 0, 0, 0.24);
+      --font: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      --max: 1240px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      color-scheme: dark;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(109, 124, 255, 0.30), transparent 26%),
+        radial-gradient(circle at top right, rgba(32, 212, 255, 0.18), transparent 22%),
+        radial-gradient(circle at bottom center, rgba(141, 92, 255, 0.16), transparent 24%),
+        linear-gradient(180deg, #050b16 0%, #07111f 42%, #0a1530 100%);
+      padding: 32px 18px 48px;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      z-index: 0;
+      pointer-events: none;
+      filter: blur(60px);
+      opacity: 0.5;
+    }
+
+    body::before {
+      width: 280px;
+      height: 280px;
+      top: 70px;
+      left: -40px;
+      background: rgba(109, 124, 255, 0.25);
+      border-radius: 50%;
+    }
+
+    body::after {
+      width: 340px;
+      height: 340px;
+      right: -80px;
+      bottom: 60px;
+      background: rgba(32, 212, 255, 0.16);
+      border-radius: 50%;
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .checkout-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.025)),
+        rgba(6, 14, 30, 0.72);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .checkout-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(109, 124, 255, 0.12), transparent 26%),
+        linear-gradient(315deg, rgba(32, 212, 255, 0.07), transparent 30%);
+      pointer-events: none;
+    }
+
+    .hero {
+      position: relative;
+      padding: 36px 32px 28px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(135deg, rgba(109, 124, 255, 0.15), rgba(141, 92, 255, 0.08) 35%, rgba(32, 212, 255, 0.08) 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 0.95fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at top left, #9eb0ff, transparent 40%),
+        linear-gradient(135deg, #5868ff, #9a5eff);
+      box-shadow: 0 12px 28px rgba(88, 104, 255, 0.45);
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #c9d6ff;
+      opacity: 0.92;
+    }
+
+    .brand-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 3vw, 3.3rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      max-width: 720px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.65;
+      max-width: 700px;
+    }
+
+    .trust-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .trust-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      color: #dbe5ff;
+      font-size: 13px;
+      font-weight: 600;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-aside {
+      padding: 20px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      box-shadow: var(--shadow-md);
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .mini-stat {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-height: 86px;
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .mini-stat span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+
+    .checkout-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) 380px;
+      gap: 26px;
+      padding: 28px 28px 32px;
+      align-items: start;
+    }
+
+    .checkout-main {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .checkout-side {
+      position: relative;
+      min-width: 0;
+    }
+
+    .panel,
+    .summary-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, var(--surface), var(--surface-2));
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .panel::before,
+    .summary-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 18%);
+      pointer-events: none;
+    }
+
+    .panel-inner,
+    .summary-inner {
+      position: relative;
+      padding: 24px;
+    }
+
+    .panel-highlight {
+      background:
+        linear-gradient(180deg, rgba(18, 29, 60, 0.95), rgba(12, 22, 48, 0.96)),
+        linear-gradient(135deg, rgba(109,124,255,0.16), rgba(32,212,255,0.08));
+      border-color: rgba(109, 124, 255, 0.28);
+      box-shadow:
+        0 0 0 1px rgba(109, 124, 255, 0.08) inset,
+        0 20px 48px rgba(0, 0, 0, 0.30),
+        0 0 48px rgba(109, 124, 255, 0.12);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-heading h2,
+    .summary-title {
+      margin: 0;
+      font-size: 1.1rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #c7d4ff;
+    }
+
+    .section-copy {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      color: #d8e3ff;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      margin: 0 0 8px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #e6edff;
+      letter-spacing: 0.01em;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--input-border);
+      font: inherit;
+      color: var(--text);
+      background: var(--input-bg);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, transform 0.18s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    input::placeholder,
+    select::placeholder {
+      color: #8192b8;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(109,124,255,0.65);
+      background: rgba(255,255,255,0.08);
+      box-shadow:
+        0 0 0 4px rgba(109, 124, 255, 0.16),
+        0 8px 26px rgba(0, 0, 0, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .email-card {
+      display: grid;
+      grid-template-columns: 1.2fr auto;
+      gap: 16px;
+      align-items: end;
+    }
+
+    .email-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .value-lockup {
+      display: grid;
+      gap: 12px;
+    }
+
+    .value-chip {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      color: #dce6ff;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .demo-box {
+      margin-top: 8px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02));
+    }
+
+    .hint {
+      margin: 0 0 14px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       ONETRUST CONTAINER
+       KEEP THE SAME TARGET ID
+  ========================================================== */
+    #ot-container {
+      margin-top: 4px;
+      min-height: 40px;
+    }
+
+    /* =========================================================
+       OPTIONAL ONETRUST VISUAL CLEANUP / PREMIUM RESTYLING
+       Visual only — functional behavior remains unchanged
+  ========================================================== */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
+    }
+
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 14px !important;
+      line-height: 1.6 !important;
+      font-weight: 500 !important;
+      color: var(--muted) !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox {
+      margin-bottom: 12px !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      padding: 2px 0;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.24);
+      margin-top: 1px;
+      transition: all 0.16s ease;
+      background: rgba(255,255,255,0.03);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--primary);
+      background:
+        radial-gradient(circle at center, #ffffff 0 24%, transparent 26%),
+        linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 0 0 5px rgba(109,124,255,0.12);
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 4px rgba(109, 124, 255, 0.18);
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 13px !important;
+      margin-top: 6px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 22px !important;
+      padding: 15px 18px !important;
+      border-radius: 999px !important;
+      border: 1px solid rgba(255,255,255,0.12) !important;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2)) !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      font-size: 15px !important;
+      letter-spacing: 0.01em !important;
+      cursor: pointer !important;
+      box-shadow:
+        0 14px 32px rgba(72, 84, 214, 0.32),
+        inset 0 1px 0 rgba(255,255,255,0.18) !important;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease !important;
+    }
+
+    .ot-submit:hover {
+      transform: translateY(-1px) !important;
+      filter: brightness(1.03) !important;
+      box-shadow:
+        0 18px 38px rgba(72, 84, 214, 0.36),
+        inset 0 1px 0 rgba(255,255,255,0.22) !important;
+    }
+
+    .ot-submit:active {
+      transform: translateY(0) !important;
+    }
+
+    .summary-card {
+      position: sticky;
+      top: 22px;
+    }
+
+    .summary-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .plan-card {
+      padding: 18px;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(109,124,255,0.14), rgba(255,255,255,0.035));
+      border: 1px solid rgba(109,124,255,0.20);
+      margin-bottom: 16px;
+    }
+
+    .plan-overline {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 800;
+      color: #cad5ff;
+      margin-bottom: 8px;
+    }
+
+    .plan-title {
+      margin: 0 0 8px;
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .plan-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0 18px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 13px;
+      color: #deebff;
+    }
+
+    .summary-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      margin: 16px 0;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 8px 0;
+      color: #d8e2ff;
+      font-size: 14px;
+    }
+
+    .price-row.muted {
+      color: var(--muted);
+    }
+
+    .price-row.total {
+      padding-top: 14px;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .summary-foot {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .demo-disclaimer {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted-2);
+      line-height: 1.55;
+    }
+
+    .cta-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cta-emphasis {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-copy {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .cta-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 2px;
+    }
+
+    .cta-pill {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #dce7ff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      margin: 8px 0 2px;
+    }
+
+    @media (max-width: 1080px) {
+      .checkout-content {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-card {
+        position: static;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-aside {
+        max-width: 720px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 18px 12px 28px;
+      }
+
+      .checkout-shell {
+        border-radius: 24px;
+      }
+
+      .hero {
+        padding: 22px 18px 18px;
+      }
+
+      .checkout-content {
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .panel-inner,
+      .summary-inner {
+        padding: 18px;
+      }
+
+      .field-grid,
+      .email-card,
+      .mini-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <section class="checkout-shell">
+      <!-- =========================================================
+           A) HEADER / HERO CHECKOUT INTRO
+      ========================================================== -->
+      <header class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="brand-row">
+              <div class="brand-mark">S</div>
+              <div class="brand-copy">
+                <div class="eyebrow">Premium Streaming Checkout</div>
+                <div class="brand-name">StreamSphere</div>
+              </div>
+            </div>
+
+            <h1>Complete your subscription</h1>
+            <p>
+              You’re one step away from streaming. Review your details, confirm your preferences,
+              and finish setup in a fast, premium checkout experience.
+            </p>
+
+            <div class="trust-cluster">
+              <div class="trust-chip">Fast setup</div>
+              <div class="trust-chip">Secure consent flow</div>
+              <div class="trust-chip">Premium plan experience</div>
+            </div>
+          </div>
+
+          <aside class="hero-aside" aria-label="Checkout highlights">
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <strong>4K Ready</strong>
+                <span>High-quality streaming across your supported devices.</span>
+              </div>
+              <div class="mini-stat">
+                <strong>Flexible</strong>
+                <span>Simple plan overview and clear consent experience.</span>
+              </div>
+              <div class="mini-stat">
+                <strong>Trusted</strong>
+                <span>OneTrust embedded form still loads exactly as before.</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <div class="checkout-content">
+        <main class="checkout-main">
+          <!-- =========================================================
+               B) EMAIL SECTION (TOP PRIORITY PLACEMENT)
+               Keeps the original email field ID: #email
+          ========================================================== -->
+          <section class="panel panel-highlight">
+            <div class="panel-inner">
+              <div class="section-kicker">Account email</div>
+              <div class="section-heading">
+                <h2>Where should we send your subscription details?</h2>
+                <div class="badge">Top priority step</div>
+              </div>
+              <p class="section-copy">
+                Start with your email so your subscription, receipts, and updates are tied to the right account.
+              </p>
+
+              <div class="email-card">
+                <div class="field">
+                  <label for="email">Email</label>
+                  <!-- Keep this ID as requested -->
+                  <input id="email" type="email" placeholder="you@example.com" required />
+                  <div class="email-note">
+                    This preserves the original email field and validation behavior from your existing page.
+                  </div>
+                </div>
+
+                <div class="value-lockup" aria-hidden="true">
+                  <div class="value-chip">Faster account setup</div>
+                  <div class="value-chip">Subscription updates</div>
+                  <div class="value-chip">Receipts & consent records</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- =========================================================
+               C) OT FORM / CONSENT AREA
+               Same mount target (#ot-container)
+               Same automatic InstallCP() loading behavior
+               Moved near the start of the experience per requirement
+          ========================================================== -->
+          <section class="panel">
+            <div class="panel-inner">
+              <div class="section-kicker">Consent & preferences</div>
+              <div class="section-heading">
+                <h2>Review consent before completing checkout</h2>
+                <div class="badge">Loads automatically</div>
+              </div>
+              <p class="section-copy">
+                The OneTrust embedded form still mounts into the same target container and keeps the same initialization flow.
+              </p>
+
+              <div class="demo-box">
+                <p class="hint">
+                  This is the <strong>OneTrust target container</strong>. The form is still inserted here automatically via
+                  <strong>InstallCP()</strong> — only the visual presentation has changed.
+                </p>
+
+                <!-- IMPORTANT:
+                     OneTrust renders the consent form inside this div -->
+                <div id="ot-container"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- =========================================================
+               Existing HTML fields preserved (minus moved email field)
+          ========================================================== -->
+          <section class="panel">
+            <div class="panel-inner">
+              <div class="section-kicker">Profile details</div>
+              <div class="section-heading">
+                <h2>Complete your account details</h2>
+                <div class="badge">Existing fields preserved</div>
+              </div>
+              <p class="section-copy">
+                These are your original demo fields, reorganized into a cleaner checkout layout.
+              </p>
+
+              <div class="field-grid">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input id="name" type="text" placeholder="John Smith" />
+                </div>
+
+                <div class="field">
+                  <label for="nationality">Nationality</label>
+                  <input id="nationality" type="text" placeholder="Spanish" />
+                </div>
+
+                <div class="field">
+                  <label for="country">Country</label>
+                  <input id="country" type="text" placeholder="Spain" />
+                </div>
+
+                <div class="field">
+                  <label for="notes">Additional Notes</label>
+                  <input id="notes" type="text" placeholder="Extra attribute for the demo" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- =========================================================
+               E) PAYMENT SECTION
+               Demo/test values only
+               Purely presentational unless real payment logic exists elsewhere
+          ========================================================== -->
+          <section class="panel">
+            <div class="panel-inner">
+              <div class="section-kicker">Payment</div>
+              <div class="section-heading">
+                <h2>Card details</h2>
+                <div class="badge">Demo / test values only</div>
+              </div>
+              <p class="section-copy">
+                These fields are visually prefilled for demo convenience only. They do not introduce or replace real payment processing.
+              </p>
+
+              <div class="field-grid">
+                <div class="field full">
+                  <label for="cardholder-name">Cardholder Name</label>
+                  <input
+                    id="cardholder-name"
+                    type="text"
+                    value="Demo User"
+                    autocomplete="off"
+                    inputmode="text"
+                  />
+                </div>
+
+                <div class="field full">
+                  <label for="card-number">Card Number</label>
+                  <input
+                    id="card-number"
+                    type="text"
+                    value="4242 4242 4242 4242"
+                    autocomplete="off"
+                    inputmode="numeric"
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="card-expiry">Expiry</label>
+                  <input
+                    id="card-expiry"
+                    type="text"
+                    value="12/30"
+                    autocomplete="off"
+                    inputmode="numeric"
+                  />
+                </div>
+
+                <div class="field">
+                  <label for="card-cvv">CVV</label>
+                  <input
+                    id="card-cvv"
+                    type="password"
+                    value="123"
+                    autocomplete="off"
+                    inputmode="numeric"
+                  />
+                </div>
+              </div>
+
+              <div class="demo-disclaimer">
+                Demo values are shown only for workshop/test convenience. Do not use, store, or submit real payment details in this demo page.
+              </div>
+            </div>
+          </section>
+
+          <!-- =========================================================
+               F) CTA / COMPLETION AREA
+               The functional submit flow remains the OT-generated submit button.
+               This section reinforces completion without replacing the existing behavior.
+          ========================================================== -->
+          <section class="panel">
+            <div class="panel-inner cta-panel">
+              <div class="section-kicker">Complete checkout</div>
+              <p class="cta-emphasis">Review your details and confirm your subscription.</p>
+              <p class="cta-copy">
+                The primary functional submission flow remains the OneTrust-generated submit action inside the consent section above.
+                This preserves the existing behavior and avoids changing your current OneTrust form flow.
+              </p>
+
+              <div class="section-divider"></div>
+
+              <div class="cta-pill-row">
+                <div class="cta-pill">Premium checkout UI</div>
+                <div class="cta-pill">Consent flow preserved</div>
+                <div class="cta-pill">Demo-safe payment values</div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <!-- =========================================================
+             D) CART SUMMARY
+             Since the provided source does not include existing cart logic,
+             this is a premium summary panel / placeholder structure.
+             If real cart rendering exists elsewhere, keep its mapping and render into this area.
+        ========================================================== -->
+        <aside class="checkout-side">
+          <section class="summary-card">
+            <div class="summary-inner">
+              <div class="summary-topline">
+                <h2 class="summary-title">Your subscription</h2>
+                <div class="badge">Summary</div>
+              </div>
+
+              <div class="plan-card">
+                <div class="plan-overline">Featured plan</div>
+                <h3 class="plan-title">Premium Stream Pass</h3>
+                <p class="plan-copy">
+                  Stream movies, originals, and live content with a polished high-end checkout experience.
+                </p>
+              </div>
+
+              <!-- Optional cart hook:
+                   If you already have cart rendering logic elsewhere, mount or inject it into this block
+                   without changing the OneTrust behavior above. -->
+              <div id="cart-summary-slot">
+                <div class="feature-list">
+                  <div class="feature-item">
+                    <span>Monthly plan</span>
+                    <strong>€12.99</strong>
+                  </div>
+                  <div class="feature-item">
+                    <span>HD / 4K access</span>
+                    <strong>Included</strong>
+                  </div>
+                  <div class="feature-item">
+                    <span>Device access</span>
+                    <strong>Multi-device</strong>
+                  </div>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="price-row muted">
+                  <span>Plan subtotal</span>
+                  <span>€12.99</span>
+                </div>
+                <div class="price-row muted">
+                  <span>Fees</span>
+                  <span>€0.00</span>
+                </div>
+                <div class="price-row total">
+                  <span>Total due today</span>
+                  <span>€12.99</span>
+                </div>
+              </div>
+
+              <div class="summary-foot">
+                Replace this summary body with your live cart renderer/data mapping if available.
+                The layout is ready for a real cart without affecting the existing OneTrust form logic.
+              </div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================================================
+       4) PAGE JAVASCRIPT
+       KEEP ONETRUST BEHAVIOR INTACT
+       Same CP_ID
+       Same whenOTReady()
+       Same InstallCP() mount target: #ot-container
+  ========================================================== -->
+  <script>
+    /* The Consent Profile ID to load */
+    const CP_ID = "4b181d4b-c8f9-422d-ace7-f83010301ddc";
+
+    /* Wait until the OneTrust library is fully available */
+    function whenOTReady(callback) {
+      const timer = setInterval(() => {
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          callback();
+        }
+      }, 80);
+    }
+
+    /* When the page is ready, load the OneTrust form automatically */
+    window.addEventListener("DOMContentLoaded", () => {
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+``
