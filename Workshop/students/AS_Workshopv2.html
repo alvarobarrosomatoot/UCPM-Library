@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Candy Store Consent Checkout</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED SCRIPTS
+       Preserved exactly to keep the OneTrust embedded form working.
+  ========================================================== -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="a2dbcc96-e124-4932-9601-cc04f0bd2681"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <style>
+    :root {
+      --bg-top: #fff4fb;
+      --bg-bottom: #ffe0f3;
+      --card: rgba(255, 255, 255, 0.88);
+      --card-strong: #ffffff;
+      --text: #5c2454;
+      --muted: #8a5f84;
+      --primary: #ff4fb0;
+      --primary-dark: #e43797;
+      --secondary: #ff87d0;
+      --accent: #ffd6f4;
+      --rainbow-1: #ff85c8;
+      --rainbow-2: #ffb3e6;
+      --rainbow-3: #ffd166;
+      --rainbow-4: #8be9fd;
+      --rainbow-5: #c4a5ff;
+      --mint: #dffdf3;
+      --border: #f4b6dc;
+      --danger: #d9534f;
+      --success: #3aa76d;
+      --radius-xl: 26px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --shadow-soft: 0 14px 40px rgba(255, 79, 176, 0.18);
+      --shadow-card: 0 10px 24px rgba(173, 74, 131, 0.12);
+      --font: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 28px 16px 56px;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.95) 0, rgba(255,255,255,0.55) 24%, transparent 45%),
+        radial-gradient(circle at top right, rgba(255,214,244,0.95) 0, rgba(255,214,244,0.35) 20%, transparent 42%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+      display: flex;
+      justify-content: center;
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 1120px;
+      position: relative;
+    }
+
+    .sparkle,
+    .sparkle::before,
+    .sparkle::after {
+      position: absolute;
+      content: "";
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.65;
+      filter: blur(0.4px);
+    }
+
+    .sparkle.one {
+      top: 24px;
+      right: 70px;
+      width: 18px;
+      height: 18px;
+      background: radial-gradient(circle, #fff 0 30%, #ffd166 35% 62%, transparent 63%);
+    }
+
+    .sparkle.two {
+      top: 140px;
+      left: 24px;
+      width: 22px;
+      height: 22px;
+      background: radial-gradient(circle, #fff 0 30%, #8be9fd 35% 62%, transparent 63%);
+    }
+
+    .sparkle.three {
+      bottom: 40px;
+      right: 24px;
+      width: 24px;
+      height: 24px;
+      background: radial-gradient(circle, #fff 0 30%, #c4a5ff 35% 62%, transparent 63%);
+    }
+
+    .checkout-card {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.84) 100%);
+      border: 1px solid rgba(255, 182, 220, 0.7);
+      border-radius: 32px;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+      padding: 24px;
+    }
+
+    .checkout-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 10px;
+      background: linear-gradient(
+        90deg,
+        var(--rainbow-1) 0%,
+        var(--rainbow-2) 22%,
+        var(--rainbow-3) 44%,
+        var(--rainbow-4) 66%,
+        var(--rainbow-5) 100%
+      );
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 18px 22px;
+      margin-bottom: 22px;
+      background:
+        linear-gradient(135deg, rgba(255, 134, 208, 0.18), rgba(255, 255, 255, 0.65)),
+        linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.55));
+      border: 1px solid rgba(255, 182, 220, 0.85);
+      border-radius: 24px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    }
+
+    .hero-copy {
+      min-width: 260px;
+      flex: 1 1 420px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255, 182, 220, 0.8);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .eyebrow .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+      box-shadow: 0 0 0 5px rgba(255, 79, 176, 0.14);
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #8a1d68;
+    }
+
+    .sub {
+      margin: 0;
+      max-width: 650px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .hero-badges {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(110px, 1fr));
+      gap: 12px;
+      flex: 1 1 280px;
+      min-width: 280px;
+    }
+
+    .badge {
+      padding: 14px 12px;
+      border-radius: 18px;
+      background: var(--card-strong);
+      border: 1px solid rgba(255, 182, 220, 0.8);
+      text-align: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    .badge .icon {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .badge strong {
+      display: block;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .badge span {
+      display: block;
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .main-column,
+    .side-column {
+      display: grid;
+      gap: 20px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid rgba(255, 182, 220, 0.72);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      padding: 20px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .panel-title-wrap {
+      min-width: 0;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      color: #8a1d68;
+    }
+
+    .panel-subtitle {
+      margin: 6px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .pill {
+      white-space: nowrap;
+      align-self: flex-start;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      background: linear-gradient(180deg, #fff, #ffe7f6);
+      border: 1px solid rgba(255, 182, 220, 0.8);
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #7a3a6a;
+    }
+
+    input,
+    select {
+      width: 100%;
+      appearance: none;
+      border: 1px solid rgba(243, 172, 214, 0.95);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.92);
+      padding: 13px 14px;
+      font: inherit;
+      color: var(--text);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    input::placeholder {
+      color: #b784a8;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255, 79, 176, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .field-note {
+      margin: 6px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .email-banner {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border-radius: 22px;
+      background:
+        linear-gradient(135deg, rgba(255, 224, 243, 0.95), rgba(255, 255, 255, 0.9)),
+        linear-gradient(90deg, rgba(255, 179, 230, 0.25), rgba(139, 233, 253, 0.18));
+      border: 1px solid rgba(255, 182, 220, 0.85);
+    }
+
+    .email-banner-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      font-size: 15px;
+      font-weight: 800;
+      color: #97276f;
+    }
+
+    .email-banner-title .emoji {
+      font-size: 20px;
+    }
+
+    .cart-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,245,251,0.9));
+      border: 1px solid rgba(255, 190, 225, 0.8);
+    }
+
+    .product-image {
+      width: 88px;
+      height: 88px;
+      object-fit: cover;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(255, 182, 220, 0.9);
+      box-shadow: 0 8px 18px rgba(255, 121, 198, 0.12);
+    }
+
+    .product-info h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      color: #7d1f62;
+    }
+
+    .product-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .product-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(255, 182, 220, 0.75);
+      font-size: 12px;
+      color: #91507f;
+      font-weight: 700;
+    }
+
+    .product-price {
+      text-align: right;
+      min-width: 86px;
+    }
+
+    .product-price .unit {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .product-price .subtotal {
+      display: block;
+      font-size: 18px;
+      font-weight: 800;
+      color: #8a1d68;
+    }
+
+    .summary-box {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,240,249,0.92));
+      border: 1px solid rgba(255, 182, 220, 0.82);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .summary-row.total {
+      margin-top: 8px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(218, 122, 181, 0.35);
+      font-size: 18px;
+      font-weight: 800;
+      color: #8a1d68;
+    }
+
+    .card-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .card-type {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid rgba(255, 182, 220, 0.8);
+      font-size: 12px;
+      font-weight: 700;
+      color: #9a477d;
+    }
+
+    .secure-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(223, 253, 243, 0.72);
+      border: 1px solid rgba(100, 205, 152, 0.25);
+      font-size: 13px;
+      color: #39775a;
+    }
+
+    .mini-note {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .consent-shell {
+      position: sticky;
+      top: 20px;
+    }
+
+    .consent-panel {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,244,251,0.93));
+    }
+
+    .consent-panel::after {
+      content: "🦄";
+      position: absolute;
+      right: 16px;
+      top: 14px;
+      font-size: 28px;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .consent-banner {
+      margin-top: 8px;
+      padding: 14px;
+      border-radius: 18px;
+      background:
+        linear-gradient(90deg, rgba(255, 133, 200, 0.18), rgba(255, 209, 102, 0.16), rgba(139, 233, 253, 0.18));
+      border: 1px solid rgba(255, 182, 220, 0.8);
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    /* =========================================================
+       ONETRUST CONTAINER
+       Kept with same ID to preserve rendering target.
+    ========================================================== */
+    #ot-container {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.88);
+      border: 1px dashed rgba(255, 182, 220, 0.95);
+      min-height: 110px;
+    }
+
+    /* =========================================================
+       ONETRUST VISUAL CLEANUP / PINK THEME
+       Functional behavior remains unchanged.
+    ========================================================== */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
+    }
+
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 14px !important;
+      line-height: 1.55 !important;
+      font-weight: 500 !important;
+      color: var(--muted) !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      position: relative;
+      padding: 2px 0;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 999px;
+      border: 2px solid rgba(243, 172, 214, 0.95);
+      margin-top: 1px;
+      background: linear-gradient(180deg, #fff, #fff7fb);
+      transition: all 0.16s ease;
+      box-shadow: 0 2px 7px rgba(255, 79, 176, 0.08);
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--primary);
+      background:
+        radial-gradient(circle at center, var(--primary) 0 42%, transparent 44%),
+        linear-gradient(180deg, #fff, #fff7fb);
+      box-shadow: 0 0 0 4px rgba(255, 79, 176, 0.10);
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 4px rgba(255, 79, 176, 0.18);
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 13px !important;
+      margin-top: 4px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 18px !important;
+      padding: 14px 16px !important;
+      border-radius: 16px !important;
+      border: 1px solid rgba(255, 182, 220, 0.95) !important;
+      background: linear-gradient(180deg, #ff78c0, #ff4fb0) !important;
+      color: #ffffff !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.01em !important;
+      cursor: pointer !important;
+      box-shadow: 0 12px 24px rgba(255, 79, 176, 0.22) !important;
+    }
+
+    .ot-submit:hover {
+      background: linear-gradient(180deg, #ff87c8, #ff58b5) !important;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .consent-shell {
+        position: static;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .checkout-card {
+        padding: 18px;
+        border-radius: 26px;
+      }
+
+      .hero {
+        padding: 16px;
+      }
+
+      .hero-badges {
+        grid-template-columns: 1fr;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-item {
+        grid-template-columns: 72px 1fr;
+      }
+
+      .product-price {
+        grid-column: 2;
+        text-align: left;
+      }
+
+      .product-image {
+        width: 72px;
+        height: 72px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <span class="sparkle one" aria-hidden="true"></span>
+    <span class="sparkle two" aria-hidden="true"></span>
+    <span class="sparkle three" aria-hidden="true"></span>
+
+    <section class="checkout-card" aria-label="Candy store checkout page">
+      <header class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="dot" aria-hidden="true"></span>
+            Candy Store Consent Checkout
+          </div>
+          <h1>Sweet treats, dreamy checkout, instant consent ✨</h1>
+          <p class="sub">
+            This checkout page keeps the OneTrust embedded form behavior intact while transforming the layout
+            into a pink-first candy store experience with product visuals, a prominent email section, and
+            pre-filled payment details for easy demos.
+          </p>
+        </div>
+
+        <div class="hero-badges" aria-label="Checkout highlights">
+          <div class="badge">
+            <span class="icon" aria-hidden="true">🌈</span>
+            <strong>Rainbow aesthetic</strong>
+            <span>Playful, polished, pink-first</span>
+          </div>
+          <div class="badge">
+            <span class="icon" aria-hidden="true">🦄</span>
+            <strong>Consent still loads</strong>
+            <span>OneTrust auto-renders on load</span>
+          </div>
+          <div class="badge">
+            <span class="icon" aria-hidden="true">🍭</span>
+            <strong>Checkout-ready</strong>
+            <span>Email, cart, and payment fields</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="layout">
+        <!-- LEFT COLUMN -->
+        <div class="main-column">
+          <!-- EMAIL SECTION -->
+          <section class="panel" aria-labelledby="email-section-title">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2 class="panel-title" id="email-section-title">1. Sweet shopper details</h2>
+                <p class="panel-subtitle">
+                  Start with the customer email at the top, as requested. The <strong>email field keeps the same ID</strong>
+                  so any logic tied to <code>#email</code> remains safe.
+                </p>
+              </div>
+              <div class="pill">Top section</div>
+            </div>
+
+            <div class="email-banner">
+              <p class="email-banner-title">
+                <span class="emoji" aria-hidden="true">💌</span>
+                Enter the email before checkout and consent
+              </p>
+
+              <div class="field-grid">
+                <div class="field full">
+                  <label for="email">Email</label>
+                  <!-- IMPORTANT: ID preserved -->
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="sweet.customer@example.com"
+                    value="sweet.customer@example.com"
+                    required
+                    autocomplete="email"
+                    aria-describedby="email-help"
+                  />
+                  <p class="field-note" id="email-help">
+                    This remains the primary email field and is intentionally placed at the top of the page.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- CART SECTION -->
+          <section class="panel" aria-labelledby="cart-section-title">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2 class="panel-title" id="cart-section-title">2. Candy cart</h2>
+                <p class="panel-subtitle">
+                  Products are shown with images, quantities, pricing, and subtotals to create a true checkout feel.
+                </p>
+              </div>
+              <div class="pill">Cart preview</div>
+            </div>
+
+            <div id="cart-items" class="cart-list" aria-live="polite"></div>
+
+            <div class="summary-box" aria-label="Order summary">
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <strong id="summary-subtotal">€0.00</strong>
+              </div>
+              <div class="summary-row">
+                <span>Sprinkle shipping</span>
+                <strong>€4.95</strong>
+              </div>
+              <div class="summary-row">
+                <span>Magic handling</span>
+                <strong>€1.50</strong>
+              </div>
+              <div class="summary-row total">
+                <span>Total</span>
+                <strong id="summary-total">€0.00</strong>
+              </div>
+            </div>
+          </section>
+
+          <!-- PAYMENT SECTION -->
+          <section class="panel" aria-labelledby="payment-section-title">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2 class="panel-title" id="payment-section-title">3. Payment details</h2>
+                <p class="panel-subtitle">
+                  Card fields are pre-filled for demo convenience but remain editable. No checkout submission logic was added
+                  that could interfere with existing consent behavior.
+                </p>
+              </div>
+              <div class="pill">Pre-filled demo data</div>
+            </div>
+
+            <div class="card-strip" aria-label="Accepted card types">
+              <span class="card-type">Visa</span>
+              <span class="card-type">Mastercard</span>
+              <span class="card-type">Amex</span>
+              <span class="card-type">Demo mode</span>
+            </div>
+
+            <div class="field-grid">
+              <div class="field full">
+                <label for="cardholder-name">Name on card</label>
+                <input
+                  id="cardholder-name"
+                  type="text"
+                  value="Candy Customer"
+                  autocomplete="cc-name"
+                />
+              </div>
+
+              <div class="field full">
+                <label for="card-number">Card number</label>
+                <input
+                  id="card-number"
+                  type="text"
+                  inputmode="numeric"
+                  value="4242 4242 4242 4242"
+                  autocomplete="cc-number"
+                />
+              </div>
+
+              <div class="field">
+                <label for="expiry-date">Expiry date</label>
+                <input
+                  id="expiry-date"
+                  type="text"
+                  value="12/28"
+                  autocomplete="cc-exp"
+                />
+              </div>
+
+              <div class="field">
+                <label for="cvv">Security code</label>
+                <input
+                  id="cvv"
+                  type="text"
+                  inputmode="numeric"
+                  value="123"
+                  autocomplete="cc-csc"
+                />
+              </div>
+
+              <div class="field full">
+                <label for="billing-country">Billing country</label>
+                <input
+                  id="billing-country"
+                  type="text"
+                  value="Spain"
+                  autocomplete="country-name"
+                />
+              </div>
+            </div>
+
+            <div class="secure-note" role="note" aria-label="Demo payment note">
+              <span aria-hidden="true">🔒</span>
+              <span>
+                Demo payment details are pre-filled for repeated testing and can be edited anytime.
+              </span>
+            </div>
+
+            <p class="mini-note">
+              These payment inputs are visual/demo elements only and do not replace or alter your existing consent collection logic.
+            </p>
+          </section>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <aside class="side-column consent-shell">
+          <section class="panel consent-panel" aria-labelledby="consent-section-title">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2 class="panel-title" id="consent-section-title">4. Consent magic</h2>
+                <p class="panel-subtitle">
+                  The OneTrust embedded form still loads automatically on page start using the same
+                  <code>InstallCP()</code> behavior and the same target container.
+                </p>
+              </div>
+              <div class="pill">Auto-load preserved</div>
+            </div>
+
+            <div class="consent-banner">
+              This panel keeps the original embedded consent workflow intact. The OneTrust form is mounted into the
+              same target container below as soon as the page is ready — no click required.
+            </div>
+
+            <!-- IMPORTANT:
+                 OneTrust renders the consent form inside this div.
+                 ID preserved exactly as before.
+            -->
+            <div id="ot-container" aria-live="polite"></div>
+
+            <p class="footer-note">
+              Pink styling has been applied to the OneTrust area for visual consistency only.
+              Functional consent behavior is unchanged.
+            </p>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    /* =========================================================
+       4) PAGE JAVASCRIPT
+       Preserves OneTrust loading behavior and adds non-invasive
+       demo cart rendering for the candy store UI.
+    ========================================================== */
+
+    /* The Consent Profile ID to load */
+    const CP_ID = "21b68ad5-1abd-454a-b889-2a8beb83615c";
+
+    /* Demo cart items for the checkout layout */
+    const cartItems = [
+      {
+        name: "Strawberry Swirl Lollipop",
+        quantity: 2,
+        price: 4.50,
+        badge: "Best seller",
+        image:
+          'data:image/svg+xml;utf8,' +
+          encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+              <defs>
+                <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#fff6fb"/>
+                  <stop offset="100%" stop-color="#ffe0f3"/>
+                </linearGradient>
+              </defs>
+              <rect width="120" height="120" rx="24" fill="url(#bg)"/>
+              <rect x="56" y="52" width="8" height="46" rx="4" fill="#d9b8c9"/>
+              <circle cx="60" cy="44" r="26" fill="#ff7ec8"/>
+              <circle cx="60" cy="44" r="19" fill="none" stroke="#ffd4ec" stroke-width="6"/>
+              <circle cx="60" cy="44" r="10" fill="none" stroke="#fff" stroke-width="5"/>
+              <circle cx="78" cy="28" r="6" fill="#ffd166"/>
+            </svg>
+          `)
+      },
+      {
+        name: "Unicorn Cupcake Box",
+        quantity: 1,
+        price: 8.90,
+        badge: "Sparkly pick",
+        image:
+          'data:image/svg+xml;utf8,' +
+          encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+              <defs>
+                <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#fff9fd"/>
+                  <stop offset="100%" stop-color="#ffe8f7"/>
+                </linearGradient>
+                <linearGradient id="frosting" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffb3e6"/>
+                  <stop offset="100%" stop-color="#ff78c0"/>
+                </linearGradient>
+              </defs>
+              <rect width="120" height="120" rx="24" fill="url(#bg2)"/>
+              <path d="M35 68h50l-6 24H41z" fill="#ffd166"/>
+              <path d="M38 69c0-14 9-22 22-22 9 0 14 3 18 10 2-4 6-6 10-6 6 0 12 5 12 14 0 2 0 3-1 4H38z" fill="url(#frosting)"/>
+              <path d="M60 30l5 14h-10z" fill="#c4a5ff"/>
+              <circle cx="52" cy="58" r="3.5" fill="#8be9fd"/>
+              <circle cx="66" cy="54" r="3.5" fill="#fff"/>
+              <circle cx="76" cy="60" r="3.5" fill="#ffd166"/>
+            </svg>
+          `)
+      },
+      {
+        name: "Rainbow Gummies Pack",
+        quantity: 3,
+        price: 3.20,
+        badge: "Party favorite",
+        image:
+          'data:image/svg+xml;utf8,' +
+          encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+              <defs>
+                <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#fff6fb"/>
+                  <stop offset="100%" stop-color="#ffe5f6"/>
+                </linearGradient>
+              </defs>
+              <rect width="120" height="120" rx="24" fill="url(#bg3)"/>
+              <path d="M25 74a34 34 0 0 1 68 0" fill="none" stroke="#ff85c8" stroke-width="8" stroke-linecap="round"/>
+              <path d="M31 74a28 28 0 0 1 56 0" fill="none" stroke="#ffd166" stroke-width="8" stroke-linecap="round"/>
+              <path d="M37 74a22 22 0 0 1 44 0" fill="none" stroke="#8be9fd" stroke-width="8" stroke-linecap="round"/>
+              <circle cx="44" cy="82" r="7" fill="#ffb3e6"/>
+              <circle cx="60" cy="86" r="7" fill="#c4a5ff"/>
+              <circle cx="76" cy="82" r="7" fill="#8be9fd"/>
+            </svg>
+          `)
+      }
+    ];
+
+    function formatEuro(amount) {
+      return new Intl.NumberFormat("en-IE", {
+        style: "currency",
+        currency: "EUR"
+      }).format(amount);
+    }
+
+    function renderCart() {
+      const cartContainer = document.getElementById("cart-items");
+      const subtotalEl = document.getElementById("summary-subtotal");
+      const totalEl = document.getElementById("summary-total");
+
+      if (!cartContainer || !subtotalEl || !totalEl) return;
+
+      const itemsMarkup = cartItems.map((item) => {
+        const itemSubtotal = item.quantity * item.price;
+
+        return `
+          <article class="cart-item">
+            <img
+              class="product-image"
+              src="${item.image}"
+              alt="${item.name}"
+              loading="lazy"
+              width="88"
+              height="88"
+            />
+            <div class="product-info">
+              <h3>${item.name}</h3>
+              <div class="product-meta">
+                <span class="product-chip">Qty: ${item.quantity}</span>
+                <span class="product-chip">Unit: ${formatEuro(item.price)}</span>
+                <span class="product-chip">${item.badge}</span>
+              </div>
+            </div>
+            <div class="product-price">
+              <span class="unit">Subtotal</span>
+              <span class="subtotal">${formatEuro(itemSubtotal)}</span>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      const subtotal = cartItems.reduce((sum, item) => sum + item.quantity * item.price, 0);
+      const total = subtotal + 4.95 + 1.50;
+
+      cartContainer.innerHTML = itemsMarkup;
+      subtotalEl.textContent = formatEuro(subtotal);
+      totalEl.textContent = formatEuro(total);
+    }
+
+    /* Wait until the OneTrust library is fully available */
+    function whenOTReady(callback) {
+      const timer = setInterval(() => {
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          callback();
+        }
+      }, 80);
+    }
+
+    /* Load demo cart + OneTrust automatically when the page is ready */
+    window.addEventListener("DOMContentLoaded", () => {
+      renderCart();
+
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+``
