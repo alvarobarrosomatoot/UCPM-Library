@@ -1,95 +1,328 @@
-<!-- Description: Simple demo page for a OneTrust Embedded Form workshop (basic HTML attributes are displayed at the top for training purposes, and the consent form is loaded automatically at the bottom using InstallCP so users can clearly identify the key OneTrust elements). -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>OneTrust Embedded Form Demo</title>
+  <title>Jewelry Store Checkout | OneTrust Embedded Form Demo</title>
 
   <!-- =========================================================
        1) ONETRUST REQUIRED SCRIPTS
-       These scripts are required for the embedded OneTrust form.
-       For workshop purposes:
-       - Leave this section as-is
-       - Think of it as the "OneTrust loader"
-       - Make sure to replace with your own ID's (from your trial environment)
+       Keep this section as-is so the embedded OneTrust form
+       continues working exactly like before.
   ========================================================== -->
 
-  <!-- Required OneTrust bootstrap -->
   <script>
     window.OtSdk = window.OtSdk || function () {
       (OtSdk.q = OtSdk.q || []).push(arguments);
     };
   </script>
 
-  <!-- OneTrust embedded form library -->
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
     data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
     worker="https://consent-api.onetrust.com"
   ></script>
 
-  <!-- =========================================================
-       2) PAGE STYLES
-       This section only controls how the page looks.
-       It does NOT load the OneTrust form.
-  ========================================================== -->
   <style>
     :root {
-      --bg: #f4f6f8;
-      --card: #ffffff;
-      --text: #111;
-      --muted: #666;
-      --primary: #2563eb;
-      --border: #e5e7eb;
-      --danger: #d9534f;
-      --radius: 12px;
-      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --bg: #0b0a09;
+      --bg-soft: #141210;
+      --panel: rgba(255, 255, 255, 0.05);
+      --panel-strong: rgba(255, 255, 255, 0.08);
+      --card: #15120f;
+      --card-2: #1c1814;
+      --text: #f6f1ea;
+      --muted: #c4b8aa;
+      --subtle: #9c8f80;
+      --gold: #d8b36a;
+      --gold-soft: #f3dfb6;
+      --line: rgba(255, 255, 255, 0.12);
+      --line-strong: rgba(216, 179, 106, 0.32);
+      --danger: #ff7d7d;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      padding: 40px 16px;
-      background: var(--bg);
+      min-height: 100vh;
       color: var(--text);
       font-family: var(--font);
-      display: flex;
-      justify-content: center;
+      background:
+        radial-gradient(circle at top left, rgba(216, 179, 106, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.06), transparent 24%),
+        linear-gradient(180deg, #0a0908 0%, #12100e 48%, #0b0a09 100%);
+      padding: 28px 16px 40px;
     }
 
-    .card {
+    .shell {
       width: 100%;
-      max-width: 720px;
-      background: var(--card);
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      max-width: 1240px;
+      margin: 0 auto;
     }
 
-    h1 {
-      margin: 0 0 8px;
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)),
+        linear-gradient(180deg, rgba(216,179,106,0.08), rgba(255,255,255,0.02));
+      box-shadow: var(--shadow);
+      padding: 28px;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+      opacity: 0.5;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #1c1408;
+      background: radial-gradient(circle at 30% 30%, #fff0cd, var(--gold));
+      box-shadow: 0 12px 30px rgba(216, 179, 106, 0.26);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-copy h1 {
+      margin: 0;
       font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-copy p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .secure-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: rgba(216, 179, 106, 0.08);
+      color: var(--gold-soft);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .secure-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 16px rgba(216, 179, 106, 0.65);
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .intro-copy {
+      padding: 12px 4px 4px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--gold-soft);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .intro-copy h2 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    .intro-copy p {
+      margin: 0;
+      max-width: 64ch;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .order-glance {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      padding: 18px;
+    }
+
+    .order-glance-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .order-glance-title strong {
+      font-size: 15px;
+      letter-spacing: 0.02em;
+    }
+
+    .glance-total {
+      color: var(--gold-soft);
+      font-size: 20px;
       font-weight: 800;
     }
 
-    .sub {
-      margin: 0 0 24px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
+    .glance-mini {
+      display: grid;
+      gap: 12px;
     }
 
-    .section-title {
-      margin: 24px 0 10px;
+    .mini-item {
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .mini-thumb,
+    .product-thumb {
+      overflow: hidden;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2c241d 0%, #15110d 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      place-items: center;
+    }
+
+    .mini-thumb {
+      width: 52px;
+      height: 52px;
+    }
+
+    .mini-copy strong,
+    .product-copy strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .mini-copy span,
+    .product-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .mini-price,
+    .product-price {
       font-size: 14px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      color: var(--gold-soft);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      padding: 22px;
+      backdrop-filter: blur(10px);
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .panel-title h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .panel-title p {
+      margin: 4px 0 0;
       color: var(--muted);
+      font-size: 13px;
+    }
+
+    .section-badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line-strong);
+      color: var(--gold-soft);
+      background: rgba(216, 179, 106, 0.08);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .field-grid {
@@ -101,6 +334,7 @@
     .field {
       display: flex;
       flex-direction: column;
+      gap: 8px;
     }
 
     .field.full {
@@ -108,57 +342,96 @@
     }
 
     label {
-      margin: 0 0 6px;
-      font-weight: 600;
-      font-size: 14px;
+      font-size: 13px;
+      color: var(--gold-soft);
+      font-weight: 700;
+      letter-spacing: 0.01em;
     }
 
     input,
     select {
       width: 100%;
-      padding: 12px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 14px 14px;
       font: inherit;
-      background: #fff;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    input::placeholder,
+    select::placeholder {
+      color: #9b8f82;
     }
 
     input:focus,
     select:focus {
       outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(216, 179, 106, 0.14);
+      background: rgba(255,255,255,0.08);
     }
 
-    .hint {
+    .email-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: end;
+    }
+
+    .email-note {
       margin-top: 10px;
-      font-size: 13px;
       color: var(--muted);
-      line-height: 1.5;
+      font-size: 13px;
+      line-height: 1.6;
     }
 
-    .demo-box {
-      margin-top: 8px;
-      padding: 16px;
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      background: #fafafa;
+    .micro-card {
+      min-width: 150px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line-strong);
+      background: linear-gradient(180deg, rgba(216,179,106,0.12), rgba(216,179,106,0.05));
+      text-align: left;
     }
 
-    /* =========================================================
-       ONETRUST CONTAINER
-       This is where OneTrust will render the consent form.
-       The JS will target this exact element.
-  ========================================================== */
+    .micro-card strong {
+      display: block;
+      color: var(--gold-soft);
+      font-size: 13px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .micro-card span {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .ot-wrap {
+      border-radius: 18px;
+      padding: 18px;
+      border: 1px solid rgba(216, 179, 106, 0.16);
+      background:
+        linear-gradient(180deg, rgba(216,179,106,0.08), rgba(255,255,255,0.03));
+    }
+
+    .ot-info {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* OneTrust target container */
     #ot-container {
-      margin-top: 18px;
+      margin-top: 8px;
     }
 
-    /* =========================================================
-       OPTIONAL ONETRUST VISUAL CLEANUP
-       These styles make the OneTrust form look simpler for demos.
-       They do not change the functional behavior.
-  ========================================================== */
+    /* Optional OneTrust visual cleanup - functionality preserved */
     .ot-consent-inline,
     .otwf-content,
     .ot-form,
@@ -176,7 +449,7 @@
     #ot-container label,
     #ot-container span.ot-label {
       font-size: 14px !important;
-      line-height: 1.5 !important;
+      line-height: 1.6 !important;
       font-weight: 400 !important;
       color: var(--muted) !important;
     }
@@ -201,19 +474,20 @@
       height: 18px;
       min-width: 18px;
       border-radius: 50%;
-      border: 2px solid var(--border);
+      border: 2px solid rgba(255,255,255,0.22);
       margin-top: 2px;
       transition: all 0.15s ease;
-      background: #fff;
+      background: rgba(255,255,255,0.04);
     }
 
     #ot-container input[type="checkbox"]:checked + label::before {
-      border-color: var(--primary);
-      background: radial-gradient(circle at center, var(--primary) 45%, transparent 47%);
+      border-color: var(--gold);
+      background: radial-gradient(circle at center, var(--gold) 45%, transparent 47%);
+      box-shadow: 0 0 0 4px rgba(216, 179, 106, 0.12);
     }
 
     #ot-container input[type="checkbox"]:focus + label::before {
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      box-shadow: 0 0 0 4px rgba(216, 179, 106, 0.16);
     }
 
     .ot-error {
@@ -224,96 +498,713 @@
 
     .ot-submit {
       width: 100% !important;
-      margin-top: 16px !important;
-      padding: 14px !important;
-      border-radius: var(--radius) !important;
-      border: 1px solid var(--border) !important;
-      background: #fff !important;
-      color: var(--text) !important;
-      font-weight: 700 !important;
+      margin-top: 18px !important;
+      padding: 14px 16px !important;
+      border-radius: 14px !important;
+      border: 1px solid rgba(216, 179, 106, 0.4) !important;
+      background: linear-gradient(180deg, #ecd8aa, #d8b36a) !important;
+      color: #24190c !important;
+      font-weight: 800 !important;
       cursor: pointer !important;
+      letter-spacing: 0.01em !important;
+      box-shadow: 0 10px 24px rgba(216, 179, 106, 0.22) !important;
     }
 
     .ot-submit:hover {
-      background: #f9f9f9 !important;
+      filter: brightness(1.02);
     }
 
-    @media (max-width: 640px) {
-      .field-grid {
+    .products {
+      display: grid;
+      gap: 14px;
+    }
+
+    .product {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      gap: 14px;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.035);
+      padding: 12px;
+    }
+
+    .product-thumb {
+      width: 88px;
+      height: 88px;
+    }
+
+    .product-copy small {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      color: var(--subtle);
+      font-size: 12px;
+    }
+
+    .product-copy small::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .qty-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(216, 179, 106, 0.22);
+      color: var(--gold-soft);
+      background: rgba(216, 179, 106, 0.08);
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    .price-column {
+      text-align: right;
+    }
+
+    .price-column .product-price {
+      font-size: 16px;
+    }
+
+    .summary-lines {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .summary-line,
+    .summary-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .summary-line span:first-child {
+      color: var(--muted);
+    }
+
+    .summary-total {
+      margin-top: 6px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--gold-soft);
+    }
+
+    .card-preview {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+      min-height: 205px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.14), transparent 24%),
+        radial-gradient(circle at bottom left, rgba(216,179,106,0.18), transparent 28%),
+        linear-gradient(135deg, #21180f 0%, #11100f 42%, #1a1714 100%);
+      padding: 20px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .card-chip {
+      width: 42px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #f5ddb2, #c69c52);
+      margin-bottom: 28px;
+    }
+
+    .card-type {
+      position: absolute;
+      right: 20px;
+      top: 18px;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .card-number {
+      margin: 0 0 20px;
+      font-size: clamp(22px, 3.4vw, 30px);
+      letter-spacing: 0.16em;
+      font-weight: 800;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .card-meta strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 14px;
+      letter-spacing: 0.03em;
+      text-transform: none;
+      color: var(--text);
+    }
+
+    .payment-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .checkout-actions {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .primary-btn,
+    .secondary-note {
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .primary-btn {
+      border: 1px solid rgba(216, 179, 106, 0.4);
+      background: linear-gradient(180deg, #ecd8aa, #d8b36a);
+      color: #24190c;
+      box-shadow: 0 10px 24px rgba(216, 179, 106, 0.22);
+    }
+
+    .secondary-note {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .trust-points {
+      display: grid;
+      gap: 12px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .trust-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: #22170b;
+      background: linear-gradient(180deg, #f4e2ba, #d8b36a);
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .trust-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .trust-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    svg {
+      display: block;
+    }
+
+    @media (max-width: 980px) {
+      .intro,
+      .layout {
         grid-template-columns: 1fr;
+      }
+
+      .order-glance {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 16px 12px 28px;
+      }
+
+      .hero {
+        padding: 18px;
+        border-radius: 24px;
+      }
+
+      .brand-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .field-grid,
+      .email-row {
+        grid-template-columns: 1fr;
+      }
+
+      .product {
+        grid-template-columns: 72px 1fr;
+      }
+
+      .price-column {
+        grid-column: 2;
+        text-align: left;
+      }
+
+      .product-thumb {
+        width: 72px;
+        height: 72px;
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- =========================================================
-       3) PAGE HTML
-       This is the visible page content.
-       We show:
-       - Simple HTML fields first
-       - The OneTrust container at the bottom
-  ========================================================== -->
-  <section class="card">
-    <h1>Embedded Form Demo</h1>
-    <p class="sub">
-      This page shows standard HTML fields first and the OneTrust embedded consent form underneath.
-    </p>
+  <div class="shell">
+    <section class="hero">
+      <div class="brand-row">
+        <div class="brand">
+          <div class="brand-mark">A</div>
+          <div class="brand-copy">
+            <h1>Auréline Fine Jewelry</h1>
+            <p>Luxury checkout experience with embedded consent collection</p>
+          </div>
+        </div>
 
-    <!-- Standard HTML fields -->
-    <div class="section-title">Example HTML Fields</div>
-
-    <div class="field-grid">
-      <div class="field">
-        <label for="name">Name</label>
-        <input id="name" type="text" placeholder="John Smith" />
+        <div class="secure-badge">
+          <span class="secure-dot"></span>
+          Secure Checkout Experience
+        </div>
       </div>
 
-      <div class="field">
-        <label for="nationality">Nationality</label>
-        <input id="nationality" type="text" placeholder="Spanish" />
+      <div class="intro">
+        <div class="intro-copy">
+          <span class="eyebrow">Private Collection</span>
+          <h2>Complete your order with elegance, clarity, and embedded consent.</h2>
+          <p>
+            Review your curated jewelry selection, confirm your contact details, provide payment
+            information, and collect consent seamlessly through the embedded OneTrust form below.
+          </p>
+        </div>
+
+        <aside class="order-glance">
+          <div class="order-glance-title">
+            <strong>Order Overview</strong>
+            <span class="glance-total">€5,115.00</span>
+          </div>
+
+          <div class="glance-mini">
+            <div class="mini-item">
+              <div class="mini-thumb">
+                <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="miniGold1" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#fff0cd"/>
+                      <stop offset="100%" stop-color="#d8b36a"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="32" cy="36" r="16" fill="none" stroke="url(#miniGold1)" stroke-width="5"/>
+                  <path d="M32 8l10 10-10 10-10-10z" fill="url(#miniGold1)" />
+                </svg>
+              </div>
+              <div class="mini-copy">
+                <strong>Solstice Diamond Ring</strong>
+                <span>Qty 1</span>
+              </div>
+              <div class="mini-price">€2,450</div>
+            </div>
+
+            <div class="mini-item">
+              <div class="mini-thumb">
+                <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="miniGold2" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#fff0cd"/>
+                      <stop offset="100%" stop-color="#d8b36a"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="32" cy="22" r="9" fill="url(#miniGold2)"/>
+                  <path d="M16 34c4 10 12 16 16 16s12-6 16-16" fill="none" stroke="url(#miniGold2)" stroke-width="5" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="mini-copy">
+                <strong>Luna Pendant</strong>
+                <span>Qty 1</span>
+              </div>
+              <div class="mini-price">€1,380</div>
+            </div>
+
+            <div class="mini-item">
+              <div class="mini-thumb">
+                <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="miniGold3" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#fff0cd"/>
+                      <stop offset="100%" stop-color="#d8b36a"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="21" cy="32" r="10" fill="none" stroke="url(#miniGold3)" stroke-width="5"/>
+                  <circle cx="43" cy="32" r="10" fill="none" stroke="url(#miniGold3)" stroke-width="5"/>
+                  <path d="M16 19l5-8 5 8M38 19l5-8 5 8" fill="none" stroke="url(#miniGold3)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="mini-copy">
+                <strong>Étoile Earrings</strong>
+                <span>Qty 1</span>
+              </div>
+              <div class="mini-price">€1,080</div>
+            </div>
+          </div>
+        </aside>
       </div>
 
-      <div class="field">
-        <label for="email">Email</label>
-        <!-- Keep this ID as requested -->
-        <input id="email" type="email" placeholder="you@example.com" required />
+      <div class="layout">
+        <div class="stack">
+          <!-- EMAIL AT THE TOP -->
+          <section class="panel">
+            <div class="panel-title">
+              <div>
+                <h3>Contact Email</h3>
+                <p>Enter the customer email at the start of the checkout flow.</p>
+              </div>
+              <span class="section-badge">Step 1</span>
+            </div>
+
+            <div class="email-row">
+              <div class="field">
+                <label for="email">Email Address</label>
+                <!-- Keep this ID exactly as requested -->
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="customer@aureline.com"
+                  value="vip.customer@aureline.com"
+                  required
+                />
+              </div>
+
+              <div class="micro-card">
+                <strong>Client Tier</strong>
+                <span>Private Concierge</span>
+              </div>
+            </div>
+
+            <div class="email-note">
+              This email field remains available at the top of the experience so you can quickly enter
+              or update the customer email before interacting with the consent form.
+            </div>
+          </section>
+
+          <!-- ONETRUST AT THE START -->
+          <section class="panel">
+            <div class="panel-title">
+              <div>
+                <h3>Consent Preferences</h3>
+                <p>Embedded OneTrust form loaded automatically at the start, preserving the original behavior.</p>
+              </div>
+              <span class="section-badge">Step 2</span>
+            </div>
+
+            <div class="ot-wrap">
+              <div class="ot-info">
+                The OneTrust embedded form renders inside the container below using the same
+                <strong>InstallCP()</strong> logic as before. Only the visual styling has been elevated to match
+                the luxury jewelry checkout theme.
+              </div>
+
+              <!-- IMPORTANT: OneTrust renders the consent form inside this div -->
+              <div id="ot-container"></div>
+            </div>
+          </section>
+
+          <!-- CUSTOMER DETAILS -->
+          <section class="panel">
+            <div class="panel-title">
+              <div>
+                <h3>Client Details</h3>
+                <p>Luxury checkout details section aligned to the new ecommerce experience.</p>
+              </div>
+              <span class="section-badge">Step 3</span>
+            </div>
+
+            <div class="field-grid">
+              <div class="field">
+                <label for="name">Full Name</label>
+                <input id="name" type="text" placeholder="Sophia Bennett" value="Sophia Bennett" />
+              </div>
+
+              <div class="field">
+                <label for="nationality">City</label>
+                <input id="nationality" type="text" placeholder="Madrid" value="Madrid" />
+              </div>
+
+              <div class="field">
+                <label for="country">Country</label>
+                <input id="country" type="text" placeholder="Spain" value="Spain" />
+              </div>
+
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" type="tel" placeholder="+34 600 123 456" value="+34 600 123 456" />
+              </div>
+
+              <div class="field full">
+                <label for="notes">Gift Note</label>
+                <input id="notes" type="text" placeholder="Add a gift message" value="Please include the signature gift wrap." />
+              </div>
+            </div>
+          </section>
+
+          <!-- PAYMENT -->
+          <section class="panel">
+            <div class="panel-title">
+              <div>
+                <h3>Credit Card Details</h3>
+                <p>Pre-filled demo/test values so you do not need to re-enter them every time.</p>
+              </div>
+              <span class="section-badge">Step 4</span>
+            </div>
+
+            <div class="card-preview" aria-hidden="true">
+              <div class="card-type">Demo Visa</div>
+              <div class="card-chip"></div>
+              <p class="card-number">4242 4242 4242 4242</p>
+              <div class="card-meta">
+                <div>
+                  Cardholder
+                  <strong>Sophia Bennett</strong>
+                </div>
+                <div>
+                  Expires
+                  <strong>12/34</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field full">
+                <label for="card-name">Name on Card</label>
+                <input id="card-name" type="text" value="Sophia Bennett" />
+              </div>
+
+              <div class="field full">
+                <label for="card-number">Card Number</label>
+                <input id="card-number" type="text" inputmode="numeric" value="4242 4242 4242 4242" />
+              </div>
+
+              <div class="field">
+                <label for="card-expiry">Expiry Date</label>
+                <input id="card-expiry" type="text" inputmode="numeric" value="12/34" />
+              </div>
+
+              <div class="field">
+                <label for="card-cvc">Security Code</label>
+                <input id="card-cvc" type="text" inputmode="numeric" value="123" />
+              </div>
+            </div>
+
+            <div class="payment-note">
+              Demo values only. This section is styled for a realistic checkout flow, but it uses safe placeholder
+              payment data and does not change the original OneTrust functionality.
+            </div>
+
+            <div class="checkout-actions">
+              <button type="button" class="primary-btn">Review Order</button>
+              <div class="secondary-note">Consent behavior remains powered by the embedded OneTrust form above.</div>
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <aside class="stack">
+          <section class="panel">
+            <div class="panel-title">
+              <div>
+                <h3>Your Cart</h3>
+                <p>Selected pieces presented with premium product visuals and order details.</p>
+              </div>
+              <span class="section-badge">Curated</span>
+            </div>
+
+            <div class="products">
+              <article class="product">
+                <div class="product-thumb" aria-hidden="true">
+                  <svg width="62" height="62" viewBox="0 0 64 64">
+                    <defs>
+                      <linearGradient id="ringGold" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#fff0cd"/>
+                        <stop offset="100%" stop-color="#d8b36a"/>
+                      </linearGradient>
+                    </defs>
+                    <circle cx="32" cy="l="url(#ringGold)" />
+                    <circle cx="32" cy="19" r="4" fill="#fff8e8" opacity="0.9"/>
+                  </svg>
+                </div>
+
+                <div class="product-copy">
+                  <strong>Solstice Diamond Ring</strong>
+                  <span>18k gold · Brilliant-cut center stone</span>
+                  <small>Complimentary signature packaging included</small>
+                  <div class="qty-pill">Qty 1</div>
+                </div>
+
+                <div class="price-column">
+                  <div class="product-price">€2,450.00</div>
+                </div>
+              </article>
+
+              <article class="product">
+                <div class="product-thumb" aria-hidden="true">
+                  <svg width="62" height="62" viewBox="0 0 64 64">
+                    <defs>
+                      <linearGradient id="pendantGold" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#fff0cd"/>
+                        <stop offset="100%" stop-color="#d8b36a"/>
+                      </linearGradient>
+                    </defs>
+                    <circle cx="32" cy="20" r="8" fill="url(#pendantGold)"/>
+                    <path d="M16 33c4 12 12 17 16 17s12-5 16-17" fill="none" stroke="url(#pendantGold)" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M25 18c2-7 12-7 14 0" fill="none" stroke="#fff8e8" stroke-width="2" opacity="0.6"/>
+                  </svg>
+                </div>
+
+                <div class="product-copy">
+                  <strong>Luna Pendant Necklace</strong>
+                  <span>Yellow gold · Satin-polished finish</span>
+                  <small>Adjustable chain with gift presentation box</small>
+                  <div class="qty-pill">Qty 1</div>
+                </div>
+
+                <div class="price-column">
+                  <div class="product-price">€1,380.00</div>
+                </div>
+              </article>
+
+              <article class="product">
+                <div class="product-thumb" aria-hidden="true">
+                  <svg width="62" height="62" viewBox="0 0 64 64">
+                    <defs>
+                      <linearGradient id="earringGold" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#fff0cd"/>
+                        <stop offset="100%" stop-color="#d8b36a"/>
+                      </linearGradient>
+                    </defs>
+                    <circle cx="21" cy="32" r="9" fill="none" stroke="url(#earringGold)" stroke-width="5"/>
+                    <circle cx="43" cy="32" r="9" fill="none" stroke="url(#earringGold)" stroke-width="5"/>
+                    <path d="M16 20l5-8 5 8M38 20l5-8 5 8" fill="none" stroke="url(#earringGold)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+
+                <div class="product-copy">
+                  <strong>Étoile Drop Earrings</strong>
+                  <span>Hand-finished pair · Sculpted silhouette</span>
+                  <small>Designed for evening wear and statement gifting</small>
+                  <div class="qty-pill">Qty 1</div>
+                </div>
+
+                <div class="price-column">
+                  <div class="product-price">€1,080.00</div>
+                </div>
+              </article>
+            </div>
+
+            <div class="summary-lines">
+              <div class="summary-line">
+                <span>Subtotal</span>
+                <strong>€4,910.00</strong>
+              </div>
+              <div class="summary-line">
+                <span>Insured delivery</span>
+                <strong>€40.00</strong>
+              </div>
+              <div class="summary-line">
+                <span>Luxury packaging</span>
+                <strong>€25.00</strong>
+              </div>
+              <div class="summary-line">
+                <span>Estimated tax</span>
+                <strong>€140.00</strong>
+              </div>
+              <div class="summary-total">
+                <span>Total</span>
+                <span>€5,115.00</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-title">
+              <div>
+                <h3>Why clients trust this checkout</h3>
+                <p>The visual experience is upgraded, while the consent flow remains intact.</p>
+              </div>
+              <span class="section-badge">Trusted</span>
+            </div>
+
+            <div class="trust-points">
+              <div class="trust-item">
+                <div class="trust-icon">✓</div>
+                <div>
+                  <strong>Original OT functionality preserved</strong>
+                  <p>The embedded consent form still initializes automatically into the same target container using the same OneTrust loading logic.</p>
+                </div>
+              </div>
+
+              <div class="trust-item">
+                <div class="trust-icon">✦</div>
+                <div>
+                  <strong>Luxury-first visual design</strong>
+                  <p>The page now looks like a premium jewelry ecommerce checkout with elegant panels, refined spacing, and elevated styling.</p>
+                </div>
+              </div>
+
+              <div class="trust-item">
+                <div class="trust-icon">🔒</div>
+                <div>
+                  <strong>Safe demo payment content</strong>
+                  <p>The credit card section is pre-filled using demo/test placeholder values only, so it is convenient for demos and workshops.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
       </div>
+    </section>
+  </div>
 
-      <div class="field">
-        <label for="country">Country</label>
-        <input id="country" type="text" placeholder="Spain" />
-      </div>
-
-      <div class="field full">
-        <label for="notes">Additional Notes</label>
-        <input id="notes" type="text" placeholder="Extra attribute for the demo" />
-      </div>
-    </div>
-
-    <!-- OneTrust area -->
-    <div class="section-title">OneTrust Embedded Form</div>
-
-    <div class="demo-box">
-      <div class="hint">
-        This box contains the <strong>OneTrust target container</strong>.  
-        The consent form will be inserted here automatically using <strong>InstallCP()</strong>.
-      </div>
-
-      <!-- IMPORTANT:
-           OneTrust renders the consent form inside this div -->
-      <div id="ot-container"></div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       4) PAGE JAVASCRIPT
-       This section controls the behavior.
-       For the workshop, the key idea is:
-       - Wait until OneTrust is ready
-       - Call InstallCP()
-       - Mount the form into #ot-container
-  ========================================================== -->
   <script>
     /* The Consent Profile ID to load */
     const CP_ID = "6ed87545-c4ba-4dc1-ac8a-17fb30a4f110";
@@ -339,4 +1230,3 @@
   </script>
 </body>
 </html>
-``
