@@ -1,0 +1,1189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Business & Facility Services Checkout</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED SCRIPTS
+       Preserved exactly so OT functionality continues to work
+  ========================================================== -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="86cfa775-f542-42b6-8f6d-30a22fc81ba1"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #101935;
+      --panel: rgba(255,255,255,0.92);
+      --panel-strong: #ffffff;
+      --text: #0f172a;
+      --text-soft: #475569;
+      --text-muted: #64748b;
+      --line: rgba(15, 23, 42, 0.08);
+      --line-strong: rgba(15, 23, 42, 0.14);
+      --primary: #2563eb;
+      --primary-2: #1d4ed8;
+      --accent: #06b6d4;
+      --success: #059669;
+      --danger: #dc2626;
+      --shadow-xl: 0 30px 80px rgba(2, 6, 23, 0.35);
+      --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.12);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 12px;
+      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.22), transparent 28%),
+        radial-gradient(circle at top right, rgba(6, 182, 212, 0.16), transparent 26%),
+        linear-gradient(180deg, #0b1020 0%, #101935 42%, #eaf1fb 42%, #eff5fb 100%);
+    }
+
+    body {
+      padding: 40px 18px 56px;
+    }
+
+    .page-shell {
+      max-width: 1340px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      padding: 30px 30px 26px;
+      margin-bottom: 22px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(37, 99, 235, 0.96), rgba(29, 78, 216, 0.9) 38%, rgba(15, 23, 42, 0.96) 100%);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.24), rgba(255,255,255,0.02) 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero h1 {
+      margin: 14px 0 10px;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: rgba(255,255,255,0.84);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(360px, 0.95fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.65);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-lg);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .panel-inner {
+      padding: 24px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title-wrap h2 {
+      margin: 0 0 6px;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-title-wrap p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-2);
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(37, 99, 235, 0.12);
+    }
+
+    .email-card {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92)),
+        linear-gradient(135deg, rgba(6,182,212,0.06), rgba(37,99,235,0.08));
+    }
+
+    .email-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: end;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      margin: 0 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      padding: 14px 14px;
+      min-height: 50px;
+      background: rgba(255,255,255,0.96);
+      color: var(--text);
+      font: inherit;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
+      transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+    }
+
+    input::placeholder,
+    select {
+      color: #94a3b8;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(37,99,235,0.72);
+      box-shadow:
+        0 0 0 4px rgba(37,99,235,0.12),
+        0 8px 24px rgba(37,99,235,0.08);
+      transform: translateY(-1px);
+    }
+
+    .hint,
+    .microcopy {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.04);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+    }
+
+    .product-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.94), rgba(248,250,252,0.9));
+      box-shadow: var(--shadow-md);
+    }
+
+    .product-image {
+      width: 92px;
+      height: 92px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border: 1px solid rgba(37, 99, 235, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-meta h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+    }
+
+    .product-meta p {
+      margin: 0;
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .product-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .product-tag {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-soft);
+      background: rgba(15,23,42,0.05);
+      border: 1px solid rgba(15,23,42,0.06);
+    }
+
+    .product-price {
+      min-width: 130px;
+      text-align: right;
+    }
+
+    .product-price .unit {
+      color: var(--text-muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .product-price .amount {
+      display: block;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .product-price .subtotal {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .pricing-summary {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #0f172a, #111827);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pricing-row,
+    .pricing-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .pricing-row {
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      padding: 8px 0;
+    }
+
+    .pricing-total {
+      padding-top: 14px;
+      margin-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .summary-card {
+      position: sticky;
+      top: 22px;
+    }
+
+    .summary-block {
+      display: grid;
+      gap: 14px;
+    }
+
+    .summary-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.84);
+    }
+
+    .summary-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .summary-item span {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .summary-amount {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .card-visual {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      padding: 20px;
+      min-height: 210px;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 30%),
+        linear-gradient(135deg, #0f172a 0%, #1e3a8a 48%, #0891b2 100%);
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 18px;
+    }
+
+    .card-visual::before,
+    .card-visual::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .card-visual::before {
+      width: 180px;
+      height: 180px;
+      right: -40px;
+      top: -40px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .card-visual::after {
+      width: 120px;
+      height: 120px;
+      left: -20px;
+      bottom: -28px;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .card-chip {
+      width: 52px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255,255,255,0.48));
+      border: 1px solid rgba(255,255,255,0.42);
+      margin-bottom: 26px;
+    }
+
+    .card-brand {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .card-number {
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      margin-bottom: 18px;
+    }
+
+    .card-details {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .card-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .card-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .payment-note {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(37,99,235,0.06);
+      border: 1px solid rgba(37,99,235,0.1);
+      color: var(--text-soft);
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .service-profile {
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .section-kicker {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .consent-card {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.92));
+    }
+
+    #ot-container {
+      margin-top: 14px;
+      padding: 0;
+    }
+
+    /* =========================================================
+       OPTIONAL ONETRUST VISUAL CLEANUP
+       Preserved and lightly enhanced only for aesthetics
+    ========================================================== */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
+    }
+
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 14px !important;
+      line-height: 1.6 !important;
+      font-weight: 500 !important;
+      color: var(--text-soft) !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      padding: 2px 0;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(37,99,235,0.22);
+      margin-top: 2px;
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(37,99,235,0.08);
+      transition: all 0.18s ease;
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--primary);
+      background: radial-gradient(circle at center, var(--primary) 45%, transparent 47%);
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 4px rgba(37,99,235,0.14);
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 13px !important;
+      margin-top: 6px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 18px !important;
+      padding: 14px 16px !important;
+      min-height: 52px !important;
+      border-radius: 14px !important;
+      border: 1px solid rgba(37,99,235,0.18) !important;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2)) !important;
+      color: #fff !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.01em !important;
+      box-shadow: 0 12px 28px rgba(37,99,235,0.22) !important;
+      cursor: pointer !important;
+    }
+
+    .ot-submit:hover {
+      filter: brightness(1.02) !important;
+    }
+
+    .secure-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .secure-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-soft);
+      background: rgba(15,23,42,0.05);
+      border: 1px solid rgba(15,23,42,0.06);
+    }
+
+    .cta-note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1100px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 22px 14px 32px;
+      }
+
+      .hero {
+        padding: 22px 20px 20px;
+      }
+
+      .panel-inner {
+        padding: 18px;
+      }
+
+      .field-grid,
+      .email-row {
+        grid-template-columns: 1fr;
+      }
+
+      .product-card {
+        grid-template-columns: 1fr;
+      }
+
+      .product-image {
+        width: 100%;
+        max-width: 130px;
+        height: 100px;
+      }
+
+      .product-price {
+        text-align: left;
+        min-width: 0;
+      }
+
+      .card-number {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <section class="hero" aria-label="Checkout page header">
+      <div class="eyebrow">Business &amp; Facility Services</div>
+      <h1>Premium service checkout with built-in consent</h1>
+      <p>
+        Review your services, confirm your business contact information, and complete checkout in a streamlined experience with OneTrust consent loaded automatically at page start.
+      </p>
+    </section>
+
+    <main class="checkout-grid">
+      <!-- LEFT COLUMN -->
+      <div class="stack">
+        <!-- EMAIL TOP SECTION -->
+        <section class="panel email-card" aria-labelledby="contact-title">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2 id="contact-title">Business contact</h2>
+                <p>Start with the primary email address for notifications, invoices, and service updates.</p>
+              </div>
+              <div class="badge">Priority field</div>
+            </div>
+
+            <div class="email-row">
+              <div class="field">
+                <label for="email">Business email</label>
+                <!-- Keep this ID as requested -->
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  required
+                  autocomplete="email"
+                />
+                <div class="hint">This remains the main email field and stays compatible with your existing page logic.</div>
+              </div>
+              <div class="pill-row" aria-hidden="true">
+                <div class="pill"><span class="pill-dot"></span> Service confirmations</div>
+                <div class="pill"><span class="pill-dot"></span> Consent receipt</div>
+                <div class="pill"><span class="pill-dot"></span> Billing notifications</div>
+              </div>
+            </div>
+
+            <!-- Existing HTML fields preserved in an upgraded layout -->
+            <div class="service-profile">
+              <div class="section-kicker">Service profile</div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input id="name" type="text" placeholder="John Smith" autocomplete="name" />
+                </div>
+
+                <div class="field">
+                  <label for="nationality">Nationality</label>
+                  <input id="nationality" type="text" placeholder="Spanish" />
+                </div>
+
+                <div class="field">
+                  <label for="country">Country</label>
+                  <input id="country" type="text" placeholder="Spain" autocomplete="country-name" />
+                </div>
+
+                <div class="field">
+                  <label for="department">Department / Requesting Team</label>
+                  <input id="department" type="text" placeholder="Workplace Operations" />
+                </div>
+
+                <div class="field full">
+                  <label for="notes">Additional Notes</label>
+                  <input id="notes" type="text" placeholder="Extra attribute for the demo" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CART PRODUCTS -->
+        <section class="panel" aria-labelledby="cart-title">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2 id="cart-title">Cart review</h2>
+                <p>Premium service items displayed with imagery, quantity, pricing, and subtotal visibility.</p>
+              </div>
+              <div class="badge">Cart</div>
+            </div>
+
+            <div id="cart-products" class="product-list" aria-live="polite"></div>
+
+            <div class="pricing-summary" aria-label="Order totals">
+              <div class="pricing-row">
+                <span>Service subtotal</span>
+                <strong id="summary-subtotal">€0.00</strong>
+              </div>
+              <div class="pricing-row">
+                <span>Processing</span>
+                <strong id="summary-processing">Included</strong>
+              </div>
+              <div class="pricing-row">
+                <span>Consent collection</span>
+                <strong id="summary-consent">Included</strong>
+              </div>
+              <div class="pricing-total">
+                <span>Total due today</span>
+                <span id="summary-total">€0.00</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAYMENT -->
+        <section class="panel" aria-labelledby="payment-title">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2 id="payment-title">Payment details</h2>
+                <p>A polished card section with development-safe prefilled values for faster repeat testing.</p>
+              </div>
+              <div class="badge">Saved payment UI</div>
+            </div>
+
+            <div class="card-visual" aria-hidden="true">
+              <div class="card-brand">Corporate Card</div>
+              <div class="card-chip"></div>
+              <div class="card-number">4242&nbsp;&nbsp;4242&nbsp;&nbsp;4242&nbsp;&nbsp;4242</div>
+              <div class="card-details">
+                <div>
+                  <span class="card-label">Cardholder</span>
+                  <span class="card-value">Business Services Demo</span>
+                </div>
+                <div>
+                  <span class="card-label">Expires</span>
+                  <span class="card-value">12/30</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="field-grid">
+              <div class="field full">
+                <label for="cc-name">Cardholder name</label>
+                <input
+                  id="cc-name"
+                  type="text"
+                  value="Business Services Demo"
+                  autocomplete="cc-name"
+                />
+              </div>
+
+              <div class="field full">
+                <label for="cc-number">Card number</label>
+                <input
+                  id="cc-number"
+                  type="text"
+                  inputmode="numeric"
+                  value="4242 4242 4242 4242"
+                  autocomplete="cc-number"
+                />
+              </div>
+
+              <div class="field">
+                <label for="cc-expiry">Expiry date</label>
+                <input
+                  id="cc-expiry"
+                  type="text"
+                  value="12/30"
+                  placeholder="MM/YY"
+                  autocomplete="cc-exp"
+                />
+              </div>
+
+              <div class="field">
+                <label for="cc-cvv">Security code</label>
+                <input
+                  id="cc-cvv"
+                  type="password"
+                  placeholder="•••"
+                  autocomplete="off"
+                  aria-describedby="cvv-note"
+                />
+                <div id="cvv-note" class="microcopy">Security code is intentionally not prefilled or persisted.</div>
+              </div>
+
+              <div class="field">
+                <label for="billing-country">Billing country</label>
+                <input
+                  id="billing-country"
+                  type="text"
+                  value="Spain"
+                  autocomplete="country-name"
+                />
+              </div>
+
+              <div class="field">
+                <label for="billing-postcode">Billing postal code</label>
+                <input
+                  id="billing-postcode"
+                  type="text"
+                  value="28001"
+                  autocomplete="postal-code"
+                />
+              </div>
+            </div>
+
+            <div class="payment-note">
+              Demo-friendly defaults are shown for convenience. Replace these with your existing secure autofill or tokenized saved-payment mechanism if your application already supports it.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="stack summary-card">
+        <section class="panel panel-strong">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2>Order snapshot</h2>
+                <p>Everything important at a glance before submission.</p>
+              </div>
+              <div class="badge">Summary</div>
+            </div>
+
+            <div class="summary-block">
+              <div class="summary-item">
+                <div>
+                  <strong>Checkout status</strong>
+                  <span>Ready for consent and payment confirmation.</span>
+                </div>
+                <div class="summary-amount" id="summary-status">Ready</div>
+              </div>
+
+              <div class="summary-item">
+                <div>
+                  <strong>Products in cart</strong>
+                  <span>Rendered from the cart area with pricing and visual cards.</span>
+                </div>
+                <div class="summary-amount" id="summary-count">0</div>
+              </div>
+
+              <div class="summary-item">
+                <div>
+                  <strong>Total</strong>
+                  <span>Live order total aligned with the visible cart section.</span>
+                </div>
+                <div class="summary-amount" id="summary-side-total">€0.00</div>
+              </div>
+            </div>
+
+            <div class="secure-strip" aria-hidden="true">
+              <div class="secure-badge">Encrypted checkout UI</div>
+              <div class="secure-badge">Consent-first flow</div>
+              <div class="secure-badge">Responsive layout</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ONETRUST CONSENT -->
+        <section class="panel consent-card" aria-labelledby="consent-title">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-title-wrap">
+                <h2 id="consent-title">Consent &amp; preferences</h2>
+                <p>
+                  The OneTrust embedded form below loads automatically on initial page load using <strong>InstallCP()</strong>, as before.
+                </p>
+              </div>
+              <div class="badge">OneTrust</div>
+            </div>
+
+            <div class="hint">
+              This remains the target area for your embedded OneTrust consent form.
+            </div>
+
+            <!-- IMPORTANT:
+                 OneTrust renders the consent form inside this div -->
+            <div id="ot-container"></div>
+
+            <div class="cta-note">
+              Keep your original Consent Profile ID and OT bootstrap sequence unchanged to preserve the existing embedded form behavior.
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    /* =========================================================
+       4) CART RENDERING
+       Added for the new checkout view.
+       In your real app, replace this demo array with your
+       existing cart state/data source while keeping the same
+       render target and UI structure if desired.
+    ========================================================== */
+    const cartItems = [
+      {
+        name: "Premium Facility Access Pass",
+        description: "Managed building access, visitor support, and front desk coordination.",
+        quantity: 1,
+        price: 149.00,
+        image: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#dbeafe"/>
+                <stop offset="100%" stop-color="#93c5fd"/>
+              </linearGradient>
+            </defs>
+            <rect width="200" height="200" rx="32" fill="url(#g)"/>
+            <rect x="48" y="40" width="104" height="120" rx="14" fill="#ffffff" opacity="0.94"/>
+            <rect x="72" y="24" width="56" height="20" rx="10" fill="#1d4ed8"/>
+            <rect x="65" y="72" width="70" height="10" rx="5" fill="#bfdbfe"/>
+            <rect x="65" y="92" width="48" height="10" rx="5" fill="#bfdbfe"/>
+            <circle cx="100" cy="125" r="18" fill="#2563eb" opacity="0.95"/>
+          </svg>
+        `),
+        tag: "Access"
+      },
+      {
+        name: "Workplace Services Bundle",
+        description: "Desk readiness, room preparation, supplies, and on-site support coordination.",
+        quantity: 2,
+        price: 89.50,
+        image: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#cffafe"/>
+                <stop offset="100%" stop-color="#67e8f9"/>
+              </linearGradient>
+            </defs>
+            <rect width="200" height="200" rx="32" fill="url(#g2)"/>
+            <rect x="40" y="120" width="120" height="26" rx="13" fill="#0f172a" opacity="0.08"/>
+            <rect x="52" y="62" width="96" height="60" rx="14" fill="#ffffff" opacity="0.95"/>
+            <rect x="60" y="76" width="80" height="12" rx="6" fill="#06b6d4" opacity="0.24"/>
+            <rect x="60" y="96" width="55" height="10" rx="5" fill="#a5f3fc"/>
+            <circle cx="146" cy="56" r="18" fill="#0891b2"/>
+          </svg>
+        `),
+        tag: "Operations"
+      },
+      {
+        name: "Event & Room Readiness Package",
+        description: "Meeting room staging, signage support, and hospitality readiness for business events.",
+        quantity: 1,
+        price: 229.00,
+        image: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ede9fe"/>
+                <stop offset="100%" stop-color="#c4b5fd"/>
+              </linearGradient>
+            </defs>
+            <rect width="200" height="200" rx="32" fill="url(#g3)"/>
+            <rect x="34" y="52" width="132" height="86" rx="16" fill="#ffffff" opacity="0.95"/>
+            <rect x="48" y="68" width="104" height="12" rx="6" fill="#c4b5fd"/>
+            <rect x="48" y="90" width="60" height="10" rx="5" fill="#ddd6fe"/>
+            <rect x="48" y="108" width="78" height="10" rx="5" fill="#ddd6fe"/>
+            <rect x="138" y="96" width="16" height="28" rx="8" fill="#7c3aed"/>
+          </svg>
+        `),
+        tag: "Events"
+      }
+    ];
+
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('en-IE', {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(value);
+    }
+
+    function renderCart(items) {
+      const cartContainer = document.getElementById('cart-products');
+      const subtotalEl = document.getElementById('summary-subtotal');
+      const totalEl = document.getElementById('summary-total');
+      const sideTotalEl = document.getElementById('summary-side-total');
+      const countEl = document.getElementById('summary-count');
+
+      if (!cartContainer) return;
+
+      cartContainer.innerHTML = items.map(item => {
+        const subtotal = item.price * item.quantity;
+        return `
+          <article class="product-card">
+            <div class="product-image">
+              <img src="${item.image}" alt="${item.name}" />
+            </div>
+
+            <div class="product-meta">
+              <h3>${item.name}</h3>
+              <p>${item.description}</p>
+              <div class="product-tags">
+                <span class="product-tag">${item.tag}</span>
+                <span class="product-tag">Qty ${item.quantity}</span>
+              </div>
+            </div>
+
+            <div class="product-price">
+              <div class="unit">${formatCurrency(item.price)} each</div>
+              <span class="amount">${formatCurrency(item.price)}</span>
+              <span class="subtotal">Subtotal ${formatCurrency(subtotal)}</span>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+      subtotalEl.textContent = formatCurrency(subtotal);
+      totalEl.textContent = formatCurrency(subtotal);
+      sideTotalEl.textContent = formatCurrency(subtotal);
+      countEl.textContent = String(items.length);
+    }
+
+    /* =========================================================
+       5) ONETRUST LOADING
+       Preserved functionality:
+       - Same CP_ID
+       - Same readiness polling
+       - Same automatic load on DOMContentLoaded
+       - Same target: #ot-container
+    ========================================================== */
+    const CP_ID = "c40e97df-fd0a-4699-89b4-af241e11e679";
+
+    function whenOTReady(callback) {
+      const timer = setInterval(() => {
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          callback();
+        }
+      }, 80);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderCart(cartItems);
+
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+``
