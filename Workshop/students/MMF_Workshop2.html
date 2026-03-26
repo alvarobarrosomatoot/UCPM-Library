@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Luxury Checkout | OneTrust Embedded Form Demo</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED SCRIPTS
+       UNCHANGED: keep this section intact
+  ========================================================== -->
+
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="0ef2be00-6f35-4c33-ad71-481907d51993"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <!-- =========================================================
+       2) PAGE STYLES
+       Fully redesigned for a luxury fashion checkout aesthetic
+       WITHOUT changing OneTrust functionality
+  ========================================================== -->
+  <style>
+    :root {
+      --bg: #f6f4f1;
+      --panel: #ffffff;
+      --panel-soft: #fbfaf8;
+      --text: #111111;
+      --muted: #6f6a64;
+      --muted-2: #9b958d;
+      --line: #e8e2db;
+      --line-strong: #d8d0c7;
+      --accent: #111111;
+      --accent-soft: #2f2f2f;
+      --success: #1f7a4d;
+      --danger: #b3261e;
+      --shadow: 0 20px 50px rgba(17, 17, 17, 0.08);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --font: "Helvetica Neue", Helvetica, Arial, system-ui, -apple-system, sans-serif;
+      --transition: 0.22s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 18px;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 35%),
+        linear-gradient(180deg, #faf8f5 0%, #f3efe9 100%);
+      color: var(--text);
+      font-family: var(--font);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    input,
+    select,
+    button {
+      font: inherit;
+    }
+
+    .checkout-shell {
+      width: 100%;
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(216, 208, 199, 0.65);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .panel-inner {
+      padding: 28px;
+    }
+
+    .brand-header {
+      margin-bottom: 24px;
+      padding: 30px 32px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, rgba(250,248,244,0.9) 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .brand-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(17,17,17,0.03), transparent 45%),
+        radial-gradient(circle at 90% 20%, rgba(17,17,17,0.04), transparent 30%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--line-strong);
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      max-width: 10ch;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      margin: 14px 0 0;
+      max-width: 58ch;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .left-stack,
+    .right-stack {
+      display: grid;
+      gap: 24px;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-heading {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .section-copy {
+      margin: 0 0 22px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .luxury-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+      margin: 22px 0;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      min-height: 52px;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    }
+
+    input::placeholder,
+    select::placeholder {
+      color: var(--muted-2);
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .email-card {
+      padding: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(250,248,244,0.95) 100%);
+    }
+
+    .email-wrap {
+      display: grid;
+      grid-template-columns: 1.2fr auto;
+      gap: 14px;
+      align-items: end;
+    }
+
+    .helper-text {
+      margin: 10px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .micro-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .cart-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 108px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(180deg, #fff 0%, #fcfbf9 100%);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .cart-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(17, 17, 17, 0.05);
+      border-color: var(--line-strong);
+    }
+
+    .product-image {
+      width: 108px;
+      height: 132px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f0ece7;
+      border: 1px solid var(--line);
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-title {
+      margin: 0 0 6px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .product-meta,
+    .product-qty {
+      margin: 0;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .price-block {
+      text-align: right;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      min-width: 90px;
+    }
+
+    .price {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .price-sub {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .totals {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .total-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .total-row strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .total-row.grand {
+      margin-top: 6px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .total-row.grand strong {
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .payment-panel {
+      position: sticky;
+      top: 24px;
+    }
+
+    .payment-summary {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .payment-summary .label {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .payment-summary .amount {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .secure-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 20px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .secure-note::before {
+      content: "•";
+      font-size: 20px;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .consent-shell {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(180deg, #fff 0%, #fcfbf9 100%);
+    }
+
+    .consent-title {
+      margin: 0 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .consent-copy {
+      margin: 0 0 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .supporting-fields {
+      display: grid;
+      gap: 18px;
+    }
+
+    .support-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.9);
+    }
+
+    .support-copy {
+      margin: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .footer-note {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       ONETRUST CONTAINER
+       PRESERVED: same target, same functional role
+    ========================================================== */
+    #ot-container {
+      margin-top: 4px;
+    }
+
+    /* =========================================================
+       ONETRUST VISUAL RE-SKIN ONLY
+       Functionality remains unchanged
+    ========================================================== */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
+    }
+
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 13px !important;
+      line-height: 1.6 !important;
+      font-weight: 400 !important;
+      color: var(--muted) !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 1px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line-strong);
+      background: #fff;
+      transition: all var(--transition);
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--accent);
+      background:
+        radial-gradient(circle at center, var(--accent) 40%, transparent 43%),
+        #fff;
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.08);
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 12px !important;
+      margin-top: 6px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 18px !important;
+      min-height: 54px !important;
+      padding: 14px 18px !important;
+      border-radius: 999px !important;
+      border: 1px solid #111 !important;
+      background: #111 !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.02em !important;
+      cursor: pointer !important;
+      transition: transform var(--transition), background var(--transition), box-shadow var(--transition) !important;
+      box-shadow: 0 10px 24px rgba(17, 17, 17, 0.14);
+    }
+
+    .ot-submit:hover {
+      background: #222 !important;
+      transform: translateY(-1px);
+    }
+
+    .ot-submit:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .checkout-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .payment-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 18px 12px 28px;
+      }
+
+      .brand-header,
+      .panel-inner,
+      .email-card,
+      .support-card {
+        padding: 22px;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .email-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .cart-item {
+        grid-template-columns: 90px 1fr;
+      }
+
+      .price-block {
+        grid-column: 2;
+        text-align: left;
+        padding-top: 6px;
+      }
+
+      .product-image {
+        width: 90px;
+        height: 112px;
+      }
+
+      .payment-summary .amount {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- =========================================================
+       3) PAGE HTML
+       Redesigned layout:
+       - Email at top
+       - Cart summary on the left
+       - Payment + OT consent on the right
+       - Existing workshop fields preserved below
+  ========================================================== -->
+  <main class="checkout-shell">
+
+    <!-- LEFT COLUMN -->
+    <section class="left-stack">
+
+      <div class="panel brand-header">
+        <div class="eyebrow">Maison Checkout</div>
+        <h1>Complete your luxury order</h1>
+        <p class="hero-copy">
+          Review your curated pieces, confirm your details, and complete your purchase with
+          consent captured directly in the checkout experience.
+        </p>
+      </div>
+
+      <!-- EMAIL FIRST / TOP -->
+      <section class="panel email-card">
+        <div class="section-title">Contact</div>
+        <h2 class="section-heading">Where should we send your order confirmation?</h2>
+        <p class="section-copy">
+          Enter your email to receive order details, shipping updates, and your purchase receipt.
+        </p>
+
+        <div class="email-wrap">
+          <div class="field">
+            <label for="email">Email</label>
+            <!-- PRESERVED ID -->
+            <input id="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="micro-pill" aria-hidden="true">Secure checkout</div>
+        </div>
+
+        <p class="helper-text">
+          Your checkout experience keeps consent and purchase details in one elegant flow.
+        </p>
+      </section>
+
+      <!-- CART -->
+      <section class="panel">
+        <div class="panel-inner">
+          <div class="section-title">Shopping Bag</div>
+          <h2 class="section-heading">Your selected pieces</h2>
+          <p class="section-copy">
+            A refined summary of the items currently in your cart, including imagery, quantity, and pricing.
+          </p>
+
+          <div class="cart-list">
+
+            <article class="cart-item">
+              <div class="product-image">
+                <img
+                  src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=600&q=80"
+                  alt="Luxury black tweed jacket"
+                />
+              </div>
+              <div>
+                <h3 class="product-title">Tweed Jacket</h3>
+                <p class="product-meta">Color: Black · Size: 38</p>
+                <p class="product-qty">Quantity: 1</p>
+              </div>
+              <div class="price-block">
+                <div class="price">€2,450</div>
+                <div class="price-sub">Item total</div>
+              </div>
+            </article>
+
+            <article class="cart-item">
+              <div class="product-image">
+                <img
+                  src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"
+                  alt="Luxury leather slingback heels"
+                />
+              </div>
+              <div>
+                <h3 class="product-title">Leather Slingbacks</h3>
+                <p class="product-meta">Color: Ivory / Black · Size: 39</p>
+                <p class="product-qty">Quantity: 1</p>
+              </div>
+              <div class="price-block">
+                <div class="price">€980</div>
+                <div class="price-sub">Item total</div>
+              </div>
+            </article>
+
+            <article class="cart-item">
+              <div class="product-image">
+                <img
+                  src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80"
+                  alt="Luxury quilted handbag"
+                />
+              </div>
+              <div>
+                <h3 class="product-title">Quilted Mini Bag</h3>
+                <p class="product-meta">Color: Black · Calfskin</p>
+                <p class="product-qty">Quantity: 1</p>
+              </div>
+              <div class="price-block">
+                <div class="price">€4,200</div>
+                <div class="price-sub">Item total</div>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="totals">
+            <div class="total-row">
+              <span>Subtotal</span>
+              <strong>€7,630</strong>
+            </div>
+            <div class="total-row">
+              <span>Shipping</span>
+              <strong>Complimentary</strong>
+            </div>
+            <div class="total-row">
+              <span>Estimated tax</span>
+              <strong>€152</strong>
+            </div>
+            <div class="total-row grand">
+              <span>Total</span>
+              <strong>€7,782</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRESERVED ORIGINAL FIELDS -->
+      <section class="panel support-card">
+        <div class="section-title">Client Profile</div>
+        <h2 class="section-heading">Additional customer details</h2>
+        <p class="support-copy">
+          These original demo fields remain available so prior workshop structure and any field references stay intact.
+        </p>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="John Smith" />
+          </div>
+
+          <div class="field">
+            <label for="nationality">Nationality</label>
+            <input id="nationality" type="text" placeholder="Spanish" />
+          </div>
+
+          <div class="field">
+            <label for="country">Country</label>
+            <input id="country" type="text" placeholder="Spain" />
+          </div>
+
+          <div class="field full">
+            <label for="notes">Additional Notes</label>
+            <input id="notes" type="text" placeholder="Special packaging request or workshop demo note" />
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="right-stack">
+      <section class="panel payment-panel">
+        <div class="panel-inner">
+          <div class="payment-summary">
+            <div>
+              <div class="label">Order total</div>
+              <div class="amount">€7,782</div>
+            </div>
+          </div>
+
+          <p class="secure-note">
+            Payment details are prefilled for convenience in repeated demos and can still be edited before submission.
+          </p>
+
+          <div class="section-title">Payment</div>
+          <h2 class="section-heading">Card details</h2>
+          <p class="section-copy">
+            Enter or confirm your payment information below. The form remains editable while preserving the rest of the page functionality.
+          </p>
+
+          <div class="field-grid">
+            <div class="field full">
+              <label for="card-name">Name on Card</label>
+              <input id="card-name" type="text" value="Myriam Meijer Flames" autocomplete="cc-name" />
+            </div>
+
+            <div class="field full">
+              <label for="card-number">Card Number</label>
+              <input id="card-number" type="text" value="4242 4242 4242 4242" inputmode="numeric" autocomplete="cc-number" />
+            </div>
+
+            <div class="field">
+              <label for="card-expiry">Expiry</label>
+              <input id="card-expiry" type="text" value="12/29" inputmode="numeric" autocomplete="cc-exp" />
+            </div>
+
+            <div class="field">
+              <label for="card-cvc">CVC</label>
+              <input id="card-cvc" type="text" value="123" inputmode="numeric" autocomplete="cc-csc" />
+            </div>
+
+            <div class="field full">
+              <label for="billing-zip">Billing ZIP</label>
+              <input id="billing-zip" type="text" value="28001" autocomplete="postal-code" />
+            </div>
+          </div>
+
+          <div class="luxury-divider"></div>
+
+          <!-- ONETRUST CONSENT BLOCK -->
+          <div class="consent-shell">
+            <p class="consent-title">Consent & Confirmation</p>
+            <p class="consent-copy">
+              Review and confirm the embedded consent form below before placing the order.
+              The OneTrust form still loads automatically on page start and renders in the preserved target container.
+            </p>
+
+            <!-- IMPORTANT: PRESERVED CONTAINER -->
+            <div id="ot-container"></div>
+          </div>
+
+          <p class="footer-note">
+            This checkout layout has been restyled for a premium retail feel while keeping the OneTrust embedded form behavior exactly as before.
+          </p>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <!-- =========================================================
+       4) PAGE JAVASCRIPT
+       UNCHANGED FUNCTIONAL BEHAVIOR
+       - Same CP_ID
+       - Same readiness check
+       - Same InstallCP()
+       - Same #ot-container target
+  ========================================================== -->
+  <script>
+    /* The Consent Profile ID to load */
+    const CP_ID = "f0af6657-0c19-4697-869e-58a7263251ad";
+
+    /* Wait until the OneTrust library is fully available */
+    function whenOTReady(callback) {
+      const timer = setInterval(() => {
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          callback();
+        }
+      }, 80);
+    }
+
+    /* When the page is ready, load the OneTrust form automatically */
+    window.addEventListener("DOMContentLoaded", () => {
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+      });
+    });
+  </script>
+</body>
+</html>
