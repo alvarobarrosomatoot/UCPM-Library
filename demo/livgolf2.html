@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>LIV Golf · Tickets</title>
+
+  <!-- OneTrust command queue -->
+  <script>
+    window.OtSdk = window.OtSdk || function(){ (OtSdk.q = OtSdk.q || []).push(arguments); };
+  </script>
+
+  <!-- OneTrust Embedded Web Form Stub -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
+    worker="https://consent-api.onetrust.com">
+  </script>
+
+  <style>
+    :root{
+      --bg:#f6f7f9;
+      --card:#ffffff;
+      --card-soft:#f1f3f6;
+      --text:#0b0c0f;
+      --muted:#6b7280;
+      --accent:#00c97f;
+      --accent-2:#38e8a7;
+      --border:#e5e7eb;
+      --danger:#d92d20;
+
+      --radius:14px;
+      --radius-lg:18px;
+      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+
+      --shadow: 0 12px 32px rgba(0,0,0,.08);
+      --focus: rgba(0,201,127,.25);
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#ffffff 0%, var(--bg) 100%);
+      color:var(--text);
+      font-family:var(--font);
+      display:flex;
+      justify-content:center;
+      padding:40px 16px;
+    }
+
+    .app{ width:100%; max-width:560px; }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .brandLeft{ display:flex; align-items:center; gap:10px; }
+    .brandLeft img{ height:30px; object-fit:contain; display:block; }
+
+    header h1{
+      margin:0;
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:.02em;
+    }
+
+    .sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius-lg);
+      padding:20px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+    }
+
+    .step{ display:none; }
+    .step.active{ display:block; }
+
+    .ticket{
+      padding:14px;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      margin-bottom:12px;
+      background:var(--card-soft);
+    }
+
+    .ticket h3{
+      margin:0;
+      font-size:15px;
+      font-weight:750;
+    }
+
+    .ticket .meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-top:6px;
+    }
+
+    .ticket .info{
+      font-size:13px;
+      color:var(--accent);
+      font-weight:700;
+    }
+
+    .ticket .price{
+      font-weight:900;
+      font-size:15px;
+      white-space:nowrap;
+    }
+
+    .qty{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .qty button{
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      border:1px solid var(--border);
+      background:#fff;
+      font-weight:800;
+      cursor:pointer;
+      color:var(--text);
+    }
+
+    .qty span{
+      min-width:18px;
+      text-align:center;
+      font-weight:800;
+      color:var(--text);
+    }
+
+    .total{
+      display:flex;
+      justify-content:space-between;
+      margin-top:16px;
+      padding-top:12px;
+      border-top:1px solid var(--border);
+      font-weight:900;
+    }
+
+    .cta{
+      width:100%;
+      margin-top:16px;
+      padding:16px;
+      border-radius:var(--radius);
+      border:0;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:#003b26;
+      font-weight:950;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    .sectionTitle{
+      margin:0 0 12px;
+      font-size:18px;
+      font-weight:950;
+    }
+
+    label.ui{
+      display:block;
+      margin-bottom:6px;
+      font-size:13px;
+      font-weight:700;
+      color:var(--muted);
+    }
+
+    input.ui{
+      width:100%;
+      padding:12px;
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      margin-bottom:14px;
+      font-size:14px;
+      background:#fff;
+      color:var(--text);
+    }
+
+    input.ui:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px var(--focus);
+    }
+
+    .note{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:12px;
+      line-height:1.5;
+    }
+
+    .footer{
+      display:flex;
+      justify-content:center;
+      margin-top:14px;
+    }
+
+    .feverPill{
+      background:#0b0c0f;
+      border-radius:999px;
+      padding:10px 14px;
+      border:1px solid #1f2937;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .feverPill img{ height:18px; display:block; }
+
+    .inlineRow{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-bottom:14px;
+    }
+
+    .inlineRow .fieldWrap{
+      flex:1;
+    }
+
+    .inlineBtn{
+      min-width:120px;
+      padding:12px 16px;
+      border-radius:var(--radius);
+      border:0;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:#003b26;
+      font-weight:900;
+      cursor:pointer;
+      font-size:14px;
+      height:46px;
+      margin-top:24px;
+    }
+
+    .helper{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:-6px;
+      margin-bottom:12px;
+    }
+
+    .errorText{
+      color:var(--danger);
+      font-size:12px;
+      margin-top:-6px;
+      margin-bottom:12px;
+      display:none;
+    }
+
+    .successText{
+      font-size:13px;
+      color:var(--accent);
+      font-weight:700;
+      margin-top:10px;
+      display:none;
+    }
+
+    #consentSection{
+      margin-top:6px;
+    }
+
+    #ot-container{
+      margin-top:14px;
+      padding:14px;
+      border-radius:var(--radius);
+      background:var(--card-soft);
+      border:1px solid var(--border);
+      display:none;
+    }
+
+    #ot-container .ot-consent-inline,
+    #ot-container .otwf-content,
+    #ot-container .otwf-close-cntr,
+    #ot-container .ot-form,
+    #ot-container .ot-form-content{
+      background:transparent !important;
+      border:none !important;
+      box-shadow:none !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+
+    #ot-container .otwf-close-cntr{ display:none !important; }
+
+    #ot-container,
+    #ot-container *{
+      font-family:var(--font) !important;
+      color:var(--text) !important;
+    }
+
+    #ot-container .ot-form-content{ display:block; }
+    #ot-container .ot-el{ margin:0 0 12px !important; }
+
+    #ot-container .ot-email .ot-label,
+    #ot-container label.ot-label,
+    #ot-container .ot-label{
+      display:block !important;
+      font-size:13px !important;
+      font-weight:700 !important;
+      color:var(--muted) !important;
+      margin:0 0 6px !important;
+      line-height:1.4 !important;
+    }
+
+    #ot-container input[type="email"],
+    #ot-container input[type="text"],
+    #ot-container select{
+      width:100% !important;
+      padding:12px !important;
+      border-radius:var(--radius) !important;
+      border:1px solid var(--border) !important;
+      background:#fff !important;
+      color:var(--text) !important;
+      font-size:14px !important;
+    }
+
+    #ot-container input[type="email"]:focus,
+    #ot-container input[type="text"]:focus,
+    #ot-container select:focus{
+      outline:none !important;
+      border-color:var(--accent) !important;
+      box-shadow:0 0 0 3px var(--focus) !important;
+    }
+
+    #ot-container .ot-asterisk{
+      color:var(--danger) !important;
+      margin-left:4px !important;
+      font-weight:900 !important;
+    }
+
+    #ot-container .ot-desc{
+      margin:6px 0 0 !important;
+      font-size:12px !important;
+      color:var(--muted) !important;
+      line-height:1.45 !important;
+    }
+
+    #ot-container .ot-desc:empty{ display:none !important; }
+
+    #ot-container .ot-error{
+      display:block !important;
+      margin-top:6px !important;
+      font-size:12px !important;
+      color:var(--danger) !important;
+      line-height:1.35 !important;
+    }
+
+    #ot-container fieldset.ot-chkboxgrp{
+      border:1px solid var(--border) !important;
+      border-radius:var(--radius) !important;
+      padding:12px !important;
+      background:#fff !important;
+      margin:12px 0 !important;
+    }
+
+    #ot-container fieldset.ot-chkboxgrp legend.ot-label{
+      padding:0 8px !important;
+      font-size:12px !important;
+      font-weight:900 !important;
+      color:var(--muted) !important;
+      letter-spacing:.02em !important;
+    }
+
+    #ot-container .otwf-chkbox{
+      display:block !important;
+      margin:10px 0 !important;
+      padding:0 !important;
+      background:transparent !important;
+      border:none !important;
+    }
+
+    #ot-container .otwf-chkbox input[type="checkbox"]{
+      position:absolute !important;
+      opacity:0 !important;
+      width:1px !important;
+      height:1px !important;
+      overflow:hidden !important;
+    }
+
+    #ot-container .otwf-chkbox label{
+      display:flex !important;
+      align-items:flex-start !important;
+      gap:10px !important;
+      cursor:pointer !important;
+      user-select:none !important;
+      margin:0 !important;
+      color:var(--text) !important;
+      font-size:14px !important;
+      line-height:1.45 !important;
+      font-weight:600 !important;
+    }
+
+    #ot-container .otwf-chkbox label::before{
+      content:"" !important;
+      width:18px !important;
+      height:18px !important;
+      min-width:18px !important;
+      border:2px solid #cfd6de !important;
+      background:#fff !important;
+      margin-top:2px !important;
+      transition: all .14s ease !important;
+    }
+
+    #ot-container .otwf-chkbox input[type="checkbox"]:checked + label::before{
+      border-color:var(--accent) !important;
+      background:
+        radial-gradient(circle at center,
+          var(--accent) 46%,
+          transparent 48%) !important;
+    }
+
+    #ot-container .otwf-chkbox input[type="checkbox"]:focus + label::before{
+      box-shadow:0 0 0 3px var(--focus) !important;
+    }
+
+    #ot-container .ot-btns{
+      margin-top:14px !important;
+      padding:0 !important;
+      background:transparent !important;
+      border:none !important;
+    }
+
+    #ot-container .ot-submit{
+      width:100% !important;
+      padding:14px 16px !important;
+      border-radius:var(--radius) !important;
+      border:0 !important;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2)) !important;
+      color:#003b26 !important;
+      font-weight:950 !important;
+      letter-spacing:.01em !important;
+      cursor:pointer !important;
+      box-shadow:0 10px 20px rgba(0,0,0,.10) !important;
+    }
+
+    #ot-container .ot-submit:disabled{
+      background:#e9edf1 !important;
+      color:#9aa0ad !important;
+      box-shadow:none !important;
+      cursor:not-allowed !important;
+    }
+
+    .paymentConfirmation{
+      display:none;
+      margin-top:14px;
+      padding:12px 14px;
+      border-radius:var(--radius);
+      background:#eefcf6;
+      border:1px solid #c7f2de;
+      color:#0f6b48;
+      font-size:13px;
+      font-weight:700;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+
+    <header>
+      <div class="brandLeft">
+        <img alt="LIV Golf" src="https://upload.wikimedia.org/wikipedia/en/thumb/2/27/LIV_golf_logo.svg/960px-LIV_golf_logo.svg.png?20220723195156">
+      </div>
+      <div>
+        <h1>Select ticket type</h1>
+        <div class="sub">LIV Golf · Ticket flow demo (OT white-label)</div>
+      </div>
+    </header>
+
+    <!-- STEP 1 -->
+    <section class="card step active" id="step1">
+      <div class="ticket">
+        <h3>4-Day Pass (June 4–7)</h3>
+        <div class="meta">
+          <div class="info">More info</div>
+          <div class="price">108,57 €</div>
+        </div>
+        <div class="qty"><button type="button">-</button><span>1</span><button type="button">+</button></div>
+      </div>
+
+      <div class="ticket">
+        <h3>Friday (June 5)</h3>
+        <div class="meta">
+          <div class="info">More info</div>
+          <div class="price">29,52 €</div>
+        </div>
+        <div class="qty"><button type="button">-</button><span>0</span><button type="button">+</button></div>
+      </div>
+
+      <div class="total">
+        <span>Total</span>
+        <span>108,57 €</span>
+      </div>
+
+      <button class="cta" id="nextBtn">Buy now</button>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="card step" id="step2">
+      <h2 class="sectionTitle">Contact details</h2>
+
+      <div class="inlineRow">
+        <div class="fieldWrap">
+          <label class="ui" for="email">Email</label>
+          <input class="ui" id="email" type="email" placeholder="your@email.com" autocomplete="email"/>
+        </div>
+        <button class="inlineBtn" id="confirmEmailBtn" type="button">Confirm</button>
+      </div>
+
+      <div id="emailError" class="errorText">Please enter a valid email address.</div>
+
+      <div id="consentSection">
+        <div id="ot-container"></div>
+        <div id="consentSuccess" class="successText">Thanks — we’ll keep you informed.</div>
+      </div>
+
+      <button class="cta" id="toPaymentBtn" type="button" style="display:none;">Continue to payment</button>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="card step" id="step3">
+      <h2 class="sectionTitle">Payment (simulation)</h2>
+
+      <label class="ui" for="cardNumber">Card number</label>
+      <input class="ui" id="cardNumber" value="4242 4242 4242 4242" />
+
+      <label class="ui" for="cardExpiryCvc">Expiry / CVC</label>
+      <input class="ui" id="cardExpiryCvc" value="12/29 · 123" />
+
+      <div class="note">Secure payment · Demo screen only (no validation).</div>
+
+      <button class="cta" id="confirmPaymentBtn" type="button">Confirm purchase</button>
+
+      <div id="paymentConfirmation" class="paymentConfirmation">
+        Purchase confirmed (demo).
+      </div>
+    </section>
+
+    <div class="footer">
+      <div class="feverPill" aria-label="Powered by Fever">
+        <img alt="Fever" src="https://d21buns5ku92am.cloudfront.net/70118/images/560270-Fever%20Logo%20Neg%20CMYK%208680b9%20%206322c5%20Original-8f26b7-original-1730291643.png">
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+
+    const step1 = document.getElementById("step1");
+    const step2 = document.getElementById("step2");
+    const step3 = document.getElementById("step3");
+
+    const nextBtn = document.getElementById("nextBtn");
+    const confirmEmailBtn = document.getElementById("confirmEmailBtn");
+    const toPaymentBtn = document.getElementById("toPaymentBtn");
+    const confirmPaymentBtn = document.getElementById("confirmPaymentBtn");
+
+    const emailInput = document.getElementById("email");
+    const emailError = document.getElementById("emailError");
+    const otContainer = document.getElementById("ot-container");
+    const consentSuccess = document.getElementById("consentSuccess");
+    const paymentConfirmation = document.getElementById("paymentConfirmation");
+
+    let installed = false;
+    let lastConfirmedEmail = "";
+
+    function whenOTReady(cb) {
+      const t = setInterval(() => {
+        if (window.OneTrust?.webform?.InstallCP && window.OneTrust?.webform?.preFill) {
+          clearInterval(t);
+          cb();
+        }
+      }, 80);
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    function goToStep(targetStep) {
+      [step1, step2, step3].forEach(step => step.classList.remove("active"));
+      targetStep.classList.add("active");
+    }
+
+    function prefillEmailInWebform(email) {
+      if (!email) return;
+
+      try {
+        window.OneTrust.webform.preFill({
+          "Email": email
+        }, CP_ID);
+      } catch (e) {
+        console.error("[OT] preFill failed", e);
+      }
+    }
+
+    function installConsentForm(email) {
+      whenOTReady(() => {
+        try {
+          if (!installed) {
+            window.OneTrust.webform.InstallCP(CP_ID, { target:"#ot-container" });
+            installed = true;
+          }
+
+          otContainer.style.display = "block";
+
+          // Try immediately and again shortly after load to ensure the field is populated
+          prefillEmailInWebform(email);
+          setTimeout(() => prefillEmailInWebform(email), 250);
+          setTimeout(() => prefillEmailInWebform(email), 800);
+        } catch (e) {
+          console.error("[OT] InstallCP failed", e);
+        }
+      });
+    }
+
+    nextBtn.addEventListener("click", () => {
+      goToStep(step2);
+    });
+
+    confirmEmailBtn.addEventListener("click", () => {
+      const email = (emailInput.value || "").trim();
+
+      if (!isValidEmail(email)) {
+        emailError.style.display = "block";
+        return;
+      }
+
+      emailError.style.display = "none";
+      consentSuccess.style.display = "none";
+      lastConfirmedEmail = email;
+      installConsentForm(email);
+    });
+
+    toPaymentBtn.addEventListener("click", () => {
+      goToStep(step3);
+    });
+
+    confirmPaymentBtn.addEventListener("click", () => {
+      paymentConfirmation.style.display = "block";
+    });
+
+    const handleFormLoaded = () => {
+      if (lastConfirmedEmail) {
+        prefillEmailInWebform(lastConfirmedEmail);
+      }
+    };
+
+    window.addEventListener("OnetrustFormLoaded", handleFormLoaded);
+    window.addEventListener("OneTrustWebFormLoaded", handleFormLoaded);
+
+    window.addEventListener("OneTrustWebFormSubmitted", (event) => {
+      console.log("OneTrustWebFormSubmitted event triggered", event.detail);
+
+      otContainer.style.display = "none";
+      consentSuccess.style.display = "block";
+      toPaymentBtn.style.display = "block";
+    });
+  </script>
+</body>
+</html>
+``
