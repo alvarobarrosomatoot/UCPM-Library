@@ -1,0 +1,1298 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>OneTrust Luxury Hotel Checkout Demo</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED SCRIPTS
+       These scripts are required for the embedded OneTrust form.
+       Preserve this section and the initialization order.
+  ========================================================== -->
+
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <style>
+    :root {
+      --bg: #f5f0e8;
+      --bg-deep: #ece3d6;
+      --card: rgba(255, 253, 249, 0.88);
+      --card-strong: #fffaf2;
+      --text: #211b14;
+      --muted: #756a5c;
+      --primary: #8a6a3f;
+      --primary-dark: #6c512f;
+      --accent: #d8b783;
+      --accent-soft: rgba(216, 183, 131, 0.18);
+      --border: rgba(93, 72, 47, 0.12);
+      --danger: #b34a41;
+      --success: #2f7d57;
+      --radius: 22px;
+      --radius-sm: 16px;
+      --shadow: 0 18px 55px rgba(51, 34, 15, 0.12);
+      --shadow-soft: 0 12px 30px rgba(51, 34, 15, 0.08);
+      --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font);
+      background:
+        radial-gradient(circle at top left, rgba(216, 183, 131, 0.32), transparent 32%),
+        radial-gradient(circle at top right, rgba(138, 106, 63, 0.15), transparent 26%),
+        linear-gradient(180deg, #f9f5ee 0%, #f2ebe0 42%, #eee4d7 100%);
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 18px 42px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      min-height: 340px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(135deg, rgba(28, 22, 18, 0.18), rgba(28, 22, 18, 0.55)),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 700'><defs><linearGradient id='sky' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23e7d5ba'/><stop offset='45%' stop-color='%23c6a57a'/><stop offset='100%' stop-color='%236b4f34'/></linearGradient></defs><rect width='1600' height='700' fill='url(%23sky)'/><rect x='0' y='420' width='1600' height='280' fill='%236a563f' opacity='0.28'/><rect x='180' y='180' width='320' height='250' rx='18' fill='%23f7f0e4' opacity='0.16'/><rect x='520' y='150' width='420' height='300' rx='18' fill='%23fff8ef' opacity='0.14'/><rect x='980' y='120' width='420' height='330' rx='18' fill='%23fff7e9' opacity='0.12'/><rect x='212' y='212' width='118' height='118' rx='10' fill='%23b68f63' opacity='0.3'/><rect x='350' y='212' width='118' height='118' rx='10' fill='%23b68f63' opacity='0.2'/><rect x='560' y='190' width='160' height='160' rx='12' fill='%23c39a6a' opacity='0.28'/><rect x='740' y='190' width='160' height='160' rx='12' fill='%23c39a6a' opacity='0.17'/><rect x='1020' y='170' width='142' height='142' rx='12' fill='%23d8b783' opacity='0.22'/><rect x='1180' y='170' width='142' height='142' rx='12' fill='%23d8b783' opacity='0.14'/><circle cx='1310' cy='152' r='74' fill='%23fff2d7' opacity='0.24'/></svg>") center/cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 120px;
+      background: linear-gradient(180deg, rgba(245, 240, 232, 0), rgba(245, 240, 232, 0.94));
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      backdrop-filter: blur(8px);
+      background: rgba(255, 248, 238, 0.16);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .brand-chip .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #f1d19a;
+      box-shadow: 0 0 0 6px rgba(241, 209, 154, 0.12);
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      color: #fff;
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 10px;
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      max-width: 640px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .hero-stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-stat {
+      min-width: 130px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 249, 241, 0.16);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.02em;
+    }
+
+    .email-banner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+      gap: 18px;
+      margin-top: -58px;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 22px;
+    }
+
+    .glass-card {
+      background: rgba(255, 251, 246, 0.86);
+      border: 1px solid rgba(99, 72, 43, 0.12);
+      backdrop-filter: blur(18px);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .email-card,
+    .arrival-card {
+      padding: 22px 22px 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 11px;
+      line-height: 1;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .email-title {
+      margin: 0 0 6px;
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+    }
+
+    .email-sub {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .email-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .input-shell {
+      position: relative;
+      flex: 1 1 360px;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      opacity: 0.54;
+    }
+
+    .pill-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      background: var(--accent-soft);
+      border: 1px solid rgba(138, 106, 63, 0.12);
+      white-space: nowrap;
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 14px;
+      font: inherit;
+      color: var(--text);
+      background: #fffdfa;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    input.with-icon {
+      padding-left: 44px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(138, 106, 63, 0.55);
+      box-shadow: 0 0 0 4px rgba(138, 106, 63, 0.11);
+      transform: translateY(-1px);
+    }
+
+    label {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #41362a;
+    }
+
+    .arrival-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      background:
+        linear-gradient(180deg, rgba(255, 252, 247, 0.92), rgba(249, 241, 228, 0.94));
+    }
+
+    .arrival-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .arrival-item {
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(99, 72, 43, 0.08);
+    }
+
+    .arrival-item span {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 800;
+    }
+
+    .arrival-item strong {
+      font-size: 15px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(360px, 0.72fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .panel {
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 252, 247, 0.95), rgba(255, 250, 244, 0.88));
+      border: 1px solid rgba(93, 72, 47, 0.10);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .panel-inner {
+      padding: 26px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      margin: 0 0 6px;
+      font-size: 26px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      font-weight: 800;
+    }
+
+    .panel-sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 680px;
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .room-visual {
+      position: relative;
+      min-height: 360px;
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(29, 24, 20, 0.05), rgba(29, 24, 20, 0.52)),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 900'><defs><linearGradient id='a' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='%23f7ead4'/><stop offset='45%' stop-color='%23d3b184'/><stop offset='100%' stop-color='%23604a36'/></linearGradient></defs><rect width='1200' height='900' fill='url(%23a)'/><rect x='0' y='520' width='1200' height='380' fill='%23574638' opacity='0.34'/><rect x='80' y='150' width='1040' height='420' rx='24' fill='%23fbf3e6' opacity='0.16'/><rect x='130' y='210' width='220' height='180' rx='14' fill='%23cfa56d' opacity='0.25'/><rect x='375' y='210' width='220' height='180' rx='14' fill='%23cfa56d' opacity='0.18'/><rect x='620' y='210' width='220' height='180' rx='14' fill='%23cfa56d' opacity='0.22'/><rect x='865' y='210' width='220' height='180' rx='14' fill='%23cfa56d' opacity='0.16'/><rect x='200' y='560' width='800' height='120' rx='24' fill='%23f4eadb' opacity='0.6'/><rect x='210' y='500' width='780' height='70' rx='18' fill='%23edd9bb' opacity='0.82'/><rect x='220' y='640' width='140' height='32' rx='10' fill='%23b58755' opacity='0.36'/><rect x='840' y='640' width='140' height='32' rx='10' fill='%23b58755' opacity='0.36'/><rect x='80' y='120' width='80' height='440' rx='18' fill='%23f9f2e5' opacity='0.10'/><rect x='1040' y='120' width='80' height='440' rx='18' fill='%23f9f2e5' opacity='0.10'/></svg>") center/cover no-repeat;
+      box-shadow: inset 0 -110px 120px rgba(0,0,0,0.28);
+    }
+
+    .room-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 249, 240, 0.9);
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .room-overlay {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      color: #fff;
+    }
+
+    .room-overlay h3 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+    }
+
+    .room-overlay p {
+      margin: 0;
+      max-width: 520px;
+      color: rgba(255,255,255,0.86);
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .price-chip {
+      min-width: 190px;
+      padding: 16px 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.18);
+      text-align: right;
+    }
+
+    .price-chip span {
+      display: block;
+      font-size: 12px;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .price-chip strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+    }
+
+    .price-chip small {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .summary-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 6px 0 0;
+    }
+
+    .summary-block {
+      padding: 18px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #fffdfa, #fff9f2);
+      border: 1px solid rgba(93, 72, 47, 0.08);
+    }
+
+    .summary-heading {
+      margin: 0 0 14px;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .summary-list,
+    .price-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .summary-item,
+    .price-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .summary-item strong,
+    .price-item strong {
+      font-size: 14px;
+      font-weight: 800;
+      color: #34291e;
+    }
+
+    .summary-item span,
+    .price-item span {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .price-item.total {
+      padding-top: 12px;
+      border-top: 1px solid rgba(93, 72, 47, 0.10);
+    }
+
+    .price-item.total strong,
+    .price-item.total span {
+      font-size: 17px;
+      color: #231a12;
+    }
+
+    .thumb-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .thumb {
+      min-height: 120px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(93, 72, 47, 0.08);
+      background-size: cover;
+      background-position: center;
+      box-shadow: inset 0 -32px 50px rgba(0,0,0,0.18);
+    }
+
+    .thumb::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .thumb.room {
+      background-image:
+        linear-gradient(180deg, rgba(35, 27, 20, 0.08), rgba(35, 27, 20, 0.38)),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'><defs><linearGradient id='g1' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='%23f1dcc0'/><stop offset='100%' stop-color='%23a57b4d'/></linearGradient></defs><rect width='600' height='400' fill='url(%23g1)'/><rect x='40' y='70' width='520' height='190' rx='18' fill='%23f9f2e5' opacity='0.12'/><rect x='90' y='210' width='420' height='80' rx='16' fill='%23f4e4cd' opacity='0.9'/><rect x='100' y='165' width='400' height='50' rx='12' fill='%23e3c39a' opacity='0.88'/><rect x='105' y='225' width='80' height='22' rx='6' fill='%23ba8c5a' opacity='0.4'/><rect x='410' y='225' width='80' height='22' rx='6' fill='%23ba8c5a' opacity='0.4'/><rect x='70' y='95' width='100' height='120' rx='10' fill='%23c59663' opacity='0.25'/><rect x='430' y='95' width='100' height='120' rx='10' fill='%23c59663' opacity='0.25'/></svg>");
+    }
+
+    .thumb.spa {
+      background-image:
+        linear-gradient(180deg, rgba(35, 27, 20, 0.10), rgba(35, 27, 20, 0.36)),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'><defs><linearGradient id='g2' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='%23ead7b8'/><stop offset='100%' stop-color='%23815f3d'/></linearGradient></defs><rect width='600' height='400' fill='url(%23g2)'/><ellipse cx='300' cy='245' rx='170' ry='75' fill='%23f6efe4' opacity='0.82'/><ellipse cx='300' cy='245' rx='140' ry='48' fill='%23d5bb93' opacity='0.65'/><circle cx='240' cy='150' r='36' fill='%23fff4df' opacity='0.58'/><circle cx='300' cy='120' r='44' fill='%23fff4df' opacity='0.42'/><circle cx='360' cy='150' r='36' fill='%23fff4df' opacity='0.58'/></svg>");
+    }
+
+    .thumb.dining {
+      background-image:
+        linear-gradient(180deg, rgba(35, 27, 20, 0.10), rgba(35, 27, 20, 0.42)),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 400'><defs><linearGradient id='g3' x1='0' x2='1' y1='0' y2='1'><stop offset='0%' stop-color='%23f5e3c6'/><stop offset='100%' stop-color='%23947049'/></linearGradient></defs><rect width='600' height='400' fill='url(%23g3)'/><rect x='120' y='110' width='360' height='170' rx='20' fill='%23fff4e4' opacity='0.14'/><ellipse cx='300' cy='240' rx='118' ry='54' fill='%23fbf6ef' opacity='0.88'/><circle cx='300' cy='240' r='58' fill='%23d5aa75' opacity='0.34'/><rect x='276' y='132' width='48' height='60' rx='10' fill='%23fff0da' opacity='0.48'/></svg>");
+    }
+
+    .prefs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .pref-card {
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fffefb, #fff7ee);
+      border: 1px solid rgba(93, 72, 47, 0.08);
+      min-height: 146px;
+    }
+
+    .pref-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      background: var(--accent-soft);
+      color: var(--primary-dark);
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .pref-card h4 {
+      margin: 0 0 6px;
+      font-size: 16px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .pref-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .guest-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .consent-panel,
+    .payment-panel {
+      position: sticky;
+      top: 18px;
+    }
+
+    .consent-wrap {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top right, rgba(216, 183, 131, 0.18), transparent 28%),
+        linear-gradient(180deg, rgba(255, 253, 248, 0.98), rgba(255, 249, 241, 0.94));
+    }
+
+    .consent-wrap::before {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216, 183, 131, 0.14), transparent 68%);
+      pointer-events: none;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--success);
+      background: rgba(47, 125, 87, 0.08);
+      border: 1px solid rgba(47, 125, 87, 0.12);
+    }
+
+    .status-chip::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 6px rgba(47, 125, 87, 0.1);
+    }
+
+    .hint {
+      margin: 0 0 16px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .consent-card {
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(93, 72, 47, 0.08);
+    }
+
+    #ot-container {
+      margin-top: 8px;
+    }
+
+    .payment-card {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 18px;
+      padding: 20px 20px 18px;
+      border-radius: 24px;
+      color: #fff;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.2), transparent 30%),
+        linear-gradient(135deg, #4a3725 0%, #8a6a3f 48%, #d2ac76 100%);
+      box-shadow: 0 16px 34px rgba(87, 61, 35, 0.22);
+    }
+
+    .payment-card::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      top: -80px;
+      right: -50px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .payment-card small {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.86;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .payment-card strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    .payment-card .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .payment-grid .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .trust-pill {
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      background: #fff8ef;
+      border: 1px solid rgba(93, 72, 47, 0.08);
+    }
+
+    /* =========================================================
+       OPTIONAL ONETRUST VISUAL CLEANUP
+       These styles adjust appearance only, not behavior.
+    ========================================================== */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
+    }
+
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 14px !important;
+      line-height: 1.65 !important;
+      font-weight: 500 !important;
+      color: var(--muted) !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start !important;
+      gap: 12px !important;
+      cursor: pointer !important;
+      position: relative !important;
+      padding: 2px 0 !important;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(138, 106, 63, 0.26);
+      margin-top: 2px;
+      transition: all 0.15s ease;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--primary);
+      background: radial-gradient(circle at center, var(--primary) 44%, transparent 46%);
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 4px rgba(138, 106, 63, 0.14);
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 13px !important;
+      margin-top: 4px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 18px !important;
+      padding: 15px 18px !important;
+      border-radius: 16px !important;
+      border: 1px solid rgba(93, 72, 47, 0.08) !important;
+      background: linear-gradient(180deg, #8a6a3f, #6f5430) !important;
+      color: #fff !important;
+      font-weight: 800 !important;
+      cursor: pointer !important;
+      letter-spacing: 0.02em !important;
+      box-shadow: 0 14px 24px rgba(111, 84, 48, 0.18) !important;
+    }
+
+    .ot-submit:hover {
+      background: linear-gradient(180deg, #96744a, #775733) !important;
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      border: 0 !important;
+      white-space: nowrap !important;
+    }
+
+    @media (max-width: 1180px) {
+      .layout,
+      .email-banner,
+      .room-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .consent-panel,
+      .payment-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .prefs-grid,
+      .guest-grid,
+      .payment-grid,
+      .arrival-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .thumb-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-inner,
+      .panel-inner,
+      .email-card,
+      .arrival-card {
+        padding: 22px;
+      }
+
+      .hero {
+        min-height: 300px;
+      }
+
+      .email-banner {
+        margin-top: -30px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell {
+        padding: 14px 12px 28px;
+      }
+
+      .hero-copy h1 {
+        font-size: 34px;
+      }
+
+      .panel-title {
+        font-size: 22px;
+      }
+
+      .email-title {
+        font-size: 22px;
+      }
+
+      .room-overlay h3 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="brand-row">
+          <div class="brand-chip">
+            <span class="dot"></span>
+            The Celestia Grand
+          </div>
+          <div class="brand-chip">Luxury Stay Checkout Experience</div>
+        </div>
+
+        <div class="hero-copy">
+          <h1>Confirm your stay in a room designed for comfort, calm, and privacy.</h1>
+          <p>
+            A premium hotel checkout experience with guest details, curated preferences, payment information,
+            and the OneTrust embedded form loaded automatically from the start.
+          </p>
+        </div>
+
+        <div class="hero-stat-row">
+          <div class="hero-stat">
+            <strong>Suite 1806</strong>
+            <span>Panoramic City & Garden View</span>
+          </div>
+          <div class="hero-stat">
+            <strong>4 Nights</strong>
+            <span>Check-in Tue • Check-out Sat</span>
+          </div>
+          <div class="hero-stat">
+            <strong>2 Guests</strong>
+            <span>Breakfast & wellness access included</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="email-banner">
+      <div class="glass-card email-card">
+        <p class="eyebrow">Guest Contact</p>
+        <h2 class="email-title">Start with the guest email</h2>
+        <p class="email-sub">
+          Keep the email at the top so it is always easy to update. The same <strong>#email</strong> input is preserved for any
+          existing logic or OneTrust-related workflows that depend on it.
+        </p>
+
+        <div class="email-row">
+          <div class="input-shell">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 7.5C4 6.67 4.67 6 5.5 6h13c.83 0 1.5.67 1.5 1.5v9c0 .83-.67 1.5-1.5 1.5h-13C4.67 18 4 17.33 4 16.5v-9Z" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 7l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <label class="visually-hidden" for="email">Email</label>
+            <input id="email" class="with-icon" type="email" placeholder="guest@luxurystay.com" value="olivia.wright@luminahotels.com" required />
+          </div>
+
+          <div class="pill-note">Used for guest identification and consent capture</div>
+        </div>
+      </div>
+
+      <div class="glass-card arrival-card">
+        <p class="eyebrow">Reservation Snapshot</p>
+        <div class="arrival-grid">
+          <div class="arrival-item">
+            <span>Check-in</span>
+            <strong>Tuesday, 14 April</strong>
+          </div>
+          <div class="arrival-item">
+            <span>Check-out</span>
+            <strong>Saturday, 18 April</strong>
+          </div>
+          <div class="arrival-item">
+            <span>Guests</span>
+            <strong>2 adults</strong>
+          </div>
+          <div class="arrival-item">
+            <span>Confirmation</span>
+            <strong>CG-481906</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="stack">
+        <article class="panel">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Room & Stay Details</p>
+                <h2 class="panel-title">Luxury room checkout with a premium hospitality feel</h2>
+                <p class="panel-sub">
+                  Present the stay details visually, show the room, highlight the booking preferences, and keep the experience elevated while preserving the original embedded form behavior.
+                </p>
+              </div>
+            </div>
+
+            <div class="room-grid">
+              <div>
+                <div class="room-visual">
+                  <div class="room-badge">Signature Collection</div>
+                  <div class="room-overlay">
+                    <div>
+                      <h3>Skyline Signature Suite</h3>
+                      <p>
+                        Spacious king suite with floor-to-ceiling windows, marble bathroom, private lounge corner,
+                        artisan minibar, and a serene neutral palette inspired by boutique luxury hotels.
+                      </p>
+                    </div>
+                    <div class="price-chip">
+                      <span>Total Stay</span>
+                      <strong>€1,860</strong>
+                      <small>Taxes and breakfast included</small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="thumb-grid">
+                  <div class="thumb room" data-label="Suite Interior"></div>
+                  <div class="thumb spa" data-label="Wellness Access"></div>
+                  <div class="thumb dining" data-label="Private Dining"></div>
+                </div>
+              </div>
+
+              <aside class="summary-card">
+                <div class="summary-block">
+                  <h3 class="summary-heading">Stay Summary</h3>
+                  <div class="summary-list">
+                    <div class="summary-item">
+                      <strong>Hotel</strong>
+                      <span>The Celestia Grand · Madrid Edition</span>
+                    </div>
+                    <div class="summary-item">
+                      <strong>Room</strong>
+                      <span>Skyline Signature Suite with King Bed</span>
+                    </div>
+                    <div class="summary-item">
+                      <strong>Nights</strong>
+                      <span>4 nights · Tue 14 Apr → Sat 18 Apr</span>
+                    </div>
+                    <div class="summary-item">
+                      <strong>Guests</strong>
+                      <span>2 adults · Quiet floor requested</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="summary-block">
+                  <h3 class="summary-heading">Pricing</h3>
+                  <div class="price-list">
+                    <div class="price-item">
+                      <strong>Suite rate</strong>
+                      <span>€410 × 4 nights</span>
+                    </div>
+                    <div class="price-item">
+                      <strong>Breakfast & lounge</strong>
+                      <span>Included</span>
+                    </div>
+                    <div class="price-item">
+                      <strong>Airport transfer</strong>
+                      <span>€80</span>
+                    </div>
+                    <div class="price-item">
+                      <strong>City tax</strong>
+                      <span>€140</span>
+                    </div>
+                    <div class="price-item total">
+                      <strong>Grand total</strong>
+                      <span>€1,860</span>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Guest Preferences</p>
+                <h2 class="panel-title">Curated stay selections</h2>
+                <p class="panel-sub">
+                  Showcase preferences in a richer, more visual way so the page feels like a polished hotel reservation experience instead of a basic checkout.
+                </p>
+              </div>
+            </div>
+
+            <div class="prefs-grid">
+              <div class="pref-card">
+                <div class="pref-icon">↑</div>
+                <h4>High Floor</h4>
+                <p>Assigned to the upper quiet wing with panoramic evening skyline views and reduced corridor traffic.</p>
+              </div>
+
+              <div class="pref-card">
+                <div class="pref-icon">♛</div>
+                <h4>King Bed Setup</h4>
+                <p>Premium king configuration with linen upgrade, layered pillows, and evening turn-down service.</p>
+              </div>
+
+              <div class="pref-card">
+                <div class="pref-icon">⏰</div>
+                <h4>Late Check-out</h4>
+                <p>Extended departure requested for 2:00 PM, subject to availability and already noted on the booking.</p>
+              </div>
+
+              <div class="pref-card">
+                <div class="pref-icon">☕</div>
+                <h4>Breakfast Included</h4>
+                <p>Daily breakfast for two with à la carte options, fresh pastries, and barista coffee service.</p>
+              </div>
+
+              <div class="pref-card">
+                <div class="pref-icon">✈</div>
+                <h4>Airport Transfer</h4>
+                <p>Executive car transfer scheduled at arrival with driver meet-and-greet in the terminal hall.</p>
+              </div>
+
+              <div class="pref-card">
+                <div class="pref-icon">☾</div>
+                <h4>Quiet Room & Extras</h4>
+                <p>Extra pillows, aromatherapy turndown, and a room placement away from elevators for a calmer stay.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Guest Profile</p>
+                <h2 class="panel-title">Guest details and special notes</h2>
+                <p class="panel-sub">
+                  The original fields are preserved, with the same IDs where relevant, so the page remains compatible with any existing logic while fitting the hotel experience.
+                </p>
+              </div>
+            </div>
+
+            <div class="guest-grid">
+              <div class="field">
+                <label for="name">Guest Name</label>
+                <input id="name" type="text" placeholder="Olivia Wright" value="Olivia Wright" />
+              </div>
+
+              <div class="field">
+                <label for="nationality">Nationality</label>
+                <input id="nationality" type="text" placeholder="Spanish" value="British" />
+              </div>
+
+              <div class="field">
+                <label for="country">Country of Residence</label>
+                <input id="country" type="text" placeholder="Spain" value="United Kingdom" />
+              </div>
+
+              <div class="field">
+                <label for="room-pref">Arrival Preference</label>
+                <input id="room-pref" type="text" placeholder="Quiet room, high floor" value="Quiet room near skyline side" />
+              </div>
+
+              <div class="field full">
+                <label for="notes">Additional Notes</label>
+                <input id="notes" type="text" placeholder="Extra attribute for the demo" value="Celebration stay · Welcome fruit amenity requested · Late check-out preferred." />
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <aside class="stack">
+        <article class="panel consent-panel">
+          <div class="panel-inner consent-wrap">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Privacy & Preferences</p>
+                <h2 class="panel-title">OneTrust embedded form</h2>
+                <p class="panel-sub">
+                  The consent form loads automatically at page start and renders inside the preserved <strong>#ot-container</strong> target.
+                </p>
+              </div>
+            </div>
+
+            <div class="status-chip">Loaded automatically on page start</div>
+
+            <div class="consent-card">
+              <p class="hint">
+                Review guest privacy preferences and confirm consent directly within the experience. The OneTrust mounting behavior remains unchanged and is still driven by <strong>InstallCP()</strong>.
+              </p>
+
+              <div id="ot-container"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel payment-panel">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Payment</p>
+                <h2 class="panel-title">Credit card details</h2>
+                <p class="panel-sub">
+                  Demo card information is prefilled for convenience while keeping the page ready for repeated workshop use.
+                </p>
+              </div>
+            </div>
+
+            <div class="payment-card">
+              <small>Preferred Payment Method</small>
+              <strong>4242&nbsp;&nbsp;4242&nbsp;&nbsp;4242&nbsp;&nbsp;4242</strong>
+              <div class="meta">
+                <span>Olivia Wright</span>
+                <span>04 / 29 · Demo Visa</span>
+              </div>
+            </div>
+
+            <div class="payment-grid">
+              <div class="field full">
+                <label for="cc-name">Cardholder Name</label>
+                <input id="cc-name" type="text" value="Olivia Wright" />
+              </div>
+
+              <div class="field full">
+                <label for="cc-number">Card Number</label>
+                <input id="cc-number" type="text" inputmode="numeric" value="4242 4242 4242 4242" />
+              </div>
+
+              <div class="field">
+                <label for="cc-exp">Expiry Date</
