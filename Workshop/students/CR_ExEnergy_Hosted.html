@@ -1,0 +1,776 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trust Energy | Powering Progress Responsibly</title>
+  <meta name="description" content="Trust Energy provides reliable fuel, gas, and energy solutions for homes, businesses, and industry." />
+  <style>
+    :root{
+      --navy:#0b3a66;
+      --navy-2:#0a2f52;
+      --gold:#f2b300;
+      --gold-2:#ffcc4d;
+      --ink:#0f172a;
+      --muted:#475569;
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --border:rgba(15, 23, 42, .10);
+      --shadow:0 10px 30px rgba(2, 8, 23, .10);
+      --radius:16px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.45;
+    }
+
+    /* ===== Header / Nav ===== */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(255,255,255,.80);
+      backdrop-filter:saturate(180%) blur(14px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:240px;
+    }
+    .brand img{
+      height:44px;
+      width:auto;
+      display:block;
+    }
+    .brand .tag{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand .tag strong{
+      font-size:14px;
+      letter-spacing:.3px;
+    }
+    .brand .tag span{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .navlinks{
+      display:flex;
+      gap:14px;
+      flex:1;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .navlinks a{
+      text-decoration:none;
+      color:var(--ink);
+      font-weight:600;
+      font-size:14px;
+      padding:8px 10px;
+      border-radius:10px;
+      transition:.15s ease;
+    }
+    .navlinks a:hover{
+      background:rgba(11,58,102,.08);
+      color:var(--navy);
+    }
+
+    .navcta{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-end;
+      min-width:260px;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--border);
+      background:#fff;
+      color:var(--ink);
+      font-weight:700;
+      font-size:14px;
+      padding:10px 14px;
+      border-radius:12px;
+      cursor:pointer;
+      transition:.15s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 8px 18px rgba(2,8,23,.10)}
+    .btn:active{transform:translateY(0)}
+    .btn-primary{
+      background:linear-gradient(135deg, var(--navy), var(--navy-2));
+      color:#fff;
+      border-color:rgba(255,255,255,.08);
+    }
+    .btn-primary:hover{box-shadow:0 12px 26px rgba(11,58,102,.25)}
+    .btn-gold{
+      background:linear-gradient(135deg, var(--gold), var(--gold-2));
+      color:#1a1a1a;
+      border-color:rgba(0,0,0,.08);
+    }
+
+    /* ===== Hero ===== */
+    .hero{
+      max-width:var(--max);
+      margin:18px auto 0;
+      padding:0 18px 22px;
+    }
+    .heroCard{
+      border-radius:24px;
+      overflow:hidden;
+      background:
+        linear-gradient(90deg, rgba(11,58,102,.92), rgba(11,58,102,.78) 55%, rgba(11,58,102,.30)),
+        url("https://images.unsplash.com/photo-1615751072497-5f5169febe17?auto=format&fit=crop&w=2400&q=80");
+      background-size:cover;
+      background-position:center;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .heroInner{
+      padding:56px 28px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:26px;
+      align-items:center;
+    }
+    .kicker{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-weight:700;
+      font-size:13px;
+      letter-spacing:.35px;
+      color:rgba(255,255,255,.88);
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      padding:8px 12px;
+      border-radius:999px;
+      width:max-content;
+    }
+    .kicker .dot{
+      width:10px;height:10px;border-radius:999px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-2));
+      box-shadow:0 0 0 3px rgba(242,179,0,.15);
+    }
+    h1{
+      margin:14px 0 10px;
+      color:#fff;
+      font-size:42px;
+      line-height:1.06;
+      letter-spacing:-.6px;
+    }
+    .lead{
+      margin:0;
+      color:rgba(255,255,255,.90);
+      font-size:16px;
+      max-width:56ch;
+    }
+    .heroActions{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .heroNote{
+      margin-top:12px;
+      color:rgba(255,255,255,.75);
+      font-size:12px;
+    }
+
+    .heroMini{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:18px;
+      padding:18px;
+      color:#fff;
+    }
+    .miniTitle{font-weight:800; margin:0 0 8px; letter-spacing:.2px}
+    .miniList{margin:0; padding-left:18px; color:rgba(255,255,255,.88)}
+    .miniList li{margin:8px 0}
+
+    /* ===== Sections ===== */
+    section{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:26px 18px;
+    }
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:14px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size:26px;
+      letter-spacing:-.3px;
+    }
+    .sectionHead p{
+      margin:0;
+      color:var(--muted);
+      max-width:70ch;
+      font-size:14px;
+    }
+
+    .grid{
+      display:grid;
+      gap:14px;
+      grid-template-columns:repeat(12, 1fr);
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      box-shadow:0 8px 18px rgba(2,8,23,.06);
+    }
+    .card h3{margin:0 0 8px; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:14px}
+    .icon{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      background:rgba(11,58,102,.10);
+      border:1px solid rgba(11,58,102,.15);
+      margin-bottom:10px;
+      font-weight:900;
+      color:var(--navy);
+    }
+
+    .span-4{grid-column:span 4}
+    .span-6{grid-column:span 6}
+    .span-8{grid-column:span 8}
+    .span-12{grid-column:span 12}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:12px;
+    }
+    .stat{
+      padding:14px 16px;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      text-align:left;
+    }
+    .stat strong{display:block; font-size:18px}
+    .stat span{color:var(--muted); font-size:12px}
+
+    /* ===== Loyalty section highlight ===== */
+    .banner{
+      background:linear-gradient(135deg, rgba(242,179,0,.18), rgba(11,58,102,.10));
+      border:1px solid rgba(242,179,0,.25);
+      border-radius:22px;
+      padding:18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .banner h3{margin:0; font-size:18px}
+    .banner p{margin:6px 0 0; color:var(--muted); font-size:14px; max-width:70ch}
+
+    /* ===== Footer ===== */
+    footer{
+      background:#071a2c;
+      color:rgba(255,255,255,.86);
+      margin-top:10px;
+    }
+    .footerInner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:26px 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr .8fr .8fr;
+      gap:18px;
+    }
+    .footerBrand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .footerBrand img{height:40px; width:auto; background:#fff; border-radius:12px; padding:6px}
+    .footerCol h4{margin:0 0 10px; font-size:14px}
+    .footerCol a{
+      color:rgba(255,255,255,.78);
+      text-decoration:none;
+      display:block;
+      margin:8px 0;
+      font-size:13px;
+    }
+    .footerCol a:hover{color:#fff}
+    .footBottom{
+      border-top:1px solid rgba(255,255,255,.12);
+      padding:12px 18px;
+      max-width:var(--max);
+      margin:0 auto;
+      font-size:12px;
+      color:rgba(255,255,255,.65);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    /* ===== Modal ===== */
+    .modalOverlay{
+      position:fixed;
+      inset:0;
+      background:rgba(2,8,23,.62);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:100;
+      padding:18px;
+    }
+    .modal{
+      width:min(980px, 96vw);
+      height:min(80vh, 760px);
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 22px 60px rgba(2,8,23,.35);
+      display:flex;
+      flex-direction:column;
+      border:1px solid rgba(0,0,0,.10);
+    }
+    .modalHeader{
+      padding:12px 14px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background:linear-gradient(135deg, rgba(11,58,102,.06), rgba(242,179,0,.08));
+    }
+    .modalHeader strong{font-size:14px}
+    .modalHeader span{font-size:12px; color:var(--muted)}
+    .modalClose{
+      border:1px solid var(--border);
+      background:#fff;
+      border-radius:10px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:800;
+    }
+    .modalBody{
+      flex:1;
+      background:#fff;
+    }
+    .modalBody iframe{
+      width:100%;
+      height:100%;
+      border:0;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 980px){
+      .heroInner{grid-template-columns:1fr}
+      h1{font-size:36px}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .footerInner{grid-template-columns:1fr 1fr}
+      .brand{min-width:auto}
+      .navcta{min-width:auto}
+    }
+    @media (max-width: 640px){
+      h1{font-size:30px}
+      .span-4,.span-6,.span-8{grid-column:span 12}
+      .stats{grid-template-columns:1fr}
+      .footerInner{grid-template-columns:1fr}
+      .navlinks{justify-content:flex-start}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top navigation -->
+  <div class="topbar">
+    <div class="nav" role="navigation" aria-label="Primary">
+      <div class="brand" aria-label="Trust Energy">
+        <!-- Put "Logo OT Energy.png" in same folder as this HTML file -->
+        <img src="Logo OT Energy.png" alt="Trust Energy logo" />
+        <div class="tag">
+          <strong>Trust Energy</strong>
+          <span>Energy • Fuel • Gas</span>
+        </div>
+      </div>
+
+      <div class="navlinks">
+        <a href="#services">Services</a>
+        <a href="#products">Products</a>
+        <a href="#sustainability">Sustainability</a>
+        <a href="#loyalty">Loyalty Program</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="navcta">
+        <button class="btn btn-primary" id="openStayInformed" type="button" aria-haspopup="dialog">
+          Stay informed
+          <span aria-hidden="true">↗</span>
+        </button>
+        <a class="btn" href="#loyalty">Explore loyalty</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="heroCard">
+      <div class="heroInner">
+        <div>
+          <div class="kicker"><span class="dot"></span> Reliable supply • Safe operations • Transparent communications</div>
+          <h1>Powering progress, responsibly.</h1>
+          <p class="lead">
+            Trust Energy delivers dependable fuel and gas solutions for homes, fleets, and industry — backed by strong safety standards,
+            operational excellence, and a growing portfolio of lower‑carbon initiatives.
+          </p>
+
+          <div class="heroActions">
+            <a class="btn btn-gold" href="#products">Browse products</a>
+            <a class="btn" href="#services">View services</a>
+            <button class="btn btn-primary" type="button" id="openStayInformed2">Stay informed</button>
+          </div>
+
+          <div class="heroNote">
+            Demo website • Non-production • Forms open in OneTrust hosted webforms.
+          </div>
+        </div>
+
+        <aside class="heroMini" aria-label="Highlights">
+          <p class="miniTitle">What we do</p>
+          <ul class="miniList">
+            <li>Retail fuels and premium additives</li>
+            <li>Industrial gas supply & distribution</li>
+            <li>Bulk delivery and fleet solutions</li>
+            <li>Safety audits & compliance readiness</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick stats -->
+  <section aria-label="Operational stats">
+    <div class="stats">
+      <div class="stat"><strong>24/7</strong><span>Supply monitoring</span></div>
+      <div class="stat"><strong>+1,200</strong><span>Delivery routes supported</span></div>
+      <div class="stat"><strong>99.9%</strong><span>On-time fulfillment (target)</span></div>
+      <div class="stat"><strong>ISO-aligned</strong><span>Safety & quality practices</span></div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" aria-label="Services">
+    <div class="sectionHead">
+      <div>
+        <h2>Services</h2>
+        <p>End‑to‑end operational services to keep energy flowing: from procurement and logistics to compliance and customer support.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card span-4">
+        <div class="icon">⛽</div>
+        <h3>Fleet Fueling</h3>
+        <p>Managed accounts, consolidated billing, driver controls, and reporting — designed for multi‑site operations.</p>
+      </div>
+      <div class="card span-4">
+        <div class="icon">🚚</div>
+        <h3>Bulk Delivery</h3>
+        <p>Scheduled or on‑demand deliveries for commercial sites, with proactive monitoring and replenishment options.</p>
+      </div>
+      <div class="card span-4">
+        <div class="icon">🧯</div>
+        <h3>Safety & Compliance</h3>
+        <p>Site assessments, training, documentation support, and safety readiness programs aligned to best practices.</p>
+      </div>
+      <div class="card span-6">
+        <div class="icon">🏭</div>
+        <h3>Industrial Supply</h3>
+        <p>Reliable sourcing for industrial customers, including logistics coordination and supply continuity planning.</p>
+      </div>
+      <div class="card span-6">
+        <div class="icon">📈</div>
+        <h3>Market Insights</h3>
+        <p>Transparent updates on supply conditions, operational notices, and service communications to support planning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="products" aria-label="Products">
+    <div class="sectionHead">
+      <div>
+        <h2>Products</h2>
+        <p>A practical portfolio for consumer and industrial needs — with quality controls and consistent supply.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card span-4">
+        <div class="icon">🟦</div>
+        <h3>Premium Gasoline</h3>
+        <p>High‑performance blends with detergent additives designed to support engine efficiency and reliability.</p>
+      </div>
+      <div class="card span-4">
+        <div class="icon">⬛</div>
+        <h3>Ultra‑Low Sulfur Diesel</h3>
+        <p>Optimized for modern fleets with consistent standards and supply options for distribution networks.</p>
+      </div>
+      <div class="card span-4">
+        <div class="icon">🟨</div>
+        <h3>Industrial Gas</h3>
+        <p>Supply programs for industrial usage with delivery coordination and consumption planning support.</p>
+      </div>
+
+      <div class="card span-8">
+        <div class="icon">🧪</div>
+        <h3>Specialty Additives & Lubricants</h3>
+        <p>Curated options for performance and maintenance — aligned to typical OEM requirements and operational conditions.</p>
+      </div>
+      <div class="card span-4">
+        <div class="icon">🧰</div>
+        <h3>On‑Site Storage</h3>
+        <p>Guidance for safe storage setups, monitoring, and operational best practices to reduce downtime.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sustainability -->
+  <section id="sustainability" aria-label="Sustainability">
+    <div class="sectionHead">
+      <div>
+        <h2>Sustainability</h2>
+        <p>We invest in operational efficiency, emissions awareness, and modernized logistics — while maintaining safety and reliability.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card span-6">
+        <h3>Operational efficiency</h3>
+        <p>Route optimization, preventive maintenance, and supply forecasting to reduce avoidable waste and improve consistency.</p>
+      </div>
+      <div class="card span-6">
+        <h3>Transparent communications</h3>
+        <p>Clear updates on service notices, supply events, and customer information to support timely decisions.</p>
+      </div>
+      <div class="card span-12">
+        <h3>Want updates?</h3>
+        <p style="margin-bottom:12px;color:var(--muted)">
+          Subscribe to operational notices and product updates. This opens a hosted OneTrust consent webform in a popup.
+        </p>
+        <button class="btn btn-primary" type="button" id="openStayInformed3">Stay informed</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loyalty -->
+  <section id="loyalty" aria-label="Loyalty Program">
+    <div class="sectionHead">
+      <div>
+        <h2>Loyalty Program</h2>
+        <p>Rewards designed for frequent customers: earn points, unlock member pricing, and access partner offers.</p>
+      </div>
+    </div>
+
+    <div class="banner">
+      <div>
+        <h3>Trust Energy Rewards</h3>
+        <p>Join the loyalty program to receive member‑only offers and updates. Clicking below redirects to your hosted OneTrust webform.</p>
+      </div>
+      <a class="btn btn-gold" href="https://privacyportaltrial.onetrust.com/hosted-webform/consent/811cf1fa-da80-41f0-bfbb-ce294e610fd2/ab371006-eacc-476b-bb65-7c141782bbe7" target="_blank" rel="noopener">
+        Join the loyalty program
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <div class="card span-4">
+        <div class="icon">⭐</div>
+        <h3>Earn points</h3>
+        <p>Collect points on eligible purchases and track progress across participating stations.</p>
+      </div>
+      <div class="card span-4">
+        <div class="icon">🏷️</div>
+        <h3>Member pricing</h3>
+        <p>Access limited‑time discounts and partner promotions — subject to availability and local terms.</p>
+      </div>
+      <div class="card span-4">
+        <div class="icon">🎁</div>
+        <h3>Redeem rewards</h3>
+        <p>Redeem for fuel credits, convenience store offers, and seasonal promotions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" aria-label="Contact">
+    <div class="sectionHead">
+      <div>
+        <h2>Contact</h2>
+        <p>For commercial supply, fleet services, or general inquiries, contact our team.</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card span-6">
+        <h3>Commercial & Industrial</h3>
+        <p><strong>Email:</strong> commercial@trustenergy.example</p>
+        <p><strong>Phone:</strong> +34 900 123 456</p>
+        <p style="color:var(--muted);margin-top:8px">Mon–Fri, 9:00–18:00 (local time)</p>
+      </div>
+      <div class="card span-6">
+        <h3>Customer Support</h3>
+        <p><strong>Email:</strong> support@trustenergy.example</p>
+        <p><strong>Phone:</strong> +34 900 654 321</p>
+        <p style="color:var(--muted);margin-top:8px">24/7 service notices and assistance</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer aria-label="Footer">
+    <div class="footerInner">
+      <div>
+        <div class="footerBrand">
+          <img src="Logo OT Energy.png" alt="Trust Energy logo small" />
+          <div>
+            <strong style="display:block">Trust Energy</strong>
+            <span style="color:rgba(255,255,255,.70);font-size:12px">Fuel • Gas • Energy Services</span>
+          </div>
+        </div>
+        <p style="margin:12px 0 0;color:rgba(255,255,255,.72);font-size:13px;max-width:55ch">
+          This is a fictional demo website created for showcasing consent collection experiences using OneTrust hosted webforms.
+        </p>
+      </div>
+
+      <div class="footerCol">
+        <h4>Company</h4>
+        <a href="#services">Services</a>
+        <a href="#products">Products</a>
+        <a href="#sustainability">Sustainability</a>
+        <a href="#loyalty">Loyalty Program</a>
+      </div>
+
+      <div class="footerCol">
+        <h4>Resources</h4>
+        <a href="#" onclick="openStayInformed(); return false;">Stay informed</a>
+        <a href="#contact">Support</a>
+        <a href="#">Safety & compliance</a>
+        <a href="#">Terms (demo)</a>
+      </div>
+
+      <div class="footerCol">
+        <h4>Contact</h4>
+        <a href="mailto:support@trustenergy.example">support@trustenergy.example</a>
+        <a href="tel:+34900654321">+34 900 654 321</a>
+        <a href="#">Madrid • EMEA Operations</a>
+      </div>
+    </div>
+
+    <div class="footBottom">
+      <div>© <span id="year"></span> Trust Energy. All rights reserved (demo).</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <span>Privacy (demo)</span>
+        <span>Cookies (demo)</span>
+        <span>Accessibility (demo)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal / Popup for "Stay informed" -->
+  <div class="modalOverlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal" role="document">
+      <div class="modalHeader">
+        <div>
+          <strong id="modalTitle">Stay informed</strong><br/>
+          <span>Complete the hosted consent form below.</span>
+        </div>
+        <button class="modalClose" id="closeModal" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="modalBody">
+        <iframe
+          id="stayInformedFrame"
+          title="OneTrust Hosted Webform - Stay informed"
+          src="about:blank"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // OneTrust hosted webform URLs (as provided)
+    const STAY_INFORMED_URL =
+      "https://privacyportaltrial.onetrust.com/hosted-webform/consent/811cf1fa-da80-41f0-bfbb-ce294e610fd2/0653d706-166e-4c57-923a-45576aebab71";
+
+    const overlay = document.getElementById("modalOverlay");
+    const frame   = document.getElementById("stayInformedFrame");
+    const closeBtn= document.getElementById("closeModal");
+
+    function openStayInformed(){
+      // load only when opening (keeps page faster)
+      frame.src = STAY_INFORMED_URL;
+      overlay.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      closeBtn.focus();
+    }
+
+    function closeStayInformed(){
+      overlay.style.display = "none";
+      document.body.style.overflow = "";
+      // optional: clear iframe to stop any audio/network
+      frame.src = "about:blank";
+    }
+
+    // Wire buttons
+    document.getElementById("openStayInformed").addEventListener("click", openStayInformed);
+    document.getElementById("openStayInformed2").addEventListener("click", openStayInformed);
+    document.getElementById("openStayInformed3").addEventListener("click", openStayInformed);
+    closeBtn.addEventListener("click", closeStayInformed);
+
+    // Close when clicking outside modal content
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) closeStayInformed();
+    });
+
+    // Close on Esc
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && overlay.style.display === "flex") closeStayInformed();
+    });
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
