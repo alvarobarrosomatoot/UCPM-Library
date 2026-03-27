@@ -1,0 +1,815 @@
+<!-- Description:
+     Premium consent collection webpage inspired by Trivalor's public site positioning.
+     Existing OneTrust behavior is preserved:
+     - OtSdk bootstrap
+     - External OT script
+     - CP_ID
+     - whenOTReady polling
+     - DOMContentLoaded auto-load
+     - InstallCP target: #ot-container
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Consent Collection | Business & Facility Services</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED SCRIPTS
+       PRESERVED AS-IS FUNCTIONALLY
+  ========================================================== -->
+
+  <!-- Required OneTrust bootstrap -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <!-- OneTrust embedded form library -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="86cfa775-f542-42b6-8f6d-30a22fc81ba1"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <!-- =========================================================
+       2) PAGE STYLES
+       Redesigned presentation only
+  ========================================================== -->
+  <style>
+    :root {
+      --bg-dark: #0f1f33;
+      --bg-deep: #13263f;
+      --bg-soft: #eef4f8;
+      --surface: rgba(255,255,255,0.96);
+      --surface-2: rgba(255,255,255,0.88);
+      --text: #182533;
+      --muted: #5d6d7f;
+      --primary: #0f5f89;
+      --primary-strong: #0b4b6d;
+      --accent: #d6a84f;
+      --accent-soft: rgba(214, 168, 79, 0.14);
+      --line: rgba(24, 37, 51, 0.10);
+      --line-strong: rgba(24, 37, 51, 0.16);
+      --danger: #c23b33;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 12px;
+      --shadow-xl: 0 32px 80px rgba(12, 24, 38, 0.32);
+      --shadow-lg: 0 18px 40px rgba(17, 32, 49, 0.14);
+      --shadow-md: 0 10px 24px rgba(17, 32, 49, 0.10);
+      --font: "Segoe UI", Inter, system-ui, -apple-system, Roboto, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(214, 168, 79, 0.18), transparent 22%),
+        radial-gradient(circle at top right, rgba(15, 95, 137, 0.22), transparent 28%),
+        linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-deep) 38%, #eff4f8 38%, #f5f8fb 100%);
+    }
+
+    body {
+      padding: 36px 16px 56px;
+    }
+
+    .page {
+      max-width: 1260px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(9, 36, 57, 0.96), rgba(15, 95, 137, 0.92) 56%, rgba(214, 168, 79, 0.88) 140%);
+      color: #fff;
+      padding: 30px 30px 26px;
+      box-shadow: var(--shadow-xl);
+      margin-bottom: 24px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -50px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.18), rgba(255,255,255,0.02) 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: -30px;
+      bottom: -50px;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(214,168,79,0.18), rgba(214,168,79,0.02) 72%);
+      pointer-events: none;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(8px);
+    }
+
+    .brand-emblem {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(214,168,79,1), rgba(255,235,190,0.92));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-emblem::before,
+    .brand-emblem::after {
+      content: "";
+      position: absolute;
+      background: rgba(9, 36, 57, 0.88);
+      border-radius: 999px;
+    }
+
+    .brand-emblem::before {
+      width: 20px;
+      height: 4px;
+      top: 14px;
+      left: 11px;
+    }
+
+    .brand-emblem::after {
+      width: 12px;
+      height: 4px;
+      top: 22px;
+      left: 11px;
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.76);
+      font-weight: 700;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .hero h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-width: 860px;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 840px;
+      font-size: 15px;
+      line-height: 1.72;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(340px, 0.82fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .panel-inner {
+      padding: 24px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title h2 {
+      margin: 0 0 6px;
+      font-size: 21px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .panel-title p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 700px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--primary-strong);
+      border: 1px solid rgba(214, 168, 79, 0.22);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .email-panel {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.92));
+    }
+
+    .email-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) auto;
+      gap: 16px;
+      align-items: end;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 50px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      padding: 14px 14px;
+      font: inherit;
+      color: var(--text);
+      transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease;
+    }
+
+    input::placeholder,
+    select {
+      color: #8a99a9;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: rgba(15,95,137,0.72);
+      box-shadow:
+        0 0 0 4px rgba(15,95,137,0.10),
+        0 10px 24px rgba(15,95,137,0.08);
+      transform: translateY(-1px);
+    }
+
+    .highlight-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .mini-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(15,95,137,0.06);
+      border: 1px solid rgba(15,95,137,0.10);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .mini-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      flex: 0 0 auto;
+    }
+
+    .section-kicker {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7a8796;
+      margin-bottom: 12px;
+    }
+
+    .service-block {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .helper {
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .consent-panel {
+      position: sticky;
+      top: 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.94));
+    }
+
+    .consent-card {
+      border-radius: 18px;
+      padding: 18px;
+      background:
+        linear-gradient(180deg, rgba(15,95,137,0.05), rgba(214,168,79,0.05));
+      border: 1px solid rgba(15,95,137,0.08);
+      margin-top: 12px;
+    }
+
+    .consent-note {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    #ot-container {
+      margin-top: 16px;
+    }
+
+    .trust-strip {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .trust-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.84);
+    }
+
+    .trust-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .trust-item span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .trust-value {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary-strong);
+      white-space: nowrap;
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #7a8796;
+    }
+
+    /* =========================================================
+       OPTIONAL ONETRUST VISUAL CLEANUP
+       Visual only; functionality preserved
+    ========================================================== */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+      color: inherit !important;
+    }
+
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container span.ot-label {
+      font-size: 14px !important;
+      line-height: 1.65 !important;
+      font-weight: 500 !important;
+      color: var(--muted) !important;
+    }
+
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      padding: 3px 0;
+    }
+
+    #ot-container .otwf-chkbox label::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      margin-top: 2px;
+      border: 2px solid rgba(15,95,137,0.24);
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(15,95,137,0.08);
+      transition: all 0.18s ease;
+    }
+
+    #ot-container input[type="checkbox"]:checked + label::before {
+      border-color: var(--primary);
+      background: radial-gradient(circle at center, var(--primary) 44%, transparent 47%);
+    }
+
+    #ot-container input[type="checkbox"]:focus + label::before {
+      box-shadow: 0 0 0 4px rgba(15,95,137,0.12);
+    }
+
+    .ot-error {
+      color: var(--danger) !important;
+      font-size: 13px !important;
+      margin-top: 4px !important;
+    }
+
+    .ot-submit {
+      width: 100% !important;
+      margin-top: 18px !important;
+      min-height: 52px !important;
+      padding: 14px 16px !important;
+      border-radius: 14px !important;
+      border: 1px solid rgba(15,95,137,0.12) !important;
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong)) !important;
+      color: #fff !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.01em !important;
+      cursor: pointer !important;
+      box-shadow: 0 12px 28px rgba(15,95,137,0.20) !important;
+    }
+
+    .ot-submit:hover {
+      filter: brightness(1.03) !important;
+    }
+
+    @media (max-width: 1080px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .consent-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 18px 12px 34px;
+      }
+
+      .hero {
+        padding: 22px 18px 20px;
+      }
+
+      .panel-inner {
+        padding: 18px;
+      }
+
+      .email-grid,
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .highlight-box {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <!-- =========================================================
+         HERO / BRAND HEADER
+         Premium redesign inspired by Trivalor positioning
+    ========================================================== -->
+    <section class="hero" aria-label="Brand introduction">
+      <div class="hero-top">
+        <div class="brand-lockup" aria-label="Brand header">
+          <div class="brand-emblem" aria-hidden="true"></div>
+          <div class="brand-copy">
+            <span class="brand-name">Trivalor</span>
+            <span class="brand-sub">Business &amp; Facility Services</span>
+          </div>
+        </div>
+
+        <div class="eyebrow">Consent collection experience</div>
+      </div>
+
+      <h1>Trusted consent experience with a premium business services feel</h1>
+      <p>
+        Collect consent in a more polished, modern, and professional interface while preserving the exact OneTrust loading behavior already implemented on the page.
+      </p>
+    </section>
+
+    <div class="layout">
+      <!-- LEFT COLUMN -->
+      <div class="stack">
+        <!-- EMAIL FIRST -->
+        <section class="panel email-panel" aria-labelledby="contact-title">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-title">
+                <h2 id="contact-title">Contact email</h2>
+                <p>
+                  Start with the primary email address for the consent interaction and any associated communications.
+                </p>
+              </div>
+              <div class="badge">Top priority field</div>
+            </div>
+
+            <div class="email-grid">
+              <div class="field">
+                <label for="email">Email</label>
+                <!-- Preserve original ID exactly -->
+                <input id="email" type="email" placeholder="you@example.com" required />
+                <div class="helper">
+                  This remains the original email field and keeps the same ID used by your current page.
+                </div>
+              </div>
+
+              <div class="highlight-box" aria-hidden="true">
+                <div class="mini-pill">Clear identity capture</div>
+                <div class="mini-pill">Consent-first flow</div>
+                <div class="mini-pill">Premium presentation</div>
+              </div>
+            </div>
+
+            <div class="service-block">
+              <div class="section-kicker">Additional information</div>
+
+              <!-- Existing HTML fields preserved and reorganized -->
+              <div class="field-grid">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input id="name" type="text" placeholder="John Smith" />
+                </div>
+
+                <div class="field">
+                  <label for="nationality">Nationality</label>
+                  <input id="nationality" type="text" placeholder="Spanish" />
+                </div>
+
+                <div class="field">
+                  <label for="country">Country</label>
+                  <input id="country" type="text" placeholder="Spain" />
+                </div>
+
+                <div class="field">
+                  <label for="service-type">Service context</label>
+                  <select id="service-type" aria-label="Service context">
+                    <option selected>Business &amp; Facility Services</option>
+                    <option>Corporate Support</option>
+                    <option>Workplace Services</option>
+                    <option>Operations</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="notes">Additional Notes</label>
+                  <input id="notes" type="text" placeholder="Extra attribute for the demo" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="info-title">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-title">
+                <h2 id="info-title">Consent overview</h2>
+                <p>
+                  The experience is intentionally structured to make the consent area clear, trustworthy, and visually prominent without changing how the embedded form works.
+                </p>
+              </div>
+              <div class="badge">Presentation refactor</div>
+            </div>
+
+            <div class="consent-card">
+              <p class="consent-note">
+                The OneTrust form still mounts into the same target container and still loads automatically after the page initializes. The layout has simply been upgraded to a more premium and corporate experience.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="stack consent-panel">
+        <section class="panel" aria-labelledby="consent-title">
+          <div class="panel-inner">
+            <div class="panel-header">
+              <div class="panel-title">
+                <h2 id="consent-title">Consent &amp; preferences</h2>
+                <p>
+                  The embedded OneTrust form below loads automatically at page start using the same install flow as before.
+                </p>
+              </div>
+              <div class="badge">OneTrust embedded form</div>
+            </div>
+
+            <div class="consent-card">
+              <p class="consent-note">
+                This remains the target area for your OneTrust consent profile. The visual treatment is enhanced, but the target container and initialization logic are preserved.
+              </p>
+
+              <!-- IMPORTANT:
+                   OneTrust renders the consent form inside this exact div -->
+              <div id="ot-container"></div>
+            </div>
+
+            <div class="trust-strip" aria-label="Supporting details">
+              <div class="trust-item">
+                <div>
+                  <strong>Auto-loaded on page start</strong>
+                  <span>The OneTrust form continues to initialize on DOMContentLoaded after readiness is confirmed.</span>
+                </div>
+                <div class="trust-value">Preserved</div>
+              </div>
+
+              <div class="trust-item">
+                <div>
+                  <strong>Same target container</strong>
+                  <span>The consent form still mounts into <code>#ot-container</code>.</span>
+                </div>
+                <div class="trust-value">Preserved</div>
+              </div>
+
+              <div class="trust-item">
+                <div>
+                  <strong>Same Consent Profile ID</strong>
+                  <span>The current embedded consent profile identifier remains unchanged.</span>
+                </div>
+                <div class="trust-value">Preserved</div>
+              </div>
+            </div>
+
+            <div class="footer-note">
+              Visual styling has been modernized for presentation only. Functional OneTrust behavior remains intact.
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <!-- =========================================================
+       3) PAGE JAVASCRIPT
+       PRESERVED FUNCTIONAL BEHAVIOR
+  ========================================================== -->
+  <script>
+    /* The Consent Profile ID to load */
+    const CP_ID = "c40e97df-fd0a-4699-89b4-af241e11e679";
+
+    /* Wait until the OneTrust library is fully available */
+    function whenOTReady(callback) {
+      const timer = setInterval(() => {
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          callback();
+        }
+      }, 80);
+    }
+
+    /* When the page is ready, load the OneTrust form automatically */
+    window.addEventListener("DOMContentLoaded", () => {
+      whenOTReady(() => {
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+``
