@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trade Checkout – Demo</title>
+
+  <!-- =========================================================
+       1) ONETRUST REQUIRED BOOTSTRAP (UNCHANGED)
+  ========================================================== -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e"
+    worker="https://consent-api.onetrust.com">
+  </script>
+
+  <!-- =========================================================
+       2) STYLES – TRADE MERCHANT LOOK & FEEL
+  ========================================================== -->
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #1e3a8a;
+      --accent: #f97316;
+      --border: #cbd5e1;
+      --radius: 10px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: var(--font);
+      color: var(--text);
+    }
+
+    /* Header */
+    header {
+      background: #0f172a;
+      color: #fff;
+      padding: 16px;
+    }
+
+    header .inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header .brand {
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    /* Layout */
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    .email-strip {
+      background: #e2e8f0;
+      padding: 16px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+    }
+
+    .email-strip label {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      font: inherit;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    /* Cart */
+    .cart-item {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+    }
+
+    .cart-meta {
+      flex: 1;
+    }
+
+    .cart-title {
+      font-weight: 700;
+    }
+
+    .cart-sku {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cart-price {
+      font-weight: 700;
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      margin-top: 16px;
+    }
+
+    /* Payment */
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    button.cta {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button.cta:hover {
+      background: #172554;
+    }
+
+    .secure-note {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* OneTrust visual cleanup (UNCHANGED BEHAVIOUR) */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="inner">
+    <div class="brand">PROTRADE SUPPLIES</div>
+    <div>Secure checkout</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- EMAIL FIRST -->
+  <section class="email-strip">
+    <label for="email">Email for order confirmation</label>
+    <input id="email" type="email" placeholder="you@company.co.uk" required />
+  </section>
+
+  <section class="grid">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- CART -->
+      <section class="card">
+        <h2>Order summary</h2>
+
+        <div class="cart-item">
+          <img src="https://via.placeholder.com/80" alt="" />
+          <div class="cart-meta">
+            <div class="cart-title">Combi Boiler 28kW</div>
+            <div class="cart-sku">SKU: HVAC‑2841</div>
+          </div>
+          <div class="cart-price">£1,250.00</div>
+        </div>
+
+        <div class="cart-total">
+          <span>Total</span>
+          <strong>£1,250.00</strong>
+        </div>
+      </section>
+
+      <!-- CONSENT -->
+      <section class="card">
+        <h2>Consent &amp; preferences</h2>
+        <p class="muted">
+          We’ll use your details to process your order and provide aftersales support.
+          Marketing preferences can be updated anytime.
+        </p>
+
+        <!-- OT TARGET – DO NOT MOVE -->
+        <div id="ot-container"></div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <section class="card">
+        <h2>Card details</h2>
+
+        <div class="field">
+          <label>Card number</label>
+          <input data-demo-card />
+        </div>
+
+        <div class="field">
+          <label>Name on card</label>
+          <input data-demo-name />
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label>Expiry</label>
+            <input data-demo-expiry />
+          </div>
+          <div class="field">
+            <label>CVC</label>
+            <input data-demo-cvc />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Billing postcode</label>
+          <input data-demo-postcode />
+        </div>
+
+        <button class="cta">Place order</button>
+
+        <div class="secure-note">
+          Secure payment • VAT invoice • Trade support
+        </div>
+      </section>
+    </div>
+
+  </section>
+</main>
+
+<!-- =========================================================
+     3) JAVASCRIPT
+========================================================== -->
+<script>
+  /* =========================
+     DEMO PREFILL TOGGLE
+     Disable in production
+  ========================== */
+  const DEMO_PREFILL = true;
+
+  if (DEMO_PREFILL) {
+    document.querySelector("[data-demo-card]").value = "4242 4242 4242 4242";
+    document.querySelector("[data-demo-name]").value = "John Smith";
+    document.querySelector("[data-demo-expiry]").value = "12/34";
+    document.querySelector("[data-demo-cvc]").value = "123";
+    document.querySelector("[data-demo-postcode]").value = "SW1A 1AA";
+  }
+
+  /* =========================
+     ONETRUST LOGIC (UNCHANGED)
+  ========================== */
+  const CP_ID = "add26ee1-b4fd-46fe-84ef-16d294d8ff40";
+
+  function whenOTReady(callback) {
+    const timer = setInterval(() => {
+      if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+        clearInterval(timer);
+        callback();
+      }
+    }, 80);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    whenOTReady(() => {
+      OneTrust.webform.InstallCP(CP_ID, {
+        target: "#ot-container"
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
+``
