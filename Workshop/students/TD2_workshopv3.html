@@ -7,7 +7,6 @@
 
   <!-- =========================================================
        ONETRUST BOOTSTRAP (DO NOT MODIFY)
-       Required for embedded consent form loading
   ========================================================== -->
   <script>
     window.OtSdk = window.OtSdk || function () {
@@ -18,21 +17,22 @@
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
     data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e"
-    worker="https://consent-api.onetrust.com"
-  ></script>
+    worker="https://consent-api.onetrust.com">
+  </script>
 
   <!-- =========================================================
-       PAGE STYLES – TRADE MERCHANT / DISTRIBUTOR THEME
+       STYLES – YELLOW / BLACK TRADE MERCHANT THEME
   ========================================================== -->
   <style>
     :root {
-      --bg: #f3f4f6;
+      --yellow: #facc15;
+      --yellow-dark: #eab308;
+      --black: #0b0b0b;
+      --bg-dark: #111827;
       --card: #ffffff;
       --text: #0f172a;
       --muted: #475569;
-      --primary: #1e3a8a;
-      --accent: #f97316;
-      --border: #cbd5e1;
+      --border: #d1d5db;
       --radius: 10px;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
@@ -41,17 +41,21 @@
 
     body {
       margin: 0;
-      background: var(--bg);
       font-family: var(--font);
       color: var(--text);
-      line-height: 1.4;
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #1f2937, transparent),
+        radial-gradient(1000px 500px at 90% 10%, #111827, transparent),
+        linear-gradient(180deg, #020617, #020617);
+      min-height: 100vh;
     }
 
-    /* Header */
+    /* HEADER */
     header {
-      background: #0f172a;
-      color: #fff;
-      padding: 16px;
+      background: linear-gradient(90deg, var(--yellow), var(--yellow-dark));
+      color: var(--black);
+      padding: 18px;
+      border-bottom: 4px solid var(--black);
     }
 
     header .inner {
@@ -60,29 +64,23 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-weight: 900;
+      letter-spacing: 0.05em;
     }
 
-    .brand {
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
-
-    /* Main layout */
     main {
       max-width: 1200px;
       margin: auto;
-      padding: 24px;
+      padding: 32px 24px;
     }
 
-    section {
-      margin-bottom: 32px;
-    }
+    section { margin-bottom: 32px; }
 
     .card {
       background: var(--card);
-      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     }
 
     h2 {
@@ -90,20 +88,21 @@
       font-size: 18px;
     }
 
-    p.muted {
+    .muted {
       color: var(--muted);
       font-size: 14px;
     }
 
-    /* Email */
+    /* EMAIL STRIP */
     .email-strip {
-      background: #e2e8f0;
-      padding: 16px;
+      background: linear-gradient(135deg, #fef08a, #fde047);
+      padding: 18px;
       border-radius: var(--radius);
+      border: 2px solid var(--black);
     }
 
     label {
-      font-weight: 700;
+      font-weight: 800;
       display: block;
       margin-bottom: 6px;
     }
@@ -116,47 +115,53 @@
       font: inherit;
     }
 
-    /* Checkout grid */
+    /* GRID */
     .grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 24px;
+      gap: 28px;
     }
 
-    /* Cart */
-    .cart-item {
+    /* CART */
+    .cart-row {
       display: flex;
-      gap: 16px;
-      padding: 12px 0;
+      justify-content: space-between;
+      padding: 10px 0;
       border-bottom: 1px solid var(--border);
-      align-items: center;
+      font-size: 14px;
     }
 
-    .cart-item img {
-      width: 80px;
-      height: 80px;
-      border: 1px solid var(--border);
+    .cart-row:last-child {
+      border-bottom: none;
     }
 
-    .cart-meta { flex: 1; }
+    .cart-meta {
+      flex: 1;
+    }
 
-    .cart-title { font-weight: 700; }
+    .cart-title {
+      font-weight: 800;
+    }
 
     .cart-sku {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--muted);
     }
 
-    .cart-price { font-weight: 700; }
+    .cart-price {
+      font-weight: 800;
+      white-space: nowrap;
+    }
 
     .cart-total {
       display: flex;
       justify-content: space-between;
-      font-size: 18px;
       margin-top: 16px;
+      font-size: 18px;
+      font-weight: 900;
     }
 
-    /* Payment */
+    /* PAYMENT */
     .field { margin-bottom: 14px; }
 
     .field-grid {
@@ -168,64 +173,28 @@
     .cta {
       width: 100%;
       padding: 16px;
-      background: var(--primary);
-      color: #fff;
+      background: var(--black);
+      color: var(--yellow);
       border: none;
       border-radius: var(--radius);
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 900;
       cursor: pointer;
+      margin-top: 10px;
     }
 
     .cta:hover {
-      background: #172554;
+      background: #000;
     }
 
     .secure-note {
       margin-top: 10px;
       font-size: 13px;
-      color: var(--muted);
       text-align: center;
-    }
-
-    /* Store locations */
-    .locations {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .location {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px;
-      font-size: 14px;
-    }
-
-    .location strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    /* Trade news */
-    .news-item {
-      border-left: 4px solid var(--accent);
-      padding-left: 12px;
-      margin-bottom: 14px;
-    }
-
-    .news-item h3 {
-      margin: 0 0 4px;
-      font-size: 15px;
-    }
-
-    .news-item p {
-      margin: 0;
-      font-size: 14px;
       color: var(--muted);
     }
 
-    /* OneTrust visual cleanup – styling only */
+    /* OneTrust visual cleanup (styling only) */
     .ot-consent-inline,
     .otwf-content,
     .ot-form,
@@ -248,35 +217,30 @@
 
 <header>
   <div class="inner">
-    <div class="brand">PROTRADE SUPPLIES</div>
-    <div>Secure trade checkout</div>
+    <div>PROTRADE SUPPLIES</div>
+    <div>TRADE CHECKOUT</div>
   </div>
 </header>
 
 <main>
 
-  <!-- =========================================================
-       EMAIL (FIRST TOUCHPOINT)
-  ========================================================== -->
+  <!-- EMAIL -->
   <section class="email-strip">
     <label for="email">Email for order confirmation</label>
     <input id="email" type="email" placeholder="you@company.co.uk" required />
   </section>
 
-  <!-- =========================================================
-       CHECKOUT CONTENT
-  ========================================================== -->
+  <!-- CHECKOUT -->
   <section class="grid">
 
-    <!-- LEFT COLUMN -->
+    <!-- LEFT -->
     <div>
 
-      <!-- CART -->
+      <!-- BASKET -->
       <section class="card">
-        <h2>Order summary</h2>
+        <h2>Shopping basket</h2>
 
-        <div class="cart-item">
-          <img src="https://via.placeholder.com/80" alt="" />
+        <div class="cart-row">
           <div class="cart-meta">
             <div class="cart-title">Combi Boiler 28kW</div>
             <div class="cart-sku">SKU: HVAC‑2841</div>
@@ -284,9 +248,17 @@
           <div class="cart-price">£1,250.00</div>
         </div>
 
+        <div class="cart-row">
+          <div class="cart-meta">
+            <div class="cart-title">Magnetic System Filter 22mm</div>
+            <div class="cart-sku">SKU: PLUMB‑9012</div>
+          </div>
+          <div class="cart-price">£89.00</div>
+        </div>
+
         <div class="cart-total">
           <span>Total</span>
-          <strong>£1,250.00</strong>
+          <span>£1,339.00</span>
         </div>
       </section>
 
@@ -304,7 +276,7 @@
 
     </div>
 
-    <!-- RIGHT COLUMN -->
+    <!-- RIGHT -->
     <div>
 
       <!-- PAYMENT -->
@@ -337,50 +309,13 @@
           <input data-demo-postcode />
         </div>
 
-        <button class="cta">Place order</button>
+        <button class="cta">PLACE ORDER</button>
 
         <div class="secure-note">
-          Secure payment • VAT invoice • Trade account support
+          Secure payment • VAT invoice • Trade support
         </div>
       </section>
 
-    </div>
-  </section>
-
-  <!-- =========================================================
-       UK STORE LOCATIONS (MOCK)
-  ========================================================== -->
-  <section class="card">
-    <h2>Our UK trade counters</h2>
-    <div class="locations">
-      <div class="location"><strong>London – Park Royal</strong> Mon–Sat • Trade counter &amp; collection</div>
-      <div class="location"><strong>Manchester – Trafford Park</strong> Mon–Fri • Boilers &amp; spares</div>
-      <div class="location"><strong>Birmingham – Aston</strong> Mon–Fri • Heating &amp; renewables</div>
-      <div class="location"><strong>Leeds – Holbeck</strong> Mon–Sat • Plumbing supplies</div>
-      <div class="location"><strong>Bristol – Avonmouth</strong> Mon–Fri • HVAC &amp; ventilation</div>
-      <div class="location"><strong>Glasgow – Hillington</strong> Mon–Fri • Trade collections</div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       RECENT TRADE NEWS (MOCK CONTENT)
-  ========================================================== -->
-  <section class="card">
-    <h2>Recent trade news</h2>
-
-    <div class="news-item">
-      <h3>Heat pump demand increases ahead of 2026 efficiency targets</h3>
-      <p>Merchants report rising interest in low‑carbon heating systems as installers prepare for regulatory changes.</p>
-    </div>
-
-    <div class="news-item">
-      <h3>Supply chain stabilises for core boiler components</h3>
-      <p>Improved availability of heat exchangers and controls reduces lead times across the UK.</p>
-    </div>
-
-    <div class="news-item">
-      <h3>Training investment grows among independent installers</h3>
-      <p>Trade bodies highlight increased uptake in accredited HVAC and renewable courses.</p>
     </div>
   </section>
 
@@ -390,7 +325,7 @@
      JAVASCRIPT
 ========================================================== -->
 <script>
-  /* DEMO PREFILL – SAFE FOR DEMOS ONLY */
+  /* DEMO PREFILL – DISABLE IN PRODUCTION */
   const DEMO_PREFILL = true;
 
   if (DEMO_PREFILL) {
