@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ProTrade Supplies | Secure Trade Checkout</title>
+
+  <!-- =========================================================
+       ONETRUST BOOTSTRAP (DO NOT MODIFY)
+       Required for embedded consent form loading
+  ========================================================== -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <!-- =========================================================
+       PAGE STYLES – TRADE MERCHANT / DISTRIBUTOR THEME
+  ========================================================== -->
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #1e3a8a;
+      --accent: #f97316;
+      --border: #cbd5e1;
+      --radius: 10px;
+      --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      font-family: var(--font);
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    /* Header */
+    header {
+      background: #0f172a;
+      color: #fff;
+      padding: 16px;
+    }
+
+    header .inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    /* Main layout */
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    section {
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    p.muted {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Email */
+    .email-strip {
+      background: #e2e8f0;
+      padding: 16px;
+      border-radius: var(--radius);
+    }
+
+    label {
+      font-weight: 700;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      font: inherit;
+    }
+
+    /* Checkout grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    /* Cart */
+    .cart-item {
+      display: flex;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+
+    .cart-item img {
+      width: 80px;
+      height: 80px;
+      border: 1px solid var(--border);
+    }
+
+    .cart-meta { flex: 1; }
+
+    .cart-title { font-weight: 700; }
+
+    .cart-sku {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cart-price { font-weight: 700; }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      margin-top: 16px;
+    }
+
+    /* Payment */
+    .field { margin-bottom: 14px; }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .cta {
+      width: 100%;
+      padding: 16px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .cta:hover {
+      background: #172554;
+    }
+
+    .secure-note {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Store locations */
+    .locations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .location {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      font-size: 14px;
+    }
+
+    .location strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Trade news */
+    .news-item {
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin-bottom: 14px;
+    }
+
+    .news-item h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+
+    .news-item p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* OneTrust visual cleanup – styling only */
+    .ot-consent-inline,
+    .otwf-content,
+    .ot-form,
+    .ot-form-content,
+    .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      font-family: inherit !important;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="inner">
+    <div class="brand">PROTRADE SUPPLIES</div>
+    <div>Secure trade checkout</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- =========================================================
+       EMAIL (FIRST TOUCHPOINT)
+  ========================================================== -->
+  <section class="email-strip">
+    <label for="email">Email for order confirmation</label>
+    <input id="email" type="email" placeholder="you@company.co.uk" required />
+  </section>
+
+  <!-- =========================================================
+       CHECKOUT CONTENT
+  ========================================================== -->
+  <section class="grid">
+
+    <!-- LEFT COLUMN -->
+    <div>
+
+      <!-- CART -->
+      <section class="card">
+        <h2>Order summary</h2>
+
+        <div class="cart-item">
+          <img src="https://via.placeholder.com/80" alt="" />
+          <div class="cart-meta">
+            <div class="cart-title">Combi Boiler 28kW</div>
+            <div class="cart-sku">SKU: HVAC‑2841</div>
+          </div>
+          <div class="cart-price">£1,250.00</div>
+        </div>
+
+        <div class="cart-total">
+          <span>Total</span>
+          <strong>£1,250.00</strong>
+        </div>
+      </section>
+
+      <!-- CONSENT -->
+      <section class="card">
+        <h2>Consent &amp; preferences</h2>
+        <p class="muted">
+          We’ll use your details to process your order and provide aftersales
+          support. Marketing preferences can be updated anytime.
+        </p>
+
+        <!-- OneTrust mount point – DO NOT MOVE -->
+        <div id="ot-container"></div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+
+      <!-- PAYMENT -->
+      <section class="card">
+        <h2>Card details</h2>
+
+        <div class="field">
+          <label>Card number</label>
+          <input data-demo-card />
+        </div>
+
+        <div class="field">
+          <label>Name on card</label>
+          <input data-demo-name />
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label>Expiry</label>
+            <input data-demo-expiry />
+          </div>
+          <div class="field">
+            <label>CVC</label>
+            <input data-demo-cvc />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Billing postcode</label>
+          <input data-demo-postcode />
+        </div>
+
+        <button class="cta">Place order</button>
+
+        <div class="secure-note">
+          Secure payment • VAT invoice • Trade account support
+        </div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       UK STORE LOCATIONS (MOCK)
+  ========================================================== -->
+  <section class="card">
+    <h2>Our UK trade counters</h2>
+    <div class="locations">
+      <div class="location"><strong>London – Park Royal</strong> Mon–Sat • Trade counter &amp; collection</div>
+      <div class="location"><strong>Manchester – Trafford Park</strong> Mon–Fri • Boilers &amp; spares</div>
+      <div class="location"><strong>Birmingham – Aston</strong> Mon–Fri • Heating &amp; renewables</div>
+      <div class="location"><strong>Leeds – Holbeck</strong> Mon–Sat • Plumbing supplies</div>
+      <div class="location"><strong>Bristol – Avonmouth</strong> Mon–Fri • HVAC &amp; ventilation</div>
+      <div class="location"><strong>Glasgow – Hillington</strong> Mon–Fri • Trade collections</div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       RECENT TRADE NEWS (MOCK CONTENT)
+  ========================================================== -->
+  <section class="card">
+    <h2>Recent trade news</h2>
+
+    <div class="news-item">
+      <h3>Heat pump demand increases ahead of 2026 efficiency targets</h3>
+      <p>Merchants report rising interest in low‑carbon heating systems as installers prepare for regulatory changes.</p>
+    </div>
+
+    <div class="news-item">
+      <h3>Supply chain stabilises for core boiler components</h3>
+      <p>Improved availability of heat exchangers and controls reduces lead times across the UK.</p>
+    </div>
+
+    <div class="news-item">
+      <h3>Training investment grows among independent installers</h3>
+      <p>Trade bodies highlight increased uptake in accredited HVAC and renewable courses.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+<script>
+  /* DEMO PREFILL – SAFE FOR DEMOS ONLY */
+  const DEMO_PREFILL = true;
+
+  if (DEMO_PREFILL) {
+    document.querySelector("[data-demo-card]").value = "4242 4242 4242 4242";
+    document.querySelector("[data-demo-name]").value = "John Smith";
+    document.querySelector("[data-demo-expiry]").value = "12/34";
+    document.querySelector("[data-demo-cvc]").value = "123";
+    document.querySelector("[data-demo-postcode]").value = "SW1A 1AA";
+  }
+
+  /* ONETRUST INITIALISATION – UNCHANGED */
+  const CP_ID = "add26ee1-b4fd-46fe-84ef-16d294d8ff40";
+
+  function whenOTReady(callback) {
+    const timer = setInterval(() => {
+      if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+        clearInterval(timer);
+        callback();
+      }
+    }, 80);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    whenOTReady(() => {
+      OneTrust.webform.InstallCP(CP_ID, { target: "#ot-container" });
+    });
+  });
+</script>
+
+</body>
+</html>
+``
