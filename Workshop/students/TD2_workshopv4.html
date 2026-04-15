@@ -1303,3 +1303,21 @@ function OptanonWrapper() { }
 
               <div class="field">
                 <label for="cc-exp">Expiry Date</
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    if (!window.OtSdk) {
+      console.error("OneTrust SDK not available");
+      return;
+    }
+
+    OtSdk(
+      "consent",
+      "InstallCP",
+      "44ce8162-e7a5-4962-8406-3d9e975ad91e",
+      function (success) {
+        console.log("OneTrust Embedded Form installed:", success);
+      }
+    );
+  });
+</script>
