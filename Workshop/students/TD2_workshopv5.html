@@ -1,18 +1,15 @@
-<!-- Description: Simple demo page for a OneTrust Embedded Form workshop (basic HTML attributes are displayed at the top for training purposes, and the consent form is loaded automatically at the bottom using InstallCP so users can clearly identify the key OneTrust elements). -->
+
+<!-- Description: Trade-merchant order confirmation page + OneTrust Embedded Form auto-load (InstallCP). -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>OneTrust Embedded Form Demo</title>
+  <title>TradeSupply Direct | Order Confirmed</title>
 
   <!-- =========================================================
-       1) ONETRUST REQUIRED SCRIPTS
+       1) ONETRUST REQUIRED SCRIPTS (PRESERVED AS-IS)
        These scripts are required for the embedded OneTrust form.
-       For workshop purposes:
-       - Leave this section as-is
-       - Think of it as the "OneTrust loader"
-       - Make sure to replace with your own ID's (from your trial environment)
   ========================================================== -->
 
   <!-- Required OneTrust bootstrap -->
@@ -23,139 +20,512 @@
   </script>
 
   <!-- OneTrust embedded form library -->
-  <script
-    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
-    data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e"
-    worker="https://consent-api.onetrust.com"
-  ></script>
+  https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.jsscript>
 
   <!-- =========================================================
-       2) PAGE STYLES
+       2) PAGE STYLES (UPDATED THEME: UK Trade Merchant)
        This section only controls how the page looks.
-       It does NOT load the OneTrust form.
   ========================================================== -->
   <style>
     :root {
-      --bg: #f4f6f8;
+      /* Trade palette */
+      --builder-yellow: #ffcc00; /* safety yellow */
+      --trade-black: #111111;
+      --plumber-blue: #0b4aa2;
+      --spark-orange: #ff6a00;
+
+      /* Neutrals */
+      --bg: #f3f4f6;
       --card: #ffffff;
-      --text: #111;
-      --muted: #666;
-      --primary: #2563eb;
+      --text: #101418;
+      --muted: #5b6776;
       --border: #e5e7eb;
-      --danger: #d9534f;
-      --radius: 12px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+
+      --ok: #0f7a3e;
+      --danger: #c0392b;
+
+      --radius: 14px;
+      --radius-sm: 12px;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+      --max: 1100px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 40px 16px;
-      background: var(--bg);
+      background: radial-gradient(1200px 700px at 10% 0%, rgba(11, 74, 162, 0.08), transparent 55%),
+                  radial-gradient(900px 520px at 90% 10%, rgba(255, 106, 0, 0.08), transparent 55%),
+                  var(--bg);
       color: var(--text);
       font-family: var(--font);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 14px 42px;
+    }
+
+    /* Header bar */
+    .topbar {
       display: flex;
-      justify-content: center;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      background: linear-gradient(90deg, var(--trade-black), #1a1a1a);
+      color: #fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .card {
-      width: 100%;
-      max-width: 720px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 220px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, var(--builder-yellow), #ffe066);
+      display: grid;
+      place-items: center;
+      color: var(--trade-black);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+    }
+
+    .brand-name {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-name strong {
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .brand-name span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .order-ref {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255, 204, 0, 0.12);
+      border: 1px solid rgba(255, 204, 0, 0.25);
+      white-space: nowrap;
+      font-weight: 700;
+    }
+
+    .order-ref small {
+      font-weight: 600;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* Layout grid */
+    .grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
       background: var(--card);
-      padding: 24px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
     }
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: 22px;
+    .panel-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #fbfbfc);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
       font-weight: 800;
     }
 
-    .sub {
-      margin: 0 0 24px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
+    .panel-body { padding: 16px; }
 
-    .section-title {
-      margin: 24px 0 10px;
-      font-size: 14px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-    }
-
-    .field-grid {
+    /* Email entry (VERY TOP section requirement) */
+    .email-strip {
+      margin-top: 14px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
 
-    .field {
-      display: flex;
-      flex-direction: column;
+    .email-card {
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 14px 16px;
     }
 
-    .field.full {
-      grid-column: 1 / -1;
+    .email-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: end;
     }
 
     label {
+      display: inline-block;
       margin: 0 0 6px;
-      font-weight: 600;
-      font-size: 14px;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--trade-black);
+      letter-spacing: 0.02em;
     }
 
-    input,
-    select {
+    input, select {
       width: 100%;
       padding: 12px;
-      border-radius: var(--radius);
+      border-radius: 12px;
       border: 1px solid var(--border);
       font: inherit;
       background: #fff;
+      color: var(--text);
     }
 
-    input:focus,
-    select:focus {
+    input:focus, select:focus {
       outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+      border-color: var(--plumber-blue);
+      box-shadow: 0 0 0 3px rgba(11, 74, 162, 0.15);
     }
 
-    .hint {
-      margin-top: 10px;
+    .btn {
+      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-weight: 900;
+      background: linear-gradient(180deg, var(--builder-yellow), #ffd84d);
+      color: var(--trade-black);
+      letter-spacing: 0.02em;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      white-space: nowrap;
+    }
+
+    .btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.35);
+    }
+
+    .helper {
+      margin: 8px 0 0;
       font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* Order confirmed hero */
+    .hero {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 16px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(15,122,62,0.08), rgba(15,122,62,0.02));
+      border: 1px solid rgba(15,122,62,0.20);
+    }
+
+    .tick {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(15,122,62,0.12);
+      border: 1px solid rgba(15,122,62,0.25);
+      display: grid;
+      place-items: center;
+      color: var(--ok);
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .hero h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      font-weight: 950;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .kv .k {
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      padding: 10px;
+    }
+
+    .kv .k small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 800;
+    }
+
+    .kv .k strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+    }
+
+    /* Cart table */
+    .cart {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+    }
+
+    .cart th, .cart td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    .cart th {
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 900;
+      background: #fafafa;
+    }
+
+    .sku {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--muted);
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .money {
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .qty {
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .totals {
+      margin-top: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .totals .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .totals .row strong { color: var(--text); }
+
+    .totals .grand {
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+      font-size: 14px;
+      font-weight: 950;
+      color: var(--trade-black);
+    }
+
+    /* Delivery options */
+    .option-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .opt {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      align-items: start;
+    }
+
+    .opt:hover { border-color: rgba(11, 74, 162, 0.35); }
+
+    .opt input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--plumber-blue);
+    }
+
+    .opt strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    .opt span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      border: 1px solid rgba(0,0,0,0.12);
+      background: #fff;
+      color: var(--trade-black);
+    }
+
+    .badge.orange { border-color: rgba(255,106,0,0.35); background: rgba(255,106,0,0.08); }
+    .badge.blue   { border-color: rgba(11,74,162,0.35); background: rgba(11,74,162,0.08); }
+    .badge.yellow { border-color: rgba(255,204,0,0.45); background: rgba(255,204,0,0.10); }
+
+    /* Store pickup list */
+    .store-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .store {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      align-items: center;
+    }
+
+    .store:hover { border-color: rgba(255,106,0,0.35); }
+
+    .store input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--spark-orange);
+    }
+
+    .store .meta strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .store .meta span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .pill {
+      font-size: 11px;
+      font-weight: 900;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fafafa;
+      white-space: nowrap;
+    }
+
+    /* Existing “example HTML fields” preserved but re-framed */
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .mini-grid .full { grid-column: 1 / -1; }
+
+    .note {
+      margin: 10px 0 0;
+      font-size: 12px;
       color: var(--muted);
       line-height: 1.5;
     }
 
-    .demo-box {
-      margin-top: 8px;
-      padding: 16px;
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      background: #fafafa;
-    }
-
     /* =========================================================
-       ONETRUST CONTAINER
-       This is where OneTrust will render the consent form.
-       The JS will target this exact element.
+       ONETRUST CONTAINER (PRESERVED ID)
+       OneTrust renders the consent form inside #ot-container.
+       We keep it visible and styled for this new layout.
   ========================================================== */
     #ot-container {
-      margin-top: 18px;
+      margin-top: 12px;
     }
 
     /* =========================================================
-       OPTIONAL ONETRUST VISUAL CLEANUP
+       OPTIONAL ONETRUST VISUAL CLEANUP (PRESERVED INTENT)
        These styles make the OneTrust form look simpler for demos.
        They do not change the functional behavior.
   ========================================================== */
@@ -208,12 +578,12 @@
     }
 
     #ot-container input[type="checkbox"]:checked + label::before {
-      border-color: var(--primary);
-      background: radial-gradient(circle at center, var(--primary) 45%, transparent 47%);
+      border-color: var(--plumber-blue);
+      background: radial-gradient(circle at center, var(--plumber-blue) 45%, transparent 47%);
     }
 
     #ot-container input[type="checkbox"]:focus + label::before {
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+      box-shadow: 0 0 0 3px rgba(11, 74, 162, 0.2);
     }
 
     .ot-error {
@@ -226,90 +596,322 @@
       width: 100% !important;
       margin-top: 16px !important;
       padding: 14px !important;
-      border-radius: var(--radius) !important;
-      border: 1px solid var(--border) !important;
-      background: #fff !important;
-      color: var(--text) !important;
-      font-weight: 700 !important;
+      border-radius: 12px !important;
+      border: 1px solid rgba(0,0,0,0.12) !important;
+      background: linear-gradient(180deg, var(--builder-yellow), #ffd84d) !important;
+      color: var(--trade-black) !important;
+      font-weight: 900 !important;
       cursor: pointer !important;
     }
 
     .ot-submit:hover {
-      background: #f9f9f9 !important;
+      filter: brightness(0.98);
     }
 
+    /* Footer help box */
+    .helpbox {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,204,0,0.10), rgba(255,204,0,0.03));
+      border: 1px solid rgba(255,204,0,0.30);
+      color: var(--trade-black);
+    }
+
+    .helpbox strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+    }
     @media (max-width: 640px) {
-      .field-grid {
-        grid-template-columns: 1fr;
-      }
+      .email-row { grid-template-columns: 1fr; }
+      .kv { grid-template-columns: 1fr; }
+      .mini-grid { grid-template-columns: 1fr; }
+      .order-ref { width: 100%; justify-content: space-between; }
+      .brand { min-width: 0; }
     }
   </style>
 </head>
 
 <body>
+  <div class="shell">
+    <!-- Header bar (Requirement B1) -->
+    <header class="topbar" role="banner" aria-label="TradeSupply Direct header">
+      <div class="brand" aria-label="TradeSupply Direct">
+        <div class="brand-mark" aria-hidden="true">TS</div>
+        <div class="brand-name">
+          <strong>TradeSupply Direct</strong>
+          <span>Builders • Plumbing • Electrical • Fixings</span>
+        </div>
+      </div>
+
+      <div class="order-ref" aria-label="Order reference">
+        <small>Order reference</small>
+        <span aria-live="polite">Order #TS-104839</span>
+      </div>
+    </header>
+
+    <!-- Email entry at the VERY TOP of page content (Requirement B2) -->
+    <section class="email-strip" aria-label="Receipt email entry">
+      <div class="email-card">
+        <div class="email-row">
+          <div class="field">
+            <label for="email">Receipt &amp; updates email</label>
+            <!-- PRESERVED ID: #email -->
+            <input id="email" type="email" placeholder="you@example.com" autocomplete="email" required />
+            <p class="helper">
+              We’ll send your order confirmation and any delivery / collection updates to this address.
+            </p>
+          </div>
+          <button class="btn" type="button" id="saveEmailBtn" aria-label="Save email (demo only)">
+            Save email
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <main class="grid" role="main">
+      <!-- LEFT COLUMN -->
+      <section class="panel" aria-label="Order confirmed details">
+        <div class="panel-header">
+          <h2 class="panel-title">Order status</h2>
+          <span class="badge yellow" aria-label="Status badge">Confirmed</span>
+        </div>
+        <div class="panel-body">
+          <!-- Hero (Requirement B3) -->
+          <div class="hero" role="status" aria-live="polite">
+            <div class="tick" aria-hidden="true">✓</div>
+            <div>
+              <h1>Order confirmed</h1>
+              <p>
+                Thanks — we’ve received your order. You’ll get a confirmation email shortly.
+                If you selected Click &amp; Collect, we’ll notify you when it’s ready for pickup.
+              </p>
+              <div class="kv" aria-label="Key order details">
+                <div class="k">
+                  <small>Estimated delivery</small>
+                  <strong id="etaText">Wed 23 Apr (placeholder)</strong>
+                </div>
+                <div class="k">
+                  <small>Payment method</small>
+                  <strong id="payText">Card ending 4242 (placeholder)</strong>
+                </div>
+                <div class="k">
+                  <small>Delivery postcode</small>
+                  <strong id="postCodeText">SW1A 1AA (placeholder)</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cart summary (Requirement B4) -->
+          <div style="margin-top:16px;">
+            <div class="panel-header" style="border-radius:14px; border:1px solid var(--border);">
+              <h2 class="panel-title">Products from your cart</h2>
+              <span class="badge blue" id="itemCountBadge" aria-label="Item count">0 items</span>
+            </div>
+
+            <div style="padding: 12px 12px 4px;">
+              <table class="cart" aria-label="Cart items table">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th class="qty">Qty</th>
+                    <th class="money">Unit</th>
+                    <th class="money">Line total</th>
+                  </tr>
+                </thead>
+                <tbody id="cartItems">
+                  <!-- Rendered by JS (demo-safe). If your real cart exists, map it into this container without changing source logic. -->
+                </tbody>
+              </table>
+
+              <div class="totals" aria-label="Order totals">
+                <div class="row"><span>Subtotal</span><strong id="subtotalText">£0.00</strong></div>
+                <div class="row"><span>Delivery</span><strong id="deliveryText">£0.00</strong></div>
+                <div class="row"><span>VAT</span><strong id="vatText">£0.00</strong></div>
+                <div class="row grand"><span>Total</span><strong id="totalText">£0.00</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Consent collection (Requirement B7) -->
+          <div style="margin-top:16px;" class="panel" aria-label="Consent collection">
+            <div class="panel-header">
+              <h2 class="panel-title">Your Privacy Choices / Consent</h2>
+              <span class="badge" aria-label="Powered by badge">Powered by OneTrust</span>
+            </div>
+            <div class="panel-body">
+              <p class="helper" style="margin-top:0;">
+                Review and set your communication and consent preferences below.
+              </p>
+
+              <!-- IMPORTANT:
+                   OneTrust renders the consent form inside this div.
+                   PRESERVED ID: #ot-container -->
+              <div id="ot-container"></div>
+            </div>
+          </div>
+
+          <div class="helpbox" role="note" aria-label="Help and support">
+            <strong>Need a hand?</strong>
+            Trade desk: <strong>0330 123 4567</strong> • Mon–Fri 7:00–18:00, Sat 8:00–16:00 (demo text).
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="panel" aria-label="Delivery and collection options">
+        <div class="panel-header">
+          <h2 class="panel-title">Delivery options</h2>
+          <span class="badge orange">UK mainland</span>
+        </div>
+        <div class="panel-body">
+          <!-- Delivery options (Requirement B5) -->
+          <div class="option-list" role="radiogroup" aria-label="Choose a delivery option">
+            <label class="opt" for="del-standard">
+              <input id="del-standard" type="radio" name="deliveryOption" value="standard" checked />
+              <div>
+                <strong>Standard delivery <span class="badge blue">2–3 working days</span></strong>
+                <span>Best value for standard site drops and day-to-day materials.</span>
+              </div>
+            </label>
+
+            <label class="opt" for="del-next">
+              <input id="del-next" type="radio" name="deliveryOption" value="next" />
+              <div>
+                <strong>Next working day <span class="badge yellow">Most popular</span></strong>
+                <span>Order before 4pm for next working day delivery (exclusions apply).</span>
+              </div>
+            </label>
+
+            <label class="opt" for="del-am">
+              <input id="del-am" type="radio" name="deliveryOption" value="timed" />
+              <div>
+                <strong>Timed AM delivery <span class="badge orange">Before 12pm</span></strong>
+                <span>Ideal when you need materials on site first thing.</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Click & Collect (Requirement B6) -->
+          <div style="margin-top:16px;">
+            <h3 class="panel-title" style="margin:0 0 10px;">Click &amp; Collect (UK pickup)</h3>
+            <p class="helper" style="margin:0 0 10px;">
+              Select a collection branch. We’ll notify you when it’s ready.
+            </p>
+
+            <div class="store-list" role="radiogroup" aria-label="Choose a pickup store location">
+              <label class="store" for="store-london">
+                <input id="store-london" type="radio" name="pickupStore" value="London (Park Royal)" checked />
+                <div class="meta">
+                  <strong>London (Park Royal)</strong>
+                  <span>NW10 • Trade counter + forklift collection</span>
+                </div>
+                <span class="pill">Open now</span>
+              </label>
+
+              <label class="store" for="store-manchester">
+                <input id="store-manchester" type="radio" name="pickupStore" value="Manchester (Trafford Park)" />
+                <div class="meta">
+                  <strong>Manchester (Trafford Park)</strong>
+                  <span>M17 • Bulk loading available</span>
+                </div>
+                <span class="pill">2 hrs</span>
+              </label>
+
+              <label class="store" for="store-birmingham">
+                <input id="store-birmingham" type="radio" name="pickupStore" value="Birmingham (Aston)" />
+                <div class="meta">
+                  <strong>Birmingham (Aston)</strong>
+                  <span>B6 • Early trade hours</span>
+                </div>
+                <span class="pill">Today</span>
+              </label>
+
+              <label class="store" for="store-leeds">
+                <input id="store-leeds" type="radio" name="pickupStore" value="Leeds (Holbeck)" />
+                <div class="meta">
+                  <strong>Leeds (Holbeck)</strong>
+                  <span>LS11 • Electrical &amp; lighting stock</span>
+                </div>
+                <span class="pill">Today</span>
+              </label>
+
+              <label class="store" for="store-bristol">
+                <input id="store-bristol" type="radio" name="pickupStore" value="Bristol (Avonmouth)" />
+                <div class="meta">
+                  <strong>Bristol (Avonmouth)</strong>
+                  <span>BS11 • Plumbing &amp; heating focus</span>
+                </div>
+                <span class="pill">Tomorrow</span>
+              </label>
+
+              <label class="store" for="store-glasgow">
+                <input id="store-glasgow" type="radio" name="pickupStore" value="Glasgow (Hillington)" />
+                <div class="meta">
+                  <strong>Glasgow (Hillington)</strong>
+                  <span>G52 • Large-format branch</span>
+                </div>
+                <span class="pill">Today</span>
+              </label>
+
+              <label class="store" for="store-edinburgh">
+                <input id="store-edinburgh" type="radio" name="pickupStore" value="Edinburgh (Leith)" />
+                <div class="meta">
+                  <strong>Edinburgh (Leith)</strong>
+                  <span>EH6 • Compact pickup point</span>
+                </div>
+                <span class="pill">Today</span>
+              </label>
+
+              <label class="store" for="store-cardiff">
+                <input id="store-cardiff" type="radio" name="pickupStore" value="Cardiff (Tremorfa)" />
+                <div class="meta">
+                  <strong>Cardiff (Tremorfa)</strong>
+                  <span>CF24 • Trade counter support</span>
+                </div>
+                <span class="pill">Today</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Preserved example HTML fields, re-framed as "Trade account details" -->
+          <div style="margin-top:16px;">
+            <h3 class="panel-title" style="margin:0 0 10px;">Trade account details (demo fields)</h3>
+            <div class="mini-grid">
+              <div class="field">
+                <label for="name">Name</label>
+                <input id="name" type="text" placeholder="John Smith" />
+              </div>
+              <div class="field">
+                <label for="nationality">Nationality</label>
+                <input id="nationality" type="text" placeholder="Spanish" />
+              </div>
+              <div class="field">
+                <label for="country">Country</label>
+                <input id="country" type="text" placeholder="Spain" />
+              </div>
+              <div class="field full">
+                <label for="notes">Additional notes</label>
+                <input id="notes" type="text" placeholder="Extra attribute for the demo" />
+              </div>
+            </div>
+            <p class="note">
+              These fields are retained from the original training page to preserve IDs and avoid breaking any existing wiring.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
   <!-- =========================================================
-       3) PAGE HTML
-       This is the visible page content.
-       We show:
-       - Simple HTML fields first
-       - The OneTrust container at the bottom
-  ========================================================== -->
-  <section class="card">
-    <h1>Embedded Form Demo</h1>
-    <p class="sub">
-      This page shows standard HTML fields first and the OneTrust embedded consent form underneath.
-    </p>
-
-    <!-- Standard HTML fields -->
-    <div class="section-title">Example HTML Fields</div>
-
-    <div class="field-grid">
-      <div class="field">
-        <label for="name">Name</label>
-        <input id="name" type="text" placeholder="John Smith" />
-      </div>
-
-      <div class="field">
-        <label for="nationality">Nationality</label>
-        <input id="nationality" type="text" placeholder="Spanish" />
-      </div>
-
-      <div class="field">
-        <label for="email">Email</label>
-        <!-- Keep this ID as requested -->
-        <input id="email" type="email" placeholder="you@example.com" required />
-      </div>
-
-      <div class="field">
-        <label for="country">Country</label>
-        <input id="country" type="text" placeholder="Spain" />
-      </div>
-
-      <div class="field full">
-        <label for="notes">Additional Notes</label>
-        <input id="notes" type="text" placeholder="Extra attribute for the demo" />
-      </div>
-    </div>
-
-    <!-- OneTrust area -->
-    <div class="section-title">OneTrust Embedded Form</div>
-
-    <div class="demo-box">
-      <div class="hint">
-        This box contains the <strong>OneTrust target container</strong>.  
-        The consent form will be inserted here automatically using <strong>InstallCP()</strong>.
-      </div>
-
-      <!-- IMPORTANT:
-           OneTrust renders the consent form inside this div -->
-      <div id="ot-container"></div>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       4) PAGE JAVASCRIPT
-       This section controls the behavior.
-       For the workshop, the key idea is:
+       4) PAGE JAVASCRIPT (ONETRUST AUTO-LOAD: PRESERVED)
        - Wait until OneTrust is ready
        - Call InstallCP()
        - Mount the form into #ot-container
@@ -331,12 +933,128 @@
     /* When the page is ready, load the OneTrust form automatically */
     window.addEventListener("DOMContentLoaded", () => {
       whenOTReady(() => {
+        // OT embed preserved: auto-load form into #ot-container
         OneTrust.webform.InstallCP(CP_ID, {
           target: "#ot-container"
         });
       });
     });
   </script>
+
+  <!-- =========================================================
+       5) PAGE JAVASCRIPT (ADDED UI LAYER ONLY - DOES NOT TOUCH OT)
+       - Demo-safe cart rendering (SKUs, totals)
+       - Email "save" UX feedback (no storage changes unless needed)
+  ========================================================== -->
+  <script>
+    // NOTE: This script is UI-only and does not modify the OneTrust embed or its loading behaviour.
+
+    // Demo cart data (replace with real cart source if you already have one; keep DOM targets stable)
+    const demoCart = [
+      { name: "Speedfit Barrier Pipe 15mm x 25m Coil", sku: "PLU-15BP-25M", qty: 2, unit: 34.99 },
+      { name: "Twin & Earth Cable 2.5mm² x 50m Drum", sku: "ELE-TE25-50M", qty: 1, unit: 49.95 },
+      { name: "Heavy Duty Frame Fixings 10mm x 120mm (Pack of 50)", sku: "BLD-FF10-120", qty: 1, unit: 22.50 }
+    ];
+
+    // Delivery pricing mapping (demo only)
+    const deliveryPricing = {
+      standard: 6.95,
+      next: 12.95,
+      timed: 18.95
+    };
+
+    function moneyGBP(value) {
+      return new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(value);
+    }
+
+    function getSelectedDeliveryKey() {
+      const checked = document.querySelector('input[name="deliveryOption"]:checked');
+      return checked ? checked.value : "standard";
+    }
+
+    function renderCart() {
+      const tbody = document.getElementById("cartItems");
+      const itemCountBadge = document.getElementById("itemCountBadge");
+      if (!tbody || !itemCountBadge) return;
+
+      tbody.innerHTML = "";
+      let subtotal = 0;
+
+      demoCart.forEach((item) => {
+        const line = item.qty * item.unit;
+        subtotal += line;
+
+        const tr = document.createElement("tr");
+
+        const tdProd = document.createElement("td");
+        tdProd.innerHTML = `
+          <div style="font-weight:900; color: var(--trade-black);">${item.name}</div>
+          <span class="sku" aria-label="SKU">${item.sku}</span>
+        `;
+
+        const tdQty = document.createElement("td");
+        tdQty.className = "qty";
+        tdQty.textContent = String(item.qty);
+
+        const tdUnit = document.createElement("td");
+        tdUnit.className = "money";
+        tdUnit.textContent = moneyGBP(item.unit);
+
+        const tdLine = document.createElement("td");
+        tdLine.className = "money";
+        tdLine.textContent = moneyGBP(line);
+
+        tr.appendChild(tdProd);
+        tr.appendChild(tdQty);
+        tr.appendChild(tdUnit);
+        tr.appendChild(tdLine);
+        tbody.appendChild(tr);
+      });
+
+      const deliveryKey = getSelectedDeliveryKey();
+      const delivery = deliveryPricing[deliveryKey] ?? deliveryPricing.standard;
+
+      // Simple VAT model for demo: assume prices are ex-VAT; add 20% VAT to (subtotal + delivery)
+      const vat = (subtotal + delivery) * 0.20;
+      const total = subtotal + delivery + vat;
+
+      document.getElementById("subtotalText").textContent = moneyGBP(subtotal);
+      document.getElementById("deliveryText").textContent = moneyGBP(delivery);
+      document.getElementById("vatText").textContent = moneyGBP(vat);
+      document.getElementById("totalText").textContent = moneyGBP(total);
+
+      const count = demoCart.reduce((acc, x) => acc + x.qty, 0);
+      itemCountBadge.textContent = `${count} item${count === 1 ? "" : "s"}`;
+    }
+
+    // Email save UX (demo only; does not change storage keys to avoid breaking existing behaviour)
+    function wireEmailSave() {
+      const btn = document.getElementById("saveEmailBtn");
+      const email = document.getElementById("email");
+      if (!btn || !email) return;
+
+      btn.addEventListener("click", () => {
+        // Visual acknowledgement only
+        btn.textContent = "Saved ✓";
+        btn.style.background = "linear-gradient(180deg, rgba(15,122,62,0.18), rgba(15,122,62,0.10))";
+        btn.style.borderColor = "rgba(15,122,62,0.35)";
+        btn.style.color = "var(--trade-black)";
+        setTimeout(() => {
+          btn.textContent = "Save email";
+          btn.removeAttribute("style");
+        }, 1400);
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderCart();
+      wireEmailSave();
+
+      // Recalculate totals when delivery option changes
+      document.querySelectorAll('input[name="deliveryOption"]').forEach((el) => {
+        el.addEventListener("change", renderCart);
+      });
+    });
+  </script>
 </body>
 </html>
-``
