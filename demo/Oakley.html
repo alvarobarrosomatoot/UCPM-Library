@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Oakley — Market Research</title>
+
+<!-- OneTrust Embedded Web Form Stub -->
+<script>
+window.OtSdk=window.OtSdk||function(){(OtSdk.q=OtSdk.q||[]).push(arguments)};
+</script>
+<script
+  src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+  data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
+  worker="https://consent-api.onetrust.com">
+</script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg-start:#0a0a0a;--bg-end:#1a1a1a;
+  --card:#ffffff;--card-dark:#111111;
+  --text:#ffffff;--text-dark:#111111;--muted:#999;
+  --accent:#C41230;--accent-light:rgba(196,18,48,.12);
+  --border:#e0e0e0;--radius:14px;
+}
+html{scroll-behavior:smooth}
+body{
+  margin:0;padding:24px 16px 60px;
+  min-height:100vh;
+  background:linear-gradient(160deg,var(--bg-start),var(--bg-end));
+  color:var(--text);
+  font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  display:flex;justify-content:center;align-items:flex-start;
+}
+.wrapper{width:100%;max-width:500px}
+.logo{text-align:center;margin-bottom:8px}
+.logo span{
+  font-size:2rem;font-weight:900;letter-spacing:.35em;
+  text-transform:uppercase;color:#fff;
+}
+.progress-bar{display:flex;gap:6px;margin-bottom:24px}
+.progress-bar .step{
+  flex:1;height:5px;border-radius:99px;
+  background:rgba(255,255,255,.15);transition:background .4s;
+}
+.progress-bar .step.active{background:var(--accent)}
+.card{
+  background:var(--card);color:var(--text-dark);
+  border-radius:var(--radius);
+  padding:32px 28px;
+  box-shadow:0 16px 48px rgba(0,0,0,.45);
+  animation:fadeUp .45s ease both;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.card h2{font-size:1.45rem;font-weight:800;margin-bottom:4px}
+.card .sub{color:var(--muted);font-size:.92rem;margin-bottom:22px}
+.screen{display:none}
+.screen.active{display:block}
+.field{margin-bottom:16px}
+.field label{display:block;font-weight:700;font-size:.85rem;margin-bottom:6px}
+.field input{
+  width:100%;padding:14px 16px;
+  border:1.5px solid var(--border);border-radius:10px;
+  font:inherit;font-size:1rem;color:var(--text-dark);
+  transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus{
+  outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-light);
+}
+.section-title{
+  font-weight:800;font-size:1rem;margin:20px 0 10px;
+  display:flex;align-items:center;gap:6px;
+}
+.section-title:first-child{margin-top:0}
+.card-grid{display:flex;flex-wrap:wrap;gap:10px}
+.sel-card{
+  flex:1 1 calc(33.33% - 10px);min-width:120px;
+  padding:14px 10px;text-align:center;
+  border:2px solid var(--border);border-radius:12px;
+  cursor:pointer;user-select:none;
+  transition:border-color .2s,background .2s,transform .15s;
+}
+.sel-card:hover{transform:translateY(-2px)}
+.sel-card.selected{border-color:var(--accent);background:var(--accent-light)}
+.sel-card .icon{font-size:1.8rem;display:block;margin-bottom:4px}
+.sel-card .lbl{font-weight:700;font-size:.82rem}
+.cad-grid{display:flex;gap:10px}
+.cad-card{
+  flex:1;padding:16px;text-align:center;
+  border:2px solid var(--border);border-radius:12px;
+  cursor:pointer;font-weight:700;font-size:.95rem;
+  transition:border-color .2s,background .2s;
+}
+.cad-card.selected{border-color:var(--accent);background:var(--accent-light)}
+.actions{display:flex;gap:12px;margin-top:24px}
+.btn{
+  flex:1;padding:15px;border:none;border-radius:10px;
+  cursor:pointer;font:inherit;font-weight:800;font-size:.95rem;
+  transition:opacity .2s;
+}
+.btn:active{opacity:.8}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--text-dark)}
+#ot-container{margin-top:12px;min-height:100px}
+.ot-consent-inline{
+  border:none!important;background:transparent!important;
+  border-radius:0!important;padding:0!important;box-shadow:none!important;
+}
+.ot-consent-inline,.ot-consent-inline *{font-family:inherit!important}
+.otwf-content,.ot-form,.ot-form-content,.otwf-chkbox,.ot-el,.ot-pur,.ot-de{
+  background:transparent!important;border:none!important;
+  box-shadow:none!important;padding:0!important;
+}
+.otwf-chkbox{margin:10px 0!important}
+.otwf-chkbox input[type="checkbox"]{
+  width:18px;height:18px;margin-right:8px!important;
+  accent-color:var(--accent)!important;
+}
+.ot-email input,.ot-de input,.ot-pp select,.ot-pp input{
+  width:100%!important;padding:12px!important;
+  border:1.5px solid var(--border)!important;border-radius:10px!important;
+  background:#fff!important;color:var(--text-dark)!important;font-size:.95rem!important;
+}
+.ot-email input:focus,.ot-de input:focus{
+  outline:none!important;border-color:var(--accent)!important;
+  box-shadow:0 0 0 3px var(--accent-light)!important;
+}
+.ot-consent-inline button[type="submit"],
+.ot-consent-inline .otwf-btn,
+.ot-consent-inline input[type="submit"]{
+  background:var(--accent)!important;color:#fff!important;
+  border:none!important;border-radius:10px!important;
+  padding:14px 28px!important;font-weight:800!important;
+  font-size:1rem!important;cursor:pointer!important;
+  width:100%!important;margin-top:12px!important;
+}
+.ot-consent-inline .otwf-header,
+.ot-consent-inline .otwf-footer{display:none!important}
+.wheel-wrap{text-align:center}
+.wheel-wrap h2{color:var(--text-dark)}
+#wheelCanvas{display:block;margin:16px auto 0}
+.spin-btn{
+  margin:20px auto 0;display:block;
+  width:180px;padding:16px;
+  background:var(--accent);color:#fff;border:none;border-radius:12px;
+  font:inherit;font-size:1.1rem;font-weight:900;
+  cursor:pointer;letter-spacing:.05em;
+  transition:transform .15s;
+}
+.spin-btn:active{transform:scale(.95)}
+.spin-btn:disabled{opacity:.5;cursor:not-allowed}
+.pointer{
+  width:0;height:0;margin:0 auto -6px;
+  border-left:14px solid transparent;
+  border-right:14px solid transparent;
+  border-top:22px solid var(--accent);
+  position:relative;z-index:2;
+}
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.75);
+  justify-content:center;align-items:center;z-index:999;
+}
+.overlay.show{display:flex}
+.modal{
+  background:#fff;border-radius:var(--radius);
+  padding:40px 32px;text-align:center;
+  max-width:380px;width:90%;
+  animation:fadeUp .4s ease both;
+}
+.modal .prize-icon{font-size:4rem;margin-bottom:8px}
+.modal h3{font-size:1.4rem;font-weight:900;color:var(--text-dark);margin-bottom:6px}
+.modal p{color:var(--muted);margin-bottom:20px}
+.modal .btn-primary{width:100%;padding:16px;font-size:1rem}
+.confetti-piece{
+  position:fixed;width:10px;height:10px;
+  border-radius:2px;z-index:1000;
+  animation:confettiFall 2.5s ease forwards;
+  pointer-events:none;
+}
+@keyframes confettiFall{
+  0%{opacity:1;transform:translateY(0) rotate(0deg)}
+  100%{opacity:0;transform:translateY(110vh) rotate(720deg)}
+}
+@media(max-width:400px){
+  .card{padding:24px 18px}
+  .sel-card{flex:1 1 calc(50% - 10px);min-width:0}
+}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+
+  <div class="logo"><span>OAKLEY</span></div>
+
+  <div class="progress-bar">
+    <div class="step active" id="prog1"></div>
+    <div class="step" id="prog2"></div>
+    <div class="step" id="prog3"></div>
+  </div>
+
+  <!-- SCREEN 1 — Personal Info -->
+  <div class="screen active" id="screen1">
+    <div class="card">
+      <h2>Tell Us About You</h2>
+      <p class="sub">Join the Oakley community &amp; unlock exclusive rewards.</p>
+      <div class="field">
+        <label for="email">Email *</label>
+        <input type="email" id="email" placeholder="you@example.com" required/>
+      </div>
+      <div class="field">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" placeholder="Your first name"/>
+      </div>
+      <div class="field">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" placeholder="Your last name"/>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" id="btn-to-2">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2 — Preferences -->
+  <div class="screen" id="screen2">
+    <div class="card">
+      <h2>Your Preferences</h2>
+      <p class="sub">Help us personalise your Oakley experience.</p>
+
+      <div class="section-title">&#128197; Communication Cadence</div>
+      <div class="cad-grid">
+        <div class="cad-card" data-value="Weekly" id="cad-weekly">Weekly</div>
+        <div class="cad-card" data-value="Monthly" id="cad-monthly">Monthly</div>
+      </div>
+
+      <div class="section-title">&#128227; Preferred Channels</div>
+      <div class="card-grid" id="channelGrid">
+        <div class="sel-card" data-value="Email">
+          <span class="icon">&#128231;</span><span class="lbl">Email</span>
+        </div>
+        <div class="sel-card" data-value="Whatsapp">
+          <span class="icon">&#128172;</span><span class="lbl">WhatsApp</span>
+        </div>
+        <div class="sel-card" data-value="SMS">
+          <span class="icon">&#128241;</span><span class="lbl">SMS</span>
+        </div>
+      </div>
+
+      <div class="section-title">&#128293; Your Interests</div>
+      <div class="card-grid" id="interestGrid">
+        <div class="sel-card" data-value="Snowboarding">
+          <span class="icon">&#127938;</span><span class="lbl">Snowboarding</span>
+        </div>
+        <div class="sel-card" data-value="Skiing">
+          <span class="icon">&#9975;&#65039;</span><span class="lbl">Skiing</span>
+        </div>
+        <div class="sel-card" data-value="Cycling">
+          <span class="icon">&#128692;</span><span class="lbl">Cycling</span>
+        </div>
+        <div class="sel-card" data-value="Golf">
+          <span class="icon">&#9971;</span><span class="lbl">Golf</span>
+        </div>
+        <div class="sel-card" data-value="Sailing">
+          <span class="icon">&#9973;</span><span class="lbl">Sailing</span>
+        </div>
+        <div class="sel-card" data-value="Surfing">
+          <span class="icon">&#127940;</span><span class="lbl">Surfing</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-ghost" id="btn-back-1">Back</button>
+        <button class="btn btn-primary" id="btn-to-3">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3 — OneTrust CP -->
+  <div class="screen" id="screen3">
+    <div class="card">
+      <h2>Confirm Your Consent</h2>
+      <p class="sub">Review and submit your preferences securely via OneTrust.</p>
+      <div id="ot-container"></div>
+      <div class="actions" style="margin-top:8px">
+        <button class="btn btn-ghost" id="btn-back-2">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4 — Wheel of Fortune -->
+  <div class="screen" id="screen4">
+    <div class="card wheel-wrap">
+      <h2>&#127881; Thank You!</h2>
+      <p class="sub">Spin the wheel for a chance to win an Oakley prize!</p>
+      <div class="pointer"></div>
+      <canvas id="wheelCanvas" width="320" height="320"></canvas>
+      <button class="spin-btn" id="spinBtn">SPIN</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Result overlay -->
+<div class="overlay" id="resultOverlay">
+  <div class="modal">
+    <div class="prize-icon" id="prizeIcon"></div>
+    <h3 id="prizeTitle"></h3>
+    <p id="prizeDesc"></p>
+    <button class="btn btn-primary" id="claimBtn">Claim Your Prize &#127873;</button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   STATE
+============================================================ */
+var currentScreen = 1;
+var selectedCadence = "";
+var CP_ID = "c34b2517-d9e8-4aad-9c34-c6f19ce53495";
+var cpInstalled = false;
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+function goToScreen(n) {
+  if (currentScreen === 1 && n === 2) {
+    var emailVal = document.getElementById("email").value.trim();
+    if (!emailVal) { alert("Please enter your email address."); return; }
+    if (emailVal.indexOf("@") === -1 || emailVal.indexOf(".") === -1) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+  }
+
+  if (n === 3 && !cpInstalled) {
+    installCP();
+  } else if (n === 3 && cpInstalled) {
+    prefillCP();
+  }
+
+  document.getElementById("screen" + currentScreen).classList.remove("active");
+  document.getElementById("screen" + n).classList.add("active");
+  currentScreen = n;
+
+  for (var i = 1; i <= 3; i++) {
+    if (i <= Math.min(n, 3)) {
+      document.getElementById("prog" + i).classList.add("active");
+    } else {
+      document.getElementById("prog" + i).classList.remove("active");
+    }
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* ============================================================
+   SCREEN 2 INTERACTIONS
+============================================================ */
+function selectCadence(el) {
+  var cards = document.querySelectorAll(".cad-card");
+  for (var i = 0; i < cards.length; i++) {
+    cards[i].classList.remove("selected");
+  }
+  el.classList.add("selected");
+  selectedCadence = el.getAttribute("data-value");
+}
+
+function toggleCard(el) {
+  el.classList.toggle("selected");
+}
+
+function getSelected(containerId) {
+  var cards = document.querySelectorAll("#" + containerId + " .sel-card.selected");
+  var result = [];
+  for (var i = 0; i < cards.length; i++) {
+    result.push(cards[i].getAttribute("data-value"));
+  }
+  return result;
+}
+
+/* ============================================================
+   ONETRUST — INSTALL & PREFILL
+============================================================ */
+function installCP() {
+  cpInstalled = true;
+
+  window.addEventListener("OnetrustFormLoaded", function onLoaded() {
+    prefillCP();
+    window.removeEventListener("OnetrustFormLoaded", onLoaded);
+  });
+
+  if (typeof OneTrust !== "undefined" && OneTrust.webform) {
+    OneTrust.webform.InstallCP(CP_ID, { target: "#ot-container" });
+  } else {
+    var poll = setInterval(function() {
+      if (typeof OneTrust !== "undefined" && OneTrust.webform) {
+        clearInterval(poll);
+        OneTrust.webform.InstallCP(CP_ID, { target: "#ot-container" });
+      }
+    }, 300);
+  }
+}
+
+function prefillCP() {
+  var data = {
+    "Email": document.getElementById("email").value.trim(),
+    "FirstName": document.getElementById("firstName").value.trim(),
+    "LastName": document.getElementById("lastName").value.trim(),
+    "Personalized Online Advertising": "Checked",
+    "Oakley Marketing": "Checked",
+    "Cadence": selectedCadence || "Monthly",
+    "Channel": getSelected("channelGrid"),
+    "Oakley Interests": getSelected("interestGrid")
+  };
+
+  try {
+    OneTrust.webform.preFill(data, CP_ID);
+    console.log("[OT] Prefill applied", data);
+  } catch (e) {
+    console.warn("[OT] Prefill not ready yet", e);
+  }
+}
+
+/* ============================================================
+   POST-SUBMIT -> SHOW WHEEL
+============================================================ */
+window.addEventListener("OneTrustWebFormSubmitted", function(event) {
+  console.log("OneTrustWebFormSubmitted event triggered", event.detail);
+  goToScreen(4);
+  drawWheel();
+});
+
+/* ============================================================
+   WHEEL OF FORTUNE
+============================================================ */
+var prizes = [
+  { label: "Goggles",  emoji: "\uD83E\uDD7D", color: "#C41230", title: "Oakley Goggles!", desc: "A pair of Oakley goggles are yours - ride in style!" },
+  { label: "Stickers", emoji: "\u2B50",        color: "#1a1a1a", title: "Oakley Stickers!", desc: "A premium Oakley sticker pack is heading your way!" },
+  { label: "Discount", emoji: "\uD83C\uDFF7\uFE0F", color: "#333333", title: "Oakley Discount!", desc: "An exclusive 20% off discount code just for you!" },
+  { label: "Goggles",  emoji: "\uD83E\uDD7D", color: "#C41230", title: "Oakley Goggles!", desc: "A pair of Oakley goggles are yours - ride in style!" },
+  { label: "Stickers", emoji: "\u2B50",        color: "#1a1a1a", title: "Oakley Stickers!", desc: "A premium Oakley sticker pack is heading your way!" },
+  { label: "Discount", emoji: "\uD83C\uDFF7\uFE0F", color: "#333333", title: "Oakley Discount!", desc: "An exclusive 20% off discount code just for you!" }
+];
+
+var numSegments = prizes.length;
+var arc = (2 * Math.PI) / numSegments;
+var angle = 0;
+var spinVelocity = 0;
+var spinning = false;
+
+function drawWheel() {
+  var canvas = document.getElementById("wheelCanvas");
+  var ctx = canvas.getContext("2d");
+  var cx = canvas.width / 2;
+  var cy = canvas.height / 2;
+  var r = cx - 6;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (var i = 0; i < numSegments; i++) {
+    var startAngle = angle + i * arc;
+    var endAngle = startAngle + arc;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, startAngle, endAngle);
+    ctx.closePath();
+    ctx.fillStyle = prizes[i].color;
+    ctx.fill();
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(startAngle + arc / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 13px system-ui, sans-serif";
+    ctx.fillText(prizes[i].emoji + " " + prizes[i].label, r - 16, 5);
+    ctx.restore();
+  }
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, 22, 0, 2 * Math.PI);
+  ctx.fillStyle = "#fff";
+  ctx.fill();
+  ctx.strokeStyle = "#C41230";
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  ctx.fillStyle = "#C41230";
+  ctx.font = "bold 18px system-ui, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("O", cx, cy);
+}
+
+function spinWheel() {
+  if (spinning) return;
+  spinning = true;
+  document.getElementById("spinBtn").disabled = true;
+  spinVelocity = 0.35 + Math.random() * 0.2;
+  requestAnimationFrame(animateWheel);
+}
+
+function animateWheel() {
+  angle += spinVelocity;
+  spinVelocity *= 0.985;
+  drawWheel();
+
+  if (spinVelocity > 0.002) {
+    requestAnimationFrame(animateWheel);
+  } else {
+    spinning = false;
+    showResult();
+  }
+}
+
+function showResult() {
+  var pointerAngle = ((3 * Math.PI / 2 - angle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  var idx = Math.floor(pointerAngle / arc) % numSegments;
+  var prize = prizes[idx];
+
+  document.getElementById("prizeIcon").textContent = prize.emoji;
+  document.getElementById("prizeTitle").textContent = prize.title;
+  document.getElementById("prizeDesc").textContent = prize.desc;
+
+  launchConfetti();
+
+  setTimeout(function() {
+    document.getElementById("resultOverlay").classList.add("show");
+  }, 300);
+}
+
+/* ============================================================
+   CONFETTI
+============================================================ */
+function launchConfetti() {
+  var colors = ["#C41230","#FFD700","#00B4D8","#FF6B6B","#2ECC71","#FFF"];
+  for (var i = 0; i < 80; i++) {
+    var el = document.createElement("div");
+    el.className = "confetti-piece";
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.top = "-10px";
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.width = (6 + Math.random() * 8) + "px";
+    el.style.height = (6 + Math.random() * 8) + "px";
+    el.style.animationDelay = (Math.random() * 0.8) + "s";
+    el.style.animationDuration = (2 + Math.random() * 1.5) + "s";
+    document.body.appendChild(el);
+    (function(elem) {
+      setTimeout(function() { elem.remove(); }, 4000);
+    })(el);
+  }
+}
+
+/* ============================================================
+   EVENT LISTENERS (attached after DOM is ready)
+============================================================ */
+document.addEventListener("DOMContentLoaded", function() {
+
+  // Screen 1 -> Screen 2
+  document.getElementById("btn-to-2").addEventListener("click", function() {
+    goToScreen(2);
+  });
+
+  // Screen 2 -> Screen 1
+  document.getElementById("btn-back-1").addEventListener("click", function() {
+    goToScreen(1);
+  });
+
+  // Screen 2 -> Screen 3
+  document.getElementById("btn-to-3").addEventListener("click", function() {
+    goToScreen(3);
+  });
+
+  // Screen 3 -> Screen 2
+  document.getElementById("btn-back-2").addEventListener("click", function() {
+    goToScreen(2);
+  });
+
+  // Cadence cards
+  document.getElementById("cad-weekly").addEventListener("click", function() {
+    selectCadence(this);
+  });
+  document.getElementById("cad-monthly").addEventListener("click", function() {
+    selectCadence(this);
+  });
+
+  // Channel cards
+  var channelCards = document.querySelectorAll("#channelGrid .sel-card");
+  for (var i = 0; i < channelCards.length; i++) {
+    channelCards[i].addEventListener("click", function() {
+      toggleCard(this);
+    });
+  }
+
+  // Interest cards
+  var interestCards = document.querySelectorAll("#interestGrid .sel-card");
+  for (var j = 0; j < interestCards.length; j++) {
+    interestCards[j].addEventListener("click", function() {
+      toggleCard(this);
+    });
+  }
+
+  // Spin button
+  document.getElementById("spinBtn").addEventListener("click", function() {
+    spinWheel();
+  });
+
+  // Claim button
+  document.getElementById("claimBtn").addEventListener("click", function() {
+    document.getElementById("resultOverlay").classList.remove("show");
+  });
+
+  // Draw wheel in case screen 4 is visible
+  var observer = new MutationObserver(function() {
+    if (document.getElementById("screen4").classList.contains("active")) {
+      drawWheel();
+    }
+  });
+  observer.observe(document.getElementById("screen4"), { attributes: true });
+});
+</script>
+
+</body>
+</html>
