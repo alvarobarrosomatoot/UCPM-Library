@@ -453,7 +453,8 @@ function installCP() {
   cpInstalled = true;
 
   window.addEventListener("OnetrustFormLoaded", function onLoaded() {
-    prefillCP();
+    /* Wait 1 second after form renders before applying prefill */
+    setTimeout(function() { prefillCP(); }, 1000);
     window.removeEventListener("OnetrustFormLoaded", onLoaded);
   });
 
@@ -476,25 +477,16 @@ function prefillCP() {
   var channels = getSelected("channelGrid");
   var interests = getSelected("interestGrid");
 
-  var data = {};
-
-  /* --- Data elements (exact data-name from rendered form) --- */
-  data["Email"] = emailVal;
-  data["First name"] = firstVal;
-  data["Last name"] = lastVal;
-
-  /* --- Purposes (Checked / Unchecked) --- */
-  data["Personalized Online Advertising"] = "Checked";
-  data["Oakley Marketing"] = "Checked";
-
-  /* --- Cadence (array with selected value) --- */
-  data["Cadence"] = selectedCadence ? [selectedCadence] : [];
-
-  /* --- Channels (array of selected options) --- */
-  data["Channel"] = channels;
-
-  /* --- Interests (array of selected options) --- */
-  data["Oakley Interests"] = interests;
+  var data = {
+    "Email": emailVal,
+    "First name": firstVal,
+    "Last name": lastVal,
+    "Personalized Online Advertising": "Checked",
+    "Oakley Marketing": "Checked",
+    "Validate Cadence": selectedCadence ? [selectedCadence] : [],
+    "Validate Channel": channels,
+    "Validate Interests": interests
+  };
 
   try {
     OneTrust.webform.preFill(data, CP_ID);
@@ -502,44 +494,6 @@ function prefillCP() {
   } catch (e) {
     console.warn("[OT] Prefill not ready yet", e);
   }
-
-  /* Fallback: handle Email channel checkbox via DOM in case the
-     array approach does not resolve the key conflict with the
-     Email data element. Locate it in the Validate Channel fieldset. */
-  setTimeout(function() {
-    try {
-      var container = document.getElementById("ot-container");
-      var legends = container.querySelectorAll("legend");
-      var channelFieldset = null;
-      for (var k = 0; k < legends.length; k++) {
-        var dn = legends[k].getAttribute("data-name");
-        if (dn === "Validate Channel") {
-          channelFieldset = legends[k].parentElement;
-          break;
-        }
-      }
-      if (channelFieldset) {
-        var allLabels = channelFieldset.querySelectorAll("label");
-        for (var m = 0; m < allLabels.length; m++) {
-          var labelName = allLabels[m].getAttribute("data-name");
-          if (labelName === "Email") {
-            var chkId = allLabels[m].getAttribute("for");
-            var chk = document.getElementById(chkId);
-            if (chk) {
-              var shouldBeChecked = (channels.indexOf("Email") >= 0);
-              if (chk.checked !== shouldBeChecked) {
-                chk.click();
-              }
-              console.log("[OT] Email channel checkbox set to", shouldBeChecked);
-            }
-            break;
-          }
-        }
-      }
-    } catch (e) {
-      console.warn("[OT] Email channel DOM fix failed", e);
-    }
-  }, 500);
 }
 
 /* ============================================================
