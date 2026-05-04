@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Oakley — Market Research</title>
+<title>Oakley - Market Research</title>
 
 <!-- OneTrust Embedded Web Form Stub -->
 <script>
@@ -19,7 +19,7 @@ window.OtSdk=window.OtSdk||function(){(OtSdk.q=OtSdk.q||[]).push(arguments)};
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg-start:#0a0a0a;--bg-end:#1a1a1a;
-  --card:#ffffff;--card-dark:#111111;
+  --card:#ffffff;
   --text:#ffffff;--text-dark:#111111;--muted:#999;
   --accent:#C41230;--accent-light:rgba(196,18,48,.12);
   --border:#e0e0e0;--radius:14px;
@@ -106,41 +106,102 @@ body{
 .btn:active{opacity:.8}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--text-dark)}
+
+/* ============================================================
+   ONETRUST FORM OVERRIDES
+============================================================ */
 #ot-container{margin-top:12px;min-height:100px}
 .ot-consent-inline{
   border:none!important;background:transparent!important;
   border-radius:0!important;padding:0!important;box-shadow:none!important;
 }
-.ot-consent-inline,.ot-consent-inline *{font-family:inherit!important}
-.otwf-content,.ot-form,.ot-form-content,.otwf-chkbox,.ot-el,.ot-pur,.ot-de{
+.ot-consent-inline,.ot-consent-inline *{
+  font-family:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif!important;
+  color:var(--text-dark)!important;
+}
+.otwf-content,.ot-form,.ot-form-content{
   background:transparent!important;border:none!important;
   box-shadow:none!important;padding:0!important;
 }
-.otwf-chkbox{margin:10px 0!important}
-.otwf-chkbox input[type="checkbox"]{
-  width:18px;height:18px;margin-right:8px!important;
-  accent-color:var(--accent)!important;
+.otwf-close-cntr,.ot-close,.ot-close-btn{display:none!important}
+.ot-consent-inline .ot-de{
+  margin-bottom:14px!important;
+  background:transparent!important;border:none!important;
+  box-shadow:none!important;padding:0!important;
 }
-.ot-email input,.ot-de input,.ot-pp select,.ot-pp input{
-  width:100%!important;padding:12px!important;
+.ot-consent-inline .ot-label{
+  display:block!important;font-weight:700!important;
+  font-size:.85rem!important;margin-bottom:6px!important;
+}
+.ot-consent-inline input[type="email"],
+.ot-consent-inline input[type="text"]{
+  width:100%!important;padding:14px 16px!important;
   border:1.5px solid var(--border)!important;border-radius:10px!important;
-  background:#fff!important;color:var(--text-dark)!important;font-size:.95rem!important;
+  background:#fff!important;color:var(--text-dark)!important;
+  font-size:1rem!important;
 }
-.ot-email input:focus,.ot-de input:focus{
+.ot-consent-inline input[type="email"]:focus,
+.ot-consent-inline input[type="text"]:focus{
   outline:none!important;border-color:var(--accent)!important;
   box-shadow:0 0 0 3px var(--accent-light)!important;
 }
-.ot-consent-inline button[type="submit"],
-.ot-consent-inline .otwf-btn,
-.ot-consent-inline input[type="submit"]{
+.ot-consent-inline .ot-pur{
+  margin:14px 0!important;padding:0!important;
+  background:transparent!important;border:none!important;
+  box-shadow:none!important;display:flex!important;align-items:center!important;gap:8px!important;
+}
+.ot-consent-inline .ot-pur .ot-desc{display:none!important}
+.ot-consent-inline input[type="checkbox"],
+.ot-consent-inline input[type="radio"]{
+  width:18px!important;height:18px!important;
+  margin-right:8px!important;
+  accent-color:var(--accent)!important;
+  cursor:pointer!important;
+}
+.ot-consent-inline fieldset{
+  border:1.5px solid var(--border)!important;border-radius:12px!important;
+  padding:16px!important;margin:16px 0!important;
+}
+.ot-consent-inline legend{
+  font-weight:800!important;font-size:.95rem!important;
+  padding:0 8px!important;color:var(--text-dark)!important;
+}
+.ot-consent-inline fieldset .ot-el{
+  margin:8px 0!important;padding:0!important;
+  background:transparent!important;border:none!important;
+  box-shadow:none!important;display:flex!important;align-items:center!important;
+}
+.ot-consent-inline fieldset .otwf-chkbox{
+  margin:8px 0!important;padding:0!important;
+  background:transparent!important;border:none!important;
+  box-shadow:none!important;display:flex!important;align-items:center!important;
+}
+.ot-consent-inline fieldset .ot-desc{display:none!important}
+.ot-consent-inline .ot-error{
+  color:#d9534f!important;font-size:.8rem!important;margin-top:4px!important;
+}
+.ot-consent-inline .ot-asterisk{display:inline!important;color:var(--accent)!important;margin-left:2px!important}
+.ot-consent-inline .ot-btns{
+  margin-top:20px!important;padding:0!important;
+  background:transparent!important;border:none!important;
+}
+.ot-consent-inline .ot-submit{
+  width:100%!important;padding:15px!important;
   background:var(--accent)!important;color:#fff!important;
   border:none!important;border-radius:10px!important;
-  padding:14px 28px!important;font-weight:800!important;
-  font-size:1rem!important;cursor:pointer!important;
-  width:100%!important;margin-top:12px!important;
+  font-weight:800!important;font-size:1rem!important;
+  cursor:pointer!important;
+  transition:opacity .2s!important;
 }
-.ot-consent-inline .otwf-header,
-.ot-consent-inline .otwf-footer{display:none!important}
+.ot-consent-inline .ot-submit:hover{opacity:.9!important}
+.ot-consent-inline .ot-submit:focus{
+  outline:none!important;
+  box-shadow:0 0 0 3px var(--accent-light)!important;
+}
+
+/* ============================================================
+   WHEEL
+============================================================ */
 .wheel-wrap{text-align:center}
 .wheel-wrap h2{color:var(--text-dark)}
 #wheelCanvas{display:block;margin:16px auto 0}
@@ -205,7 +266,7 @@ body{
     <div class="step" id="prog3"></div>
   </div>
 
-  <!-- SCREEN 1 — Personal Info -->
+  <!-- SCREEN 1 - Personal Info -->
   <div class="screen active" id="screen1">
     <div class="card">
       <h2>Tell Us About You</h2>
@@ -228,7 +289,7 @@ body{
     </div>
   </div>
 
-  <!-- SCREEN 2 — Preferences -->
+  <!-- SCREEN 2 - Preferences -->
   <div class="screen" id="screen2">
     <div class="card">
       <h2>Your Preferences</h2>
@@ -282,7 +343,7 @@ body{
     </div>
   </div>
 
-  <!-- SCREEN 3 — OneTrust CP -->
+  <!-- SCREEN 3 - OneTrust CP -->
   <div class="screen" id="screen3">
     <div class="card">
       <h2>Confirm Your Consent</h2>
@@ -294,7 +355,7 @@ body{
     </div>
   </div>
 
-  <!-- SCREEN 4 — Wheel of Fortune -->
+  <!-- SCREEN 4 - Wheel of Fortune -->
   <div class="screen" id="screen4">
     <div class="card wheel-wrap">
       <h2>&#127881; Thank You!</h2>
@@ -386,7 +447,7 @@ function getSelected(containerId) {
 }
 
 /* ============================================================
-   ONETRUST — INSTALL & PREFILL
+   ONETRUST - INSTALL & PREFILL
 ============================================================ */
 function installCP() {
   cpInstalled = true;
@@ -409,16 +470,31 @@ function installCP() {
 }
 
 function prefillCP() {
-  var data = {
-    "Email": document.getElementById("email").value.trim(),
-    "FirstName": document.getElementById("firstName").value.trim(),
-    "LastName": document.getElementById("lastName").value.trim(),
-    "Personalized Online Advertising": "Checked",
-    "Oakley Marketing": "Checked",
-    "Cadence": selectedCadence || "Monthly",
-    "Channel": getSelected("channelGrid"),
-    "Oakley Interests": getSelected("interestGrid")
-  };
+  var emailVal = document.getElementById("email").value.trim();
+  var firstVal = document.getElementById("firstName").value.trim();
+  var lastVal = document.getElementById("lastName").value.trim();
+  var channels = getSelected("channelGrid");
+  var interests = getSelected("interestGrid");
+
+  var data = {};
+
+  /* --- Data elements (exact data-name from rendered form) --- */
+  data["Email"] = emailVal;
+  data["First name"] = firstVal;
+  data["Last name"] = lastVal;
+
+  /* --- Purposes (Checked / Unchecked) --- */
+  data["Personalized Online Advertising"] = "Checked";
+  data["Oakley Marketing"] = "Checked";
+
+  /* --- Cadence (array with selected value) --- */
+  data["Cadence"] = selectedCadence ? [selectedCadence] : [];
+
+  /* --- Channels (array of selected options) --- */
+  data["Channel"] = channels;
+
+  /* --- Interests (array of selected options) --- */
+  data["Oakley Interests"] = interests;
 
   try {
     OneTrust.webform.preFill(data, CP_ID);
@@ -426,6 +502,44 @@ function prefillCP() {
   } catch (e) {
     console.warn("[OT] Prefill not ready yet", e);
   }
+
+  /* Fallback: handle Email channel checkbox via DOM in case the
+     array approach does not resolve the key conflict with the
+     Email data element. Locate it in the Validate Channel fieldset. */
+  setTimeout(function() {
+    try {
+      var container = document.getElementById("ot-container");
+      var legends = container.querySelectorAll("legend");
+      var channelFieldset = null;
+      for (var k = 0; k < legends.length; k++) {
+        var dn = legends[k].getAttribute("data-name");
+        if (dn === "Validate Channel") {
+          channelFieldset = legends[k].parentElement;
+          break;
+        }
+      }
+      if (channelFieldset) {
+        var allLabels = channelFieldset.querySelectorAll("label");
+        for (var m = 0; m < allLabels.length; m++) {
+          var labelName = allLabels[m].getAttribute("data-name");
+          if (labelName === "Email") {
+            var chkId = allLabels[m].getAttribute("for");
+            var chk = document.getElementById(chkId);
+            if (chk) {
+              var shouldBeChecked = (channels.indexOf("Email") >= 0);
+              if (chk.checked !== shouldBeChecked) {
+                chk.click();
+              }
+              console.log("[OT] Email channel checkbox set to", shouldBeChecked);
+            }
+            break;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn("[OT] Email channel DOM fix failed", e);
+    }
+  }, 500);
 }
 
 /* ============================================================
@@ -441,12 +555,12 @@ window.addEventListener("OneTrustWebFormSubmitted", function(event) {
    WHEEL OF FORTUNE
 ============================================================ */
 var prizes = [
-  { label: "Goggles",  emoji: "\uD83E\uDD7D", color: "#C41230", title: "Oakley Goggles!", desc: "A pair of Oakley goggles are yours - ride in style!" },
-  { label: "Stickers", emoji: "\u2B50",        color: "#1a1a1a", title: "Oakley Stickers!", desc: "A premium Oakley sticker pack is heading your way!" },
-  { label: "Discount", emoji: "\uD83C\uDFF7\uFE0F", color: "#333333", title: "Oakley Discount!", desc: "An exclusive 20% off discount code just for you!" },
-  { label: "Goggles",  emoji: "\uD83E\uDD7D", color: "#C41230", title: "Oakley Goggles!", desc: "A pair of Oakley goggles are yours - ride in style!" },
-  { label: "Stickers", emoji: "\u2B50",        color: "#1a1a1a", title: "Oakley Stickers!", desc: "A premium Oakley sticker pack is heading your way!" },
-  { label: "Discount", emoji: "\uD83C\uDFF7\uFE0F", color: "#333333", title: "Oakley Discount!", desc: "An exclusive 20% off discount code just for you!" }
+  { label: "Goggles",  emoji: "🥽", color: "#C41230", title: "Oakley Goggles!", desc: "A pair of Oakley goggles are yours - ride in style!" },
+  { label: "Stickers", emoji: "⭐",        color: "#1a1a1a", title: "Oakley Stickers!", desc: "A premium Oakley sticker pack is heading your way!" },
+  { label: "Discount", emoji: "🏷️", color: "#333333", title: "Oakley Discount!", desc: "An exclusive 20% off discount code just for you!" },
+  { label: "Goggles",  emoji: "🥽", color: "#C41230", title: "Oakley Goggles!", desc: "A pair of Oakley goggles are yours - ride in style!" },
+  { label: "Stickers", emoji: "⭐",        color: "#1a1a1a", title: "Oakley Stickers!", desc: "A premium Oakley sticker pack is heading your way!" },
+  { label: "Discount", emoji: "🏷️", color: "#333333", title: "Oakley Discount!", desc: "An exclusive 20% off discount code just for you!" }
 ];
 
 var numSegments = prizes.length;
@@ -563,31 +677,26 @@ function launchConfetti() {
 }
 
 /* ============================================================
-   EVENT LISTENERS (attached after DOM is ready)
+   EVENT LISTENERS
 ============================================================ */
 document.addEventListener("DOMContentLoaded", function() {
 
-  // Screen 1 -> Screen 2
   document.getElementById("btn-to-2").addEventListener("click", function() {
     goToScreen(2);
   });
 
-  // Screen 2 -> Screen 1
   document.getElementById("btn-back-1").addEventListener("click", function() {
     goToScreen(1);
   });
 
-  // Screen 2 -> Screen 3
   document.getElementById("btn-to-3").addEventListener("click", function() {
     goToScreen(3);
   });
 
-  // Screen 3 -> Screen 2
   document.getElementById("btn-back-2").addEventListener("click", function() {
     goToScreen(2);
   });
 
-  // Cadence cards
   document.getElementById("cad-weekly").addEventListener("click", function() {
     selectCadence(this);
   });
@@ -595,7 +704,6 @@ document.addEventListener("DOMContentLoaded", function() {
     selectCadence(this);
   });
 
-  // Channel cards
   var channelCards = document.querySelectorAll("#channelGrid .sel-card");
   for (var i = 0; i < channelCards.length; i++) {
     channelCards[i].addEventListener("click", function() {
@@ -603,7 +711,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Interest cards
   var interestCards = document.querySelectorAll("#interestGrid .sel-card");
   for (var j = 0; j < interestCards.length; j++) {
     interestCards[j].addEventListener("click", function() {
@@ -611,17 +718,14 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Spin button
   document.getElementById("spinBtn").addEventListener("click", function() {
     spinWheel();
   });
 
-  // Claim button
   document.getElementById("claimBtn").addEventListener("click", function() {
     document.getElementById("resultOverlay").classList.remove("show");
   });
 
-  // Draw wheel in case screen 4 is visible
   var observer = new MutationObserver(function() {
     if (document.getElementById("screen4").classList.contains("active")) {
       drawWheel();
