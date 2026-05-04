@@ -110,7 +110,8 @@ body{
 /* ============================================================
    ONETRUST FORM OVERRIDES
 ============================================================ */
-#ot-container{margin-top:12px;min-height:100px}
+#ot-container{margin-top:12px;min-height:100px;opacity:0;transition:opacity .4s ease}
+#ot-container.ready{opacity:1}
 .ot-consent-inline{
   border:none!important;background:transparent!important;
   border-radius:0!important;padding:0!important;box-shadow:none!important;
@@ -453,8 +454,11 @@ function installCP() {
   cpInstalled = true;
 
   window.addEventListener("OnetrustFormLoaded", function onLoaded() {
-    /* Wait 1 second after form renders before applying prefill */
-    setTimeout(function() { prefillCP(); }, 1000);
+    /* Wait 1s for the form to fully render, then prefill and fade in */
+    setTimeout(function() {
+      prefillCP();
+      document.getElementById("ot-container").classList.add("ready");
+    }, 1000);
     window.removeEventListener("OnetrustFormLoaded", onLoaded);
   });
 
