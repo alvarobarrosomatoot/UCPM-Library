@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SEASALT CORNWALL | Checkout</title>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       OneTrust – Required consent bootstrap
+       ═══════════════════════════════════════════════════════════════ -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <!-- OneTrust – Embedded form library -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
+    worker="https://consent-api.onetrust.com">
+  </script>
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       DESIGN TOKENS — Seasalt Cornwall
+       ═══════════════════════════════════════════════════════════ */
+    :root {
+      --bg:           #FAFBFC;
+      --panel:        #ffffff;
+      --text:         #1a1a2e;
+      --muted:        #5a6275;
+      --line:         #dce1e8;
+      --line-strong:  #c5cdd8;
+      --accent:       #263447;
+      --accent-soft:  #E8EDF2;
+      --accent-hover: #1a2636;
+      --success-bg:   #f0f5f3;
+      --success-text: #263447;
+      --radius:       4px;
+      --font-sans:    'Segoe UI', system-ui, -apple-system, sans-serif;
+      --font-serif:   Georgia, 'Times New Roman', serif;
+    }
+
+    /* ── RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ─────────────────────────────────────────────── */
+    .header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px; background: var(--panel);
+      border-bottom: 1px solid var(--line);
+    }
+    .logo { text-align: left; line-height: 1.1; }
+    .logo-main {
+      font-size: 38px; font-weight: 800; letter-spacing: .22em;
+      color: var(--accent); font-family: var(--font-sans); text-transform: uppercase;
+    }
+    .logo-sub {
+      font-size: 14px; font-weight: 700; letter-spacing: .28em;
+      color: var(--accent); text-transform: uppercase;
+    }
+    .header-checkout {
+      font-family: var(--font-serif); font-size: 14px;
+      font-style: italic; color: var(--muted);
+    }
+
+    /* ── HERO ───────────────────────────────────────────────── */
+    .hero {
+      background: var(--accent); color: #fff;
+      text-align: center; padding: 36px 40px 30px;
+    }
+    .hero h1 {
+      font-family: var(--font-serif); font-size: 28px;
+      font-weight: 400; letter-spacing: .04em; margin-bottom: 6px;
+    }
+    .hero p { font-size: 13px; opacity: .78; }
+
+    /* ── PILLS ──────────────────────────────────────────────── */
+    .pills {
+      display: flex; justify-content: center; gap: 24px;
+      padding: 14px 40px; background: var(--accent-soft);
+      font-size: 12px; color: var(--accent); font-weight: 600; letter-spacing: .04em;
+    }
+    .pills span::before { content: '✦ '; opacity: .5; }
+
+    /* ── LAYOUT ─────────────────────────────────────────────── */
+    .main {
+      max-width: 1080px; margin: 32px auto; padding: 0 24px;
+      display: grid; grid-template-columns: 1fr 360px; gap: 28px;
+    }
+    @media (max-width: 860px) { .main { grid-template-columns: 1fr; } }
+
+    /* ── CARD ───────────────────────────────────────────────── */
+    .card {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 28px 26px; margin-bottom: 20px;
+    }
+    .card-title {
+      font-family: var(--font-serif); font-size: 18px;
+      font-weight: 400; margin-bottom: 16px; color: var(--accent);
+    }
+
+    /* ── EMAIL ──────────────────────────────────────────────── */
+    .email-row { display: flex; gap: 10px; }
+    .email-row input {
+      flex: 1; padding: 11px 14px; font-size: 14px;
+      border: 1px solid var(--line-strong); border-radius: var(--radius);
+      outline: none; transition: border-color .2s; font-family: var(--font-sans);
+    }
+    .email-row input:focus { border-color: var(--accent); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 11px 22px; font-family: var(--font-sans); font-size: 13px;
+      font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      color: #fff; background: var(--accent); border: none;
+      border-radius: var(--radius); cursor: pointer; transition: background .2s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+
+    /* ── CONSENT PANEL ─────────────────────────────────────── */
+    .consent-panel {
+      overflow: hidden; max-height: 800px; opacity: 1;
+      transition: max-height .35s ease, opacity .3s ease, margin .3s ease;
+    }
+    .consent-panel.is-hidden {
+      max-height: 0; opacity: 0; margin: 0;
+      padding-top: 0; padding-bottom: 0; border: none;
+    }
+    .consent-status {
+      display: inline-block; background: var(--accent-soft);
+      color: var(--accent); font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: var(--radius); margin-bottom: 14px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       OneTrust Injected Form — Seasalt Cornwall Brand Overrides
+       Targets every element of the UCPM collection point form
+       ═══════════════════════════════════════════════════════════ */
+
+    /* ── Container ─────────────────────────────────────────── */
+    #ot-container {
+      padding: 20px 22px 8px !important;
+      border: 1px solid var(--line) !important;
+      border-radius: var(--radius) !important;
+      background: #f9fafb !important;
+      min-height: 60px;
+    }
+
+    /* ── Strip all OT default styling ──────────────────────── */
+    #ot-container .ot-consent-inline,
+    #ot-container .otwf-content,
+    #ot-container .ot-form,
+    #ot-container .ot-form-content,
+    #ot-container .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      color: inherit !important;
+      font-family: var(--font-sans) !important;
+    }
+
+    /* ── OT's own hide class ───────────────────────────────── */
+    #ot-container .ot-n {
+      display: none !important;
+    }
+
+    /* ── Close button ──────────────────────────────────────── */
+    #ot-container .otwf-close-cntr {
+      display: none !important;
+    }
+
+    /* ── Form scroll container ─────────────────────────────── */
+    #ot-container .ot-form.ot-scroll {
+      max-height: none !important;
+      overflow: visible !important;
+      padding: 0 !important;
+    }
+
+    /* ── Form content — vertical stack ─────────────────────── */
+    #ot-container .ot-form-content {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 18px !important;
+    }
+
+    /* ── LABELS ─────────────────────────────────────────────── */
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container label .ot-label {
+      font-family: var(--font-sans) !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      line-height: 1.5 !important;
+      letter-spacing: .02em !important;
+      color: var(--accent) !important;
+      cursor: pointer;
+    }
+
+    /* Fieldset legends — section headers */
+    #ot-container legend.ot-label {
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      letter-spacing: .06em !important;
+      text-transform: uppercase !important;
+      color: var(--accent) !important;
+      padding-bottom: 8px !important;
+      margin-bottom: 10px !important;
+      border-bottom: 2px solid var(--accent) !important;
+      width: 100% !important;
+      display: block !important;
+    }
+
+    /* ── EMAIL INPUT (hidden by ot-n) ──────────────────────── */
+    #ot-container .ot-email input[type="email"] {
+      width: 100% !important;
+      padding: 11px 14px !important;
+      font-family: var(--font-sans) !important;
+      font-size: 14px !important;
+      border: 1px solid var(--line-strong) !important;
+      border-radius: var(--radius) !important;
+      background: #ffffff !important;
+      color: var(--text) !important;
+      outline: none !important;
+      transition: border-color .2s !important;
+    }
+    #ot-container .ot-email input[type="email"]:focus {
+      border-color: var(--accent) !important;
+    }
+
+    /* ── ERROR MESSAGES ────────────────────────────────────── */
+    #ot-container .ot-error {
+      color: #c0392b !important;
+      font-family: var(--font-sans) !important;
+      font-size: 12px !important;
+      font-weight: 500 !important;
+      margin-top: 4px !important;
+      display: block !important;
+    }
+    #ot-container .ot-error.ot-n {
+      display: none !important;
+    }
+
+    /* ── CHECKBOXES — Custom Seasalt Style ─────────────────── */
+    #ot-container input[type="checkbox"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .otwf-chkbox {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    #ot-container .otwf-chkbox label {
+      display: flex !important;
+      align-items: flex-start !important;
+      gap: 10px !important;
+      cursor: pointer !important;
+      position: relative !important;
+      padding: 6px 0 !important;
+    }
+
+    /* Custom checkbox box */
+    #ot-container .otwf-chkbox label::before {
+      content: "" !important;
+      display: block !important;
+      width: 18px !important;
+      height: 18px !important;
+      min-width: 18px !important;
+      border: 2px solid var(--line-strong) !important;
+      border-radius: 3px !important;
+      background: #ffffff !important;
+      margin-top: 1px !important;
+      transition: all .15s ease !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Checked — navy fill */
+    #ot-container input[type="checkbox"]:checked + label::before {
+      background: var(--accent) !important;
+      border-color: var(--accent) !important;
+    }
+
+    /* Checkmark via ::after */
+    #ot-container .otwf-chkbox label::after {
+      content: "" !important;
+      position: absolute !important;
+      left: 4px !important;
+      top: 9px !important;
+      width: 10px !important;
+      height: 5px !important;
+      border-left: 2px solid transparent !important;
+      border-bottom: 2px solid transparent !important;
+      transform: rotate(-45deg) !important;
+      transition: border-color .15s ease !important;
+    }
+    #ot-container input[type="checkbox"]:checked + label::after {
+      border-left-color: #ffffff !important;
+      border-bottom-color: #ffffff !important;
+    }
+
+    /* Focus ring */
+    #ot-container input[type="checkbox"]:focus + label::before {
+      outline: 2px solid var(--accent) !important;
+      outline-offset: 2px !important;
+    }
+
+    /* ── RADIO BUTTONS — Custom Seasalt Style ──────────────── */
+    #ot-container input[type="radio"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ot-container .ot-radiogrp .ot-el {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    #ot-container .ot-radiogrp .ot-el label {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      cursor: pointer !important;
+      position: relative !important;
+      padding: 6px 0 !important;
+    }
+
+    /* Custom radio circle */
+    #ot-container .ot-radiogrp .ot-el label::before {
+      content: "" !important;
+      display: block !important;
+      width: 18px !important;
+      height: 18px !important;
+      min-width: 18px !important;
+      border: 2px solid var(--line-strong) !important;
+      border-radius: 50% !important;
+      background: #ffffff !important;
+      transition: all .15s ease !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Selected — navy ring + inner dot */
+    #ot-container input[type="radio"]:checked + label::before {
+      border-color: var(--accent) !important;
+      background: #ffffff !important;
+      box-shadow: inset 0 0 0 4px var(--accent) !important;
+    }
+
+    /* Focus ring */
+    #ot-container input[type="radio"]:focus + label::before {
+      outline: 2px solid var(--accent) !important;
+      outline-offset: 2px !important;
+    }
+
+    /* ── FIELDSETS — Card-like containers ───────────────────── */
+    #ot-container fieldset.ot-chkboxgrp,
+    #ot-container fieldset.ot-radiogrp {
+      background: #f2f4f7 !important;
+      border: 1px solid var(--line) !important;
+      border-radius: var(--radius) !important;
+      padding: 16px 18px 12px !important;
+      margin: 4px 0 !important;
+    }
+
+    #ot-container fieldset.ot-chkboxgrp > .otwf-chkbox,
+    #ot-container fieldset.ot-chkboxgrp > .ot-el,
+    #ot-container fieldset.ot-radiogrp > .ot-el {
+      padding: 0 !important;
+    }
+
+    /* ── PURPOSE CHECKBOXES (ot-pur) — accent left border ──── */
+    #ot-container .otwf-chkbox.ot-el.ot-pur {
+      border-left: 3px solid var(--accent) !important;
+      padding: 10px 14px !important;
+      background: #f5f7fa !important;
+      border-radius: 0 var(--radius) var(--radius) 0 !important;
+      margin: 4px 0 !important;
+    }
+
+    /* ── DESCRIPTION TEXT ───────────────────────────────────── */
+    #ot-container .ot-desc {
+      font-family: var(--font-sans) !important;
+      font-size: 12px !important;
+      color: var(--muted) !important;
+      line-height: 1.5 !important;
+      margin-top: 2px !important;
+      padding-left: 28px !important;
+    }
+
+    /* ── ASTERISK ───────────────────────────────────────────── */
+    #ot-container .ot-asterisk {
+      color: #c0392b !important;
+      font-weight: 700 !important;
+      margin-left: 2px !important;
+    }
+
+    /* ── SUBMIT BUTTON ─────────────────────────────────────── */
+    #ot-container .ot-btns {
+      margin-top: 12px !important;
+      padding: 0 !important;
+    }
+
+    #ot-container .ot-submit {
+      display: block !important;
+      width: 100% !important;
+      padding: 13px 22px !important;
+      font-family: var(--font-sans) !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      letter-spacing: .06em !important;
+      text-transform: uppercase !important;
+      color: #ffffff !important;
+      background: var(--accent) !important;
+      border: none !important;
+      border-radius: var(--radius) !important;
+      cursor: pointer !important;
+      transition: background .2s ease !important;
+      box-shadow: none !important;
+    }
+    #ot-container .ot-submit:hover {
+      background: var(--accent-hover) !important;
+    }
+    #ot-container .ot-submit:focus {
+      outline: 2px solid var(--accent) !important;
+      outline-offset: 2px !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       PRODUCTS
+       ═══════════════════════════════════════════════════════════ */
+    .product { display: flex; gap: 20px; padding: 18px 0; }
+    .product + .product { border-top: 1px solid var(--line); }
+    .product-thumb {
+      width: 110px; height: 140px; border-radius: var(--radius);
+      overflow: hidden; flex-shrink: 0; background: var(--accent-soft);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .product-thumb svg { width: 100%; height: 100%; }
+    .product-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .product-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+    .product-name a { color: var(--accent); text-decoration: none; }
+    .product-name a:hover { text-decoration: underline; }
+    .product-variant { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+    .product-price { font-size: 14px; font-weight: 700; color: var(--accent); }
+    .product-qty { font-size: 12px; color: var(--muted); }
+
+    /* ── PAYMENT CARD ──────────────────────────────────────── */
+    .pay-card {
+      background: var(--accent); color: #fff; padding: 22px 24px;
+      border-radius: 10px; margin-bottom: 16px; position: relative;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .chip {
+      width: 36px; height: 26px;
+      background: linear-gradient(135deg, #c4a35a 40%, #e8d4a2);
+      border-radius: 4px; margin-bottom: 18px;
+    }
+    .pay-number { font-size: 17px; letter-spacing: .16em; margin-bottom: 14px; }
+    .pay-row {
+      display: flex; justify-content: space-between;
+      font-size: 11px; text-transform: uppercase; opacity: .8;
+    }
+    .pay-row span { display: block; }
+    .pay-row strong { display: block; font-size: 13px; margin-top: 2px; opacity: 1; }
+
+    /* ── BILLING / SUMMARY ─────────────────────────────────── */
+    .billing-detail { font-size: 13px; color: var(--muted); margin-bottom: 2px; }
+    .summary-line { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; }
+    .summary-line.total {
+      border-top: 1px solid var(--line); margin-top: 6px; padding-top: 12px;
+      font-weight: 700; font-size: 15px; color: var(--accent);
+    }
+
+    /* ── DEBUG PANEL ────────────────────────────────────────── */
+    #debug-panel {
+      background: #1a1a2e; color: #c5e1a5;
+      font-family: 'Courier New', Courier, monospace; font-size: 11px; line-height: 1.5;
+      max-height: 220px; overflow-y: auto; padding: 14px 20px;
+      margin: 30px auto 0; max-width: 1080px;
+      border-radius: var(--radius); border: 1px solid #333;
+    }
+    #debug-panel .debug-title {
+      color: #fdd835; font-weight: 700; font-size: 12px; margin-bottom: 6px;
+      text-transform: uppercase; letter-spacing: .1em;
+    }
+    #debug-log .log-entry { padding: 1px 0; }
+    .log-entry .ts { color: #81d4fa; margin-right: 8px; }
+    .log-entry .msg { color: #c5e1a5; }
+    .log-entry.error .msg { color: #ef9a9a; }
+    .log-entry.success .msg { color: #a5d6a7; }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    .footer {
+      text-align: center; padding: 24px 40px; font-size: 11px;
+      color: var(--muted); border-top: 1px solid var(--line);
+      margin-top: 40px; background: var(--panel);
+    }
+    .footer strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗
+       ║  HEADER                                                  ║
+       ╚══════════════════════════════════════════════════════════╝ -->
+  <header class="header">
+    <div class="logo">
+      <div class="logo-main">SEASALT</div>
+      <div class="logo-sub">CORNWALL</div>
+    </div>
+    <div class="header-checkout">Secure Checkout</div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Almost Yours</h1>
+    <p>Designed in Cornwall · Crafted with care · Responsibly sourced</p>
+  </section>
+
+  <!-- SERVICE PILLS -->
+  <div class="pills">
+    <span>Free UK delivery over £75</span>
+    <span>Free returns</span>
+    <span>GOTS Organic cotton</span>
+  </div>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗
+       ║  MAIN GRID                                               ║
+       ╚══════════════════════════════════════════════════════════╝ -->
+  <div class="main">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+
+      <!-- Email -->
+      <div class="card">
+        <div class="card-title">1 &mdash; Your email</div>
+        <div class="email-row">
+          <input id="email" type="email" placeholder="e.g. sarah@example.com" required/>
+          <button id="confirmEmailBtn" class="btn" type="button">Confirm</button>
+        </div>
+      </div>
+
+      <!-- Consent Panel (hidden until email confirmed) -->
+      <div id="consentPanel" class="card consent-panel is-hidden" aria-hidden="true">
+        <div class="card-title">Communication Preferences</div>
+        <span id="consentStatus" class="consent-status" hidden>Initialising&hellip;</span>
+        <div id="ot-container"></div>
+      </div>
+
+      <!-- Products -->
+      <div class="card">
+        <div class="card-title">2 &mdash; Your items</div>
+
+        <!-- Product 1 – Sailor Top -->
+        <div class="product">
+          <div class="product-thumb">
+            <svg viewBox="0 0 110 140" xmlns="http://www.w3.org/2000/svg">
+              <rect width="110" height="140" fill="#E8EDF2"/>
+              <path d="M25 35 L15 55 L15 125 L95 125 L95 55 L85 35 L72 30 Q55 22 38 30 Z" fill="#fff" stroke="#263447" stroke-width="1.2"/>
+              <path d="M38 30 Q55 38 72 30" fill="none" stroke="#263447" stroke-width="1.5"/>
+              <line x1="18" y1="52" x2="92" y2="52" stroke="#263447" stroke-width="3.5"/>
+              <line x1="16" y1="62" x2="94" y2="62" stroke="#263447" stroke-width="3.5"/>
+              <line x1="15" y1="72" x2="95" y2="72" stroke="#263447" stroke-width="3.5"/>
+              <line x1="15" y1="82" x2="95" y2="82" stroke="#263447" stroke-width="3.5"/>
+              <line x1="15" y1="92" x2="95" y2="92" stroke="#263447" stroke-width="3.5"/>
+              <line x1="15" y1="102" x2="95" y2="102" stroke="#263447" stroke-width="3.5"/>
+              <line x1="15" y1="112" x2="95" y2="112" stroke="#263447" stroke-width="3.5"/>
+              <path d="M25 35 L5 55 L10 58 L15 55" fill="#fff" stroke="#263447" stroke-width="1.2"/>
+              <path d="M85 35 L105 55 L100 58 L95 55" fill="#fff" stroke="#263447" stroke-width="1.2"/>
+              <line x1="6" y1="52" x2="16" y2="52" stroke="#263447" stroke-width="3"/>
+              <line x1="94" y1="52" x2="104" y2="52" stroke="#263447" stroke-width="3"/>
+            </svg>
+          </div>
+          <div class="product-info">
+            <div class="product-name">
+              <a href="https://www.seasaltcornwall.com/clothing/tops" target="_blank">Sailor 3/4 Sleeve Top</a>
+            </div>
+            <div class="product-variant">GOTS Organic Cotton Jersey · Navy / Ecru Breton</div>
+            <div class="product-price">£29.95</div>
+            <div class="product-qty">Qty: 1 · Size: 12</div>
+          </div>
+        </div>
+
+        <!-- Product 2 – Larissa Shirt -->
+        <div class="product">
+          <div class="product-thumb">
+            <svg viewBox="0 0 110 140" xmlns="http://www.w3.org/2000/svg">
+              <rect width="110" height="140" fill="#E8EDF2"/>
+              <path d="M25 30 L15 50 L15 128 L95 128 L95 50 L85 30 L72 25 Q55 18 38 25 Z" fill="#f5f0e8" stroke="#263447" stroke-width="1.2"/>
+              <path d="M42 25 L55 38 L68 25" fill="#f5f0e8" stroke="#263447" stroke-width="1.2"/>
+              <path d="M42 25 L35 35" fill="none" stroke="#263447" stroke-width="1"/>
+              <path d="M68 25 L75 35" fill="none" stroke="#263447" stroke-width="1"/>
+              <line x1="55" y1="38" x2="55" y2="128" stroke="#263447" stroke-width=".8"/>
+              <circle cx="55" cy="50" r="1.5" fill="#263447"/>
+              <circle cx="55" cy="65" r="1.5" fill="#263447"/>
+              <circle cx="55" cy="80" r="1.5" fill="#263447"/>
+              <circle cx="55" cy="95" r="1.5" fill="#263447"/>
+              <circle cx="55" cy="110" r="1.5" fill="#263447"/>
+              <circle cx="30" cy="55" r="5" fill="#c2706a" opacity=".7"/>
+              <circle cx="30" cy="55" r="2" fill="#e8a5a0" opacity=".8"/>
+              <circle cx="78" cy="65" r="6" fill="#7a9fb5" opacity=".6"/>
+              <circle cx="78" cy="65" r="2.5" fill="#b2d1e0" opacity=".8"/>
+              <circle cx="40" cy="85" r="4.5" fill="#8ab57e" opacity=".6"/>
+              <circle cx="40" cy="85" r="1.8" fill="#c2ddb8" opacity=".8"/>
+              <circle cx="72" cy="100" r="5.5" fill="#c2706a" opacity=".6"/>
+              <circle cx="72" cy="100" r="2.2" fill="#e8a5a0" opacity=".8"/>
+              <circle cx="33" cy="112" r="4" fill="#7a9fb5" opacity=".6"/>
+              <circle cx="33" cy="112" r="1.6" fill="#b2d1e0" opacity=".8"/>
+              <circle cx="80" cy="42" r="3.5" fill="#8ab57e" opacity=".6"/>
+              <circle cx="80" cy="42" r="1.4" fill="#c2ddb8" opacity=".8"/>
+              <ellipse cx="35" cy="52" rx="3" ry="1.2" fill="#6b8f60" opacity=".5" transform="rotate(-30 35 52)"/>
+              <ellipse cx="83" cy="62" rx="3.5" ry="1.3" fill="#6b8f60" opacity=".5" transform="rotate(25 83 62)"/>
+              <ellipse cx="45" cy="82" rx="2.8" ry="1" fill="#6b8f60" opacity=".5" transform="rotate(-20 45 82)"/>
+              <path d="M25 30 L5 50 L8 53 L15 50" fill="#f5f0e8" stroke="#263447" stroke-width="1.2"/>
+              <path d="M85 30 L105 50 L102 53 L95 50" fill="#f5f0e8" stroke="#263447" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="product-info">
+            <div class="product-name">
+              <a href="https://www.seasaltcornwall.com/clothing/all-clothing" target="_blank">Larissa Organic Cotton Shirt</a>
+            </div>
+            <div class="product-variant">Organic Cotton · Meadow Floral</div>
+            <div class="product-price">£45.00</div>
+            <div class="product-qty">Qty: 1 · Size: 12</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+
+      <!-- Payment card -->
+      <div class="card" style="padding:0; border:none; background:transparent;">
+        <div class="pay-card">
+          <div class="chip"></div>
+          <div class="pay-number">4242 &nbsp; 4242 &nbsp; 4242 &nbsp; 4242</div>
+          <div class="pay-row">
+            <div><span>Cardholder</span><strong>Sarah Mitchell</strong></div>
+            <div><span>Expires</span><strong>08 / 28</strong></div>
+            <div><span>CVV</span><strong>456</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Billing -->
+      <div class="card">
+        <div class="card-title">Billing address</div>
+        <p class="billing-detail">Sarah Mitchell</p>
+        <p class="billing-detail">14 Fore Street</p>
+        <p class="billing-detail">Falmouth, Cornwall</p>
+        <p class="billing-detail">TR11 4AA, United Kingdom</p>
+      </div>
+
+      <!-- Order summary -->
+      <div class="card">
+        <div class="card-title">Order summary</div>
+        <div class="summary-line">
+          <span>Sailor 3/4 Sleeve Top</span>
+          <span>£29.95</span>
+        </div>
+        <div class="summary-line">
+          <span>Larissa Organic Cotton Shirt</span>
+          <span>£45.00</span>
+        </div>
+        <div class="summary-line">
+          <span>Shipping</span>
+          <span>£4.95</span>
+        </div>
+        <div class="summary-line total">
+          <span>Total</span>
+          <span>£79.90</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗
+       ║  DEBUG PANEL                                             ║
+       ╚══════════════════════════════════════════════════════════╝ -->
+  <div style="max-width:1080px; margin:0 auto; padding:0 24px;">
+    <div id="debug-panel">
+      <div class="debug-title">🔍 Debug Console — OneTrust UCPM Events</div>
+      <div id="debug-log"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <strong>SEASALT CORNWALL</strong> — Demo storefront for OneTrust UCPM ·
+    Designed in Cornwall · © 2026 Seasalt Limited · Company No: 02259954
+  </footer>
+
+  <!-- ╔══════════════════════════════════════════════════════════╗
+       ║  JAVASCRIPT — OneTrust UCPM Integration + Debug Logging  ║
+       ╚══════════════════════════════════════════════════════════╝ -->
+  <script>
+    /* ── Debug Logger ──────────────────────────────────────── */
+    const debugLogEl = document.getElementById("debug-log");
+    let logCounter = 0;
+
+    function debugLog(message, type) {
+      type = type || "info";
+      logCounter++;
+      const now = new Date();
+      const ts = now.toLocaleTimeString("en-GB", { hour12: false }) + "." + String(now.getMilliseconds()).padStart(3, "0");
+
+      if (type === "error") {
+        console.error("[SEASALT-DEBUG #" + logCounter + "] " + message);
+      } else if (type === "success") {
+        console.log("%c[SEASALT-DEBUG #" + logCounter + "] " + message, "color: #4caf50; font-weight: bold;");
+      } else {
+        console.log("[SEASALT-DEBUG #" + logCounter + "] " + message);
+      }
+
+      const entry = document.createElement("div");
+      entry.className = "log-entry" + (type !== "info" ? " " + type : "");
+      entry.innerHTML = '<span class="ts">' + ts + '</span><span class="msg">#' + logCounter + ' ' + message + '</span>';
+      debugLogEl.appendChild(entry);
+      debugLogEl.parentElement.scrollTop = debugLogEl.parentElement.scrollHeight;
+    }
+
+    debugLog("Page loaded — Seasalt Cornwall Checkout Demo initialised");
+    debugLog("OneTrust OtSdk bootstrap present: " + (typeof window.OtSdk !== "undefined"));
+
+    /* ── Collection Point ID ───────────────────────────────── */
+    const CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+    debugLog("CP_ID set to: " + CP_ID);
+
+    /* ── DOM references ────────────────────────────────────── */
+    const emailInput      = document.getElementById("email");
+    const confirmEmailBtn = document.getElementById("confirmEmailBtn");
+    const consentPanel    = document.getElementById("consentPanel");
+    const consentStatus   = document.getElementById("consentStatus");
+    debugLog("DOM references acquired — email input, confirm button, consent panel, status badge");
+
+    /* ── State ─────────────────────────────────────────────── */
+    let otInstallStarted  = false;
+    let otFormLoaded      = false;
+    let pendingEmail      = "";
+    let consentCompleted  = false;
+    debugLog("State initialised — otInstallStarted: false, otFormLoaded: false, consentCompleted: false");
+
+    /* ── whenOTReady ───────────────────────────────────────── */
+    function whenOTReady(callback) {
+      debugLog("whenOTReady() — starting poll for OneTrust.webform.InstallCP...");
+      let pollCount = 0;
+      const timer = setInterval(() => {
+        pollCount++;
+        if (pollCount % 10 === 0) {
+          debugLog("whenOTReady() — poll #" + pollCount + " — still waiting for OneTrust SDK...");
+        }
+        if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+          clearInterval(timer);
+          debugLog("whenOTReady() — OneTrust SDK is READY after " + pollCount + " polls ✓", "success");
+          callback();
+        }
+      }, 80);
+    }
+
+    /* ── revealConsentPanel ─────────────────────────────────── */
+    function revealConsentPanel() {
+      debugLog("revealConsentPanel() called");
+      if (consentCompleted) {
+        debugLog("revealConsentPanel() — consent already completed, skipping");
+        return;
+      }
+      consentPanel.classList.remove("is-hidden");
+      consentPanel.removeAttribute("aria-hidden");
+      consentStatus.hidden = false;
+      debugLog("revealConsentPanel() — panel is now visible", "success");
+    }
+
+    /* ── prefillEmailInForm ─────────────────────────────────── */
+    function prefillEmailInForm() {
+      debugLog("prefillEmailInForm() called — otFormLoaded: " + otFormLoaded + ", pendingEmail: '" + pendingEmail + "'");
+      if (!otFormLoaded) {
+        debugLog("prefillEmailInForm() — form not loaded yet, aborting");
+        return;
+      }
+      if (!pendingEmail) {
+        debugLog("prefillEmailInForm() — no pendingEmail, aborting");
+        return;
+      }
+      if (!window.OneTrust || !window.OneTrust.webform || !window.OneTrust.webform.preFill) {
+        debugLog("prefillEmailInForm() — OneTrust.webform.preFill not available, aborting", "error");
+        return;
+      }
+
+      debugLog("prefillEmailInForm() — calling OneTrust.webform.preFill({ Email: '" + pendingEmail + "' }, CP_ID)");
+      OneTrust.webform.preFill({
+        "Email": pendingEmail
+      }, CP_ID);
+
+      consentStatus.textContent = "Email confirmed — preferences are ready";
+      debugLog("prefillEmailInForm() — preFill executed, status updated ✓", "success");
+    }
+
+    /* ── installFormIfNeeded ────────────────────────────────── */
+    function installFormIfNeeded() {
+      debugLog("installFormIfNeeded() called — otInstallStarted: " + otInstallStarted);
+      if (otInstallStarted) {
+        debugLog("installFormIfNeeded() — already started, calling prefillEmailInForm() instead");
+        prefillEmailInForm();
+        return;
+      }
+
+      otInstallStarted = true;
+      consentStatus.textContent = "Email confirmed — loading preferences";
+      debugLog("installFormIfNeeded() — set otInstallStarted = true, calling whenOTReady()...");
+
+      whenOTReady(() => {
+        debugLog("installFormIfNeeded() → whenOTReady callback — calling OneTrust.webform.InstallCP('" + CP_ID + "', { target: '#ot-container' })");
+        OneTrust.webform.InstallCP(CP_ID, {
+          target: "#ot-container"
+        });
+        debugLog("installFormIfNeeded() — InstallCP called ✓", "success");
+      });
+    }
+
+    /* ── confirmEmailAndShowConsent ─────────────────────────── */
+    function confirmEmailAndShowConsent() {
+      debugLog("confirmEmailAndShowConsent() called");
+
+      if (consentCompleted) {
+        debugLog("confirmEmailAndShowConsent() — consent already completed, skipping");
+        return;
+      }
+
+      if (!emailInput.reportValidity()) {
+        debugLog("confirmEmailAndShowConsent() — email validation FAILED", "error");
+        return;
+      }
+      debugLog("confirmEmailAndShowConsent() — email validation passed ✓");
+
+      pendingEmail = emailInput.value.trim();
+      if (!pendingEmail) {
+        debugLog("confirmEmailAndShowConsent() — email is empty after trim, aborting", "error");
+        return;
+      }
+      debugLog("confirmEmailAndShowConsent() — pendingEmail set to: '" + pendingEmail + "'");
+
+      revealConsentPanel();
+      installFormIfNeeded();
+      prefillEmailInForm();
+      consentPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      debugLog("confirmEmailAndShowConsent() — flow completed, scrolled to consent panel", "success");
+    }
+
+    /* ── removeConsentPanel ─────────────────────────────────── */
+    function removeConsentPanel() {
+      debugLog("removeConsentPanel() called");
+      if (consentCompleted) {
+        debugLog("removeConsentPanel() — already completed, skipping");
+        return;
+      }
+      consentCompleted = true;
+      debugLog("removeConsentPanel() — set consentCompleted = true");
+
+      consentPanel.classList.add("is-hidden");
+      consentPanel.setAttribute("aria-hidden", "true");
+      debugLog("removeConsentPanel() — panel hidden with CSS transition");
+
+      setTimeout(() => {
+        if (consentPanel && consentPanel.parentNode) {
+          consentPanel.parentNode.removeChild(consentPanel);
+          debugLog("removeConsentPanel() — panel DOM node removed ✓", "success");
+        }
+      }, 360);
+    }
+
+    /* ── Event Listeners ──────────────────────────────────── */
+    confirmEmailBtn.addEventListener("click", () => {
+      debugLog("EVENT: 'Confirm' button clicked");
+      confirmEmailAndShowConsent();
+    });
+
+    emailInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        debugLog("EVENT: Enter key pressed in email input");
+        event.preventDefault();
+        confirmEmailAndShowConsent();
+      }
+    });
+
+    window.addEventListener("OnetrustFormLoaded", () => {
+      debugLog("EVENT: 'OnetrustFormLoaded' fired — OT form is now in the DOM", "success");
+      otFormLoaded = true;
+      prefillEmailInForm();
+    });
+
+    window.addEventListener("OneTrustWebFormSubmitted", (event) => {
+      debugLog("EVENT: 'OneTrustWebFormSubmitted' fired — user submitted consent form", "success");
+      if (event.detail) {
+        debugLog("OneTrustWebFormSubmitted detail: " + JSON.stringify(event.detail));
+      }
+      removeConsentPanel();
+    });
+
+    debugLog("All event listeners registered — ready for user interaction ✓", "success");
+  </script>
+
+</body>
+</html>
