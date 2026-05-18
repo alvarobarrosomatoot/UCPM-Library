@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BarclayStone Bank | Credit Cards</title>
+
+  <!-- =========================================================
+       ONETRUST SCRIPT (PRESERVED EXACTLY AS PROVIDED)
+       Do not modify, rename, reorder, or change attributes.
+  ========================================================== -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e"
+    worker="https://consent-api.onetrust.com"
+  ></script>
+
+  <style>
+    :root{
+      /* Barclays-like palette (no logos/assets used) */
+      --cyan: #00AEEF; /* commonly cited Barclays-like cyan */ /* cite: colour references */ 
+      --navy: #00395D; /* commonly cited Barclays-like deep navy */
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #0b1220;
+      --muted: #526072;
+      --border: #e6ebf2;
+      --shadow: 0 12px 30px rgba(0, 25, 70, 0.10);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --focus: 0 0 0 3px rgba(0, 174, 239, 0.25);
+      --font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(1100px 600px at 10% -10%, rgba(0,174,239,0.16), transparent 55%),
+        radial-gradient(900px 520px at 95% 10%, rgba(0,57,93,0.12), transparent 60%),
+        var(--bg);
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .skip-link{
+      position: absolute;
+      left: -999px;
+      top: 8px;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      z-index: 999;
+    }
+    .skip-link:focus{ left: 8px; outline: none; box-shadow: var(--focus), var(--shadow); }
+
+    .shell{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px 14px 44px;
+    }
+
+    /* Top nav */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(246, 248, 251, 0.72);
+      border-bottom: 1px solid rgba(230, 235, 242, 0.8);
+    }
+    .nav{
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+    }
+    .mark{
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--cyan), #7fe3ff);
+      box-shadow: 0 10px 20px rgba(0,174,239,0.20);
+      display: grid;
+      place-items: center;
+      color: #00273f;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+    }
+    .brand-name{
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+    .brand-name strong{
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .brand-name span{
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav-links{
+      display: none;
+      gap: 18px;
+      align-items: center;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .nav-links a{
+      padding: 8px 6px;
+      border-radius: 10px;
+    }
+    .nav-links a:focus{ outline: none; box-shadow: var(--focus); }
+
+    .cta{
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn{
+      border: 1px solid rgba(0,0,0,0.10);
+      background: #fff;
+      color: var(--navy);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(0, 25, 70, 0.07);
+    }
+    .btn.primary{
+      background: linear-gradient(180deg, var(--cyan), #00c7ff);
+      border-color: rgba(0,174,239,0.45);
+      color: #062233;
+    }
+    .btn:hover{ filter: brightness(0.99); }
+    .btn:focus{ outline: none; box-shadow: var(--focus), 0 10px 18px rgba(0, 25, 70, 0.07); }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero-inner{
+      padding: 18px 18px 16px;
+      display: grid;
+      gap: 10px;
+    }
+    .kicker{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--navy);
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .kicker .dot{
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(0,174,239,0.15);
+    }
+    h1{
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      color: #081528;
+    }
+    .lead{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+      max-width: 70ch;
+    }
+    .note{
+      margin: 8px 0 0;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(0,57,93,0.12);
+      background: rgba(0,57,93,0.04);
+      color: #0b2a43;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .note strong{ font-weight: 900; }
+
+    /* Grid */
+    main{ margin-top: 16px; }
+    .section-head{
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 18px 0 10px;
+    }
+    .section-head h2{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .section-head p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cards{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: grid;
+    }
+
+    .card-top{
+      padding: 16px 16px 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .card-name{
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 10px;
+    }
+    .card-name h3{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      color: #091a2d;
+    }
+
+    .tag{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,174,239,0.35);
+      background: rgba(0,174,239,0.08);
+      color: #0b2a43;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+    .tag.navy{
+      border-color: rgba(0,57,93,0.20);
+      background: rgba(0,57,93,0.06);
+      color: var(--navy);
+    }
+
+    .desc{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .rep{
+      border-radius: 14px;
+      border: 1px solid rgba(230,235,242,1);
+      background: #fbfcfe;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+      font-size: 13px;
+      color: #0f2136;
+    }
+    .rep .row{
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+    }
+    .rep .row span{ color: var(--muted); }
+    .rep .row strong{
+      font-variant-numeric: tabular-nums;
+      font-weight: 950;
+      color: #0b1b2c;
+    }
+    .rep small{
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .card-actions{
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn.secondary{
+      background: #fff;
+      border-color: rgba(0,57,93,0.20);
+      color: var(--navy);
+    }
+
+    /* Privacy / OneTrust */
+    .privacy{
+      margin-top: 18px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .privacy-head{
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+    }
+    .privacy-head h2{
+      margin: 0;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .privacy-body{
+      padding: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* PRESERVED TARGET CONTAINER */
+    #ot-container{
+      margin-top: 12px;
+      padding: 0;
+    }
+
+    /* Footer */
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      padding: 0 2px;
+    }
+    footer .fineprint{
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(230,235,242,0.9);
+      border-radius: 14px;
+      padding: 12px 12px;
+    }
+
+    /* Responsive */
+    @media (min-width: 720px){
+      .nav-links{ display: flex; }
+      .cards{ grid-template-columns: 1fr 1fr; }
+      h1{ font-size: 34px; }
+    }
+    @media (min-width: 1040px){
+      .cards{ grid-template-columns: 1fr 1fr 1fr 1fr; }
+      .hero-inner{ padding: 22px 22px 18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header role="banner" aria-label="Primary navigation">
+    <nav class="nav" aria-label="Top navigation">
+      <div class="brand" aria-label="BarclayStone Bank">
+        <div class="mark" aria-hidden="true">BS</div>
+        <div class="brand-name">
+          <strong>BarclayStone Bank</strong>
+          <span>UK personal banking</span>
+        </div>
+      </div>
+
+      <div class="nav-links" aria-label="Navigation links">
+        <a href="#" aria-current="page">Credit Cards</a>
+        <a href="#">Loans</a>
+        <a href="#">Savings</a>
+        <a href="#">Help</a>
+      </div>
+
+      <div class="cta">
+        <button class="btn primary" type="button" id="eligibilityBtn">Check eligibility</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="shell">
+    <section class="hero" aria-label="Credit cards hero">
+      <div class="hero-inner">
+        <div class="kicker"><span class="dot" aria-hidden="true"></span> Credit cards</div>
+        <h1>Choose a credit card that fits your everyday spending</h1>
+        <p class="lead">
+          Compare our four cards below. Whether you want rewards, cashback, airline points, or a simple option with no frills,
+          you can find a card that matches how you spend.
+        </p>
+
+        <!-- Compliance note: representative APR explanation in plain English -->
+        <div class="note" role="note" aria-label="Representative APR note">
+          <strong>What’s a representative APR?</strong>
+          Representative examples are shown on card promotions to help you compare products.
+          They typically illustrate costs using an assumed credit limit (often £1,200), but the rate you receive can depend on your circumstances. 【4-b4edd2】【5-437b8c】
+        </div>
+      </div>
+    </section>
+
+    <main id="main" role="main" aria-label="Credit card products">
+      <div class="section-head">
+        <h2>Our cards</h2>
+        <p>Rates shown are placeholders unless you provide exact figures.</p>
+      </div>
+
+      <section class="cards" id="cardGrid" aria-label="Credit card options">
+        <!-- Cards rendered by JS for clarity and maintainability -->
+      </section>
+
+      <section class="privacy" aria-label="Your privacy choices">
+        <div class="privacy-head">
+          <h2>Your privacy choices</h2>
+          <span class="tag navy" aria-label="Powered by OneTrust tag">Powered by OneTrust</span>
+        </div>
+        <div class="privacy-body">
+          Manage your consent preferences below.
+
+          <!-- =========================================================
+               ONETRUST TARGET CONTAINER (PRESERVED)
+               Keep this ID unchanged if your OneTrust init targets it.
+          ========================================================== -->
+          <div id="ot-container"></div>
+
+          <!-- NOTE:
+               Your existing OneTrust initialisation/mounting logic (if any) should remain unchanged.
+               This page deliberately does not modify OneTrust globals or timings. -->
+        </div>
+      </section>
+
+      <footer aria-label="Legal and disclosures">
+        <div class="fineprint">
+          <strong>Important information:</strong> All products are subject to application, financial circumstances and borrowing history.
+          The rates shown on this demo page are placeholders unless you provide official values.
+          “Apply now” and “Learn more” buttons are demo interactions only.
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // UI-only logic. Does NOT touch OneTrust scripts, globals, timing, or target container.
+
+    const cards = [
+      {
+        key: "rewards",
+        name: "The Rewards Card",
+        tag: "Everyday rewards",
+        desc: "Earn rewards on day-to-day spending and redeem them across popular categories. Great for regular purchases and recurring bills.",
+        repApr: "28.9% (placeholder)",
+        purchaseRate: "28.9% p.a. (placeholder)"
+      },
+      {
+        key: "cashback",
+        name: "The Cash back Card",
+        tag: "Cashback",
+        desc: "Get cashback on eligible spending with straightforward value back into your account. A simple way to make your spend work harder.",
+        repApr: "29.9% (placeholder)",
+        purchaseRate: "29.9% p.a. (placeholder)"
+      },
+      {
+        key: "airline",
+        name: "The Airline Points Card",
+        tag: "Travel points",
+        desc: "Collect airline points on eligible purchases and build towards trips and upgrades. Best suited for frequent travellers and commuters.",
+        repApr: "30.9% (placeholder)",
+        purchaseRate: "30.9% p.a. (placeholder)"
+      },
+      {
+        key: "basic",
+        name: "The Basic Card",
+        tag: "No-frills",
+        desc: "A straightforward credit card with clear features and a simple experience. Ideal if you prefer to keep things uncomplicated.",
+        repApr: "27.9% (placeholder)",
+        purchaseRate: "27.9% p.a. (placeholder)"
+      }
+    ];
+
+    function cardTemplate(c) {
+      return `
+        <article class="card" aria-label="${c.name}">
+          <div class="card-top">
+            <div class="card-name">
+              <h3>${c.name}</h3>
+              <span class="tag" aria-label="Card category">${c.tag}</span>
+            </div>
+
+            <p class="desc">${c.desc}</p>
+
+            <div class="rep" aria-label="Representative example">
+              <div class="row"><span>Representative APR (variable)</span><strong>${c.repApr}</strong></div>
+              <div class="row"><span>Purchase rate</span><strong>${c.purchaseRate}</strong></div>
+              <small>
+                Based on a credit limit of £1,200. Subject to application, financial circumstances and borrowing history. T&amp;Cs apply.
+              </small>
+            </div>
+          </div>
+
+          <div class="card-actions" aria-label="Card actions">
+            <button class="btn primary" type="button" data-action="apply" data-card="${c.key}">
+              Apply now
+            </button>
+            <button class="btn secondary" type="button" data-action="learn" data-card="${c.key}">
+              Learn more
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderCards() {
+      const grid = document.getElementById("cardGrid");
+      grid.innerHTML = cards.map(cardTemplate).join("");
+    }
+
+    function wireInteractions() {
+      const grid = document.getElementById("cardGrid");
+      const eligibilityBtn = document.getElementById("eligibilityBtn");
+
+      eligibilityBtn.addEventListener("click", () => {
+        // Demo behaviour only
+        eligibilityBtn.textContent = "Eligibility check (demo)";
+        setTimeout(() => eligibilityBtn.textContent = "Check eligibility", 1200);
+      });
+
+      grid.addEventListener("click", (e) => {
+        const btn = e.target.closest("button[data-action]");
+        if (!btn) return;
+        const action = btn.getAttribute("data-action");
+        const cardKey = btn.getAttribute("data-card");
+        const card = cards.find(x => x.key === cardKey);
+
+        // Demo-only interactions, no navigation and no network calls.
+        if (action === "apply") {
+          btn.textContent = "Application started (demo)";
+          setTimeout(() => btn.textContent = "Apply now", 1300);
+        } else if (action === "learn") {
+          btn.textContent = "Details opened (demo)";
+          setTimeout(() => btn.textContent = "Learn more", 1300);
+        }
+
+        // Accessibility hint via console for developers
+        // eslint-disable-next-line no-console
+        console.log(`[demo] ${action} clicked for: ${card ? card.name : cardKey}`);
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderCards();
+      wireInteractions();
+    });
+  </script>
+
+  <!-- Notes on grounding:
+       - Barclays-like palette references commonly cited #00AEEF/#00395D. 【2-4d6918】【3-e4de59】
+       - Representative example explanation aligns with typical UK lender explanation and assumed £1,200 limit usage. 【4-b4edd2】【5-437b8c】 -->
+</body>
+</html>
