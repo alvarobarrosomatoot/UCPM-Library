@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Economist — Subscribe</title>
+<link rel="icon" href="https://www.economist.com/favicon.ico" type="image/x-icon">
+
+<!-- ============================================================
+     OneTrust CMP Script — loaded on all pages
+     Sets dataSubjectParams BEFORE the SDK loads
+     ============================================================ -->
+<script>
+/* Top-level scope: set dataSubjectParams early */
+window.OneTrust = {
+  dataSubjectParams: {
+    id          : '',
+    isAnonymous : true,
+    token       : ''
+  }
+};
+console.log('[ECO-CMP] dataSubjectParams initialized (anonymous)');
+</script>
+
+<!-- OneTrust CMP SDK -->
+<script src="https://cdn.cookielaw.org/consent/019e6846-7893-7c6f-a9f7-fd6c5c6ffa53-test/otSDKStub.js"
+        type="text/javascript" charset="UTF-8"
+        data-domain-script="019e6846-7893-7c6f-a9f7-fd6c5c6ffa53-test"></script>
+<script type="text/javascript">
+function OptanonWrapper() {
+  console.log('[ECO-CMP] OptanonWrapper fired ✔');
+  console.log('[ECO-CMP] OnetrustActiveGroups:', window.OnetrustActiveGroups);
+}
+</script>
+
+<!-- OneTrust UCPM Embedded Form SDK -->
+<script>
+  window.OtSdk = window.OtSdk || function () {
+    (OtSdk.q = OtSdk.q || []).push(arguments);
+  };
+</script>
+<script
+  src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+  data-id="95ff9fea-a71a-46ed-9321-3477d4f57115""
+  worker="https://consent-api.onetrust.com">
+</script>
+
+<style>
+/* ============================================================
+   CSS VARIABLES & RESET
+   ============================================================ */
+:root {
+  --eco-red: #E3120B;
+  --eco-dark: #1D1D1B;
+  --eco-navy: #0D47A1;
+  --eco-blue-btn: #3F51B5;
+  --eco-bg: #ffffff;
+  --eco-light-bg: #F2E8DA;
+  --eco-muted: #6B6B6B;
+  --eco-line: #DCDCDC;
+  --eco-green: #E3120B;
+  --font-serif: Georgia, "Times New Roman", Times, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100vh; }
+body {
+  font-family: var(--font-sans);
+  color: var(--eco-dark);
+  background: var(--eco-bg);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ============================================================
+   PAGE TRANSITIONS
+   ============================================================ */
+.page {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.page.active {
+  display: block;
+  opacity: 1;
+}
+
+/* ============================================================
+   HEADER / NAV
+   ============================================================ */
+.eco-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 32px;
+  border-bottom: 3px solid var(--eco-red);
+  background: #fff;
+}
+.eco-logo {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+.eco-logo-box {
+  background: var(--eco-red);
+  color: #fff;
+  padding: 8px 14px;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+.eco-logo-box .logo-the {
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+.eco-logo-box .logo-economist {
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  font-style: italic;
+}
+.eco-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.eco-nav a:hover { text-decoration: underline; }
+.eco-nav .country-sel {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+.eco-nav .country-sel::after {
+  content: "▾";
+  font-size: 10px;
+}
+
+/* ============================================================
+   PAGE 1: LANDING
+   ============================================================ */
+.landing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 32px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.landing-left h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 5vw, 54px);
+  font-weight: 700;
+  line-height: 1.08;
+  margin-bottom: 18px;
+}
+.landing-left .sub {
+  font-size: 16px;
+  color: var(--eco-muted);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+.landing-left .sub em {
+  font-style: italic;
+  font-family: var(--font-serif);
+}
+
+/* Plan toggle */
+.plan-toggle {
+  display: inline-flex;
+  border: 2px solid var(--eco-line);
+  border-radius: 30px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.plan-toggle button {
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.plan-toggle button.active {
+  background: var(--eco-dark);
+  color: #fff;
+  border-radius: 30px;
+}
+
+/* Pricing cards */
+.pricing-cards { display: grid; gap: 16px; margin-bottom: 20px; }
+.pricing-card {
+  border: 2px solid var(--eco-line);
+  border-radius: 4px;
+  padding: 20px 24px;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.pricing-card.selected {
+  border-color: var(--eco-navy);
+}
+.pricing-card .intro-badge {
+  position: absolute;
+  top: -12px;
+  left: 16px;
+  background: var(--eco-navy);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+.pricing-card .card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.pricing-card .card-top .plan-name {
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pricing-card .card-top .plan-price {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pricing-card .plan-detail {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--eco-muted);
+}
+.pricing-card .save-badge {
+  color: var(--eco-red);
+  font-size: 13px;
+  font-weight: 600;
+}
+.radio-dot {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #999;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.radio-dot.checked {
+  border-color: var(--eco-navy);
+}
+.radio-dot.checked::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--eco-navy);
+}
+
+.savings-note {
+  font-size: 12px;
+  color: var(--eco-muted);
+  margin-bottom: 20px;
+}
+.btn-checkout {
+  width: 100%;
+  max-width: 520px;
+  padding: 16px;
+  border: none;
+  border-radius: 4px;
+  background: var(--eco-navy);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-checkout:hover { background: #0B3D91; }
+
+/* Right side - collage placeholder */
+.landing-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 440px;
+}
+.collage-placeholder {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 8px;
+  width: 100%;
+  max-width: 480px;
+}
+.collage-item {
+  aspect-ratio: 3/4;
+  background: #c8c8c8;
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.collage-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(transparent, rgba(227,18,11,0.35));
+}
+.collage-item:nth-child(2) { aspect-ratio: 3/4.5; }
+
+/* Features strip */
+.features-strip {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--eco-line);
+  border-bottom: 1px solid var(--eco-line);
+}
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.feature-icon.gold { background: #F9C74F; }
+.feature-icon.red { background: var(--eco-red); color: #fff; }
+.feature-item h3 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Section heading */
+.section-heading {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 32px 24px;
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Footer */
+.eco-footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--eco-muted);
+  border-top: 1px solid var(--eco-line);
+}
+.eco-footer .cookie-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--eco-line);
+  border-radius: 4px;
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--eco-muted);
+}
+.eco-footer .cookie-btn:hover { border-color: #999; }
+
+/* ============================================================
+   PAGE 2: REGISTRATION / CHECKOUT
+   ============================================================ */
+.reg-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  align-items: start;
+}
+.reg-left h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 32px;
+}
+
+/* Step indicator */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--eco-line);
+}
+.step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--eco-navy);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-label {
+  font-size: 18px;
+  font-weight: 700;
+}
+.step-sublabel {
+  font-size: 14px;
+  color: var(--eco-muted);
+  margin-bottom: 24px;
+}
+
+/* Form fields */
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.form-group input[type="email"],
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #BDBDBD;
+  border-radius: 4px;
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-group input:focus {
+  border-color: var(--eco-navy);
+  box-shadow: 0 0 0 2px rgba(13,71,161,0.15);
+}
+
+/* UCPM consent container */
+.ucpm-consent-area {
+  margin: 20px 0;
+  padding: 0;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+#ot-container {
+  min-height: 40px;
+}
+/* Override OT form styles to match Economist */
+.ot-consent-inline,
+.otwf-content,
+.ot-form,
+.ot-form-content,
+.ot-el {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: inherit !important;
+  font-family: var(--font-sans) !important;
+}
+#ot-container .ot-label,
+#ot-container label,
+#ot-container span.ot-label {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 400 !important;
+  color: var(--eco-dark) !important;
+}
+#ot-container input[type="checkbox"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+#ot-container .otwf-chkbox label {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+#ot-container .otwf-chkbox label::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border: 2px solid #757575;
+  border-radius: 2px;
+  margin-top: 2px;
+  background: #ffffff;
+  transition: all 0.15s ease;
+}
+#ot-container input[type="checkbox"]:checked + label::before {
+  background: var(--eco-navy);
+  border-color: var(--eco-navy);
+  box-shadow: inset 0 0 0 3px #ffffff;
+}
+#ot-container input[type="checkbox"]:focus + label::before {
+  outline: 2px solid var(--eco-navy);
+  outline-offset: 2px;
+}
+.ot-submit {
+  display: none !important;
+}
+
+/* Legal text */
+.legal-text {
+  font-size: 13px;
+  color: var(--eco-muted);
+  line-height: 1.6;
+  margin: 20px 0;
+}
+.legal-text a {
+  color: var(--eco-dark);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Continue button */
+.btn-continue {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 4px;
+  background: var(--eco-navy);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-bottom: 24px;
+}
+.btn-continue:hover { background: #0B3D91; }
+
+/* Social divider */
+.social-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  color: var(--eco-muted);
+  font-size: 14px;
+}
+.social-divider::before,
+.social-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--eco-line);
+}
+
+/* Social buttons */
+.social-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--eco-line);
+  border-radius: 4px;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.social-btn:hover { border-color: #999; background: #fafafa; }
+.social-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+/* Right sidebar */
+.reg-sidebar {
+  background: var(--eco-light-bg);
+  border-radius: 0;
+  padding: 32px;
+  position: sticky;
+  top: 24px;
+}
+.reg-sidebar h3 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.sidebar-plan {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.sidebar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.sidebar-row .amount {
+  font-weight: 700;
+}
+.sidebar-included {
+  margin-top: 20px;
+}
+.sidebar-included h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.sidebar-included li {
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.check-icon {
+  color: var(--eco-red);
+  font-size: 16px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   DEBUG PANEL
+   ============================================================ */
+.debug-panel {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0f172a;
+  color: #a5f3fc;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 16px;
+  z-index: 10000;
+  border-top: 2px solid #60a5fa;
+}
+.debug-panel.show { display: block; }
+.debug-panel h4 {
+  color: #60a5fa;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+/* ============================================================
+   SUCCESS TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #166534;
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 10000;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .landing-container { grid-template-columns: 1fr; }
+  .landing-right { min-height: 200px; order: -1; }
+  .features-strip { grid-template-columns: 1fr; }
+  .reg-container { grid-template-columns: 1fr; }
+  .reg-sidebar { position: static; }
+  .social-buttons { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .eco-header { padding: 10px 16px; }
+  .eco-nav { gap: 12px; font-size: 12px; }
+  .landing-container, .reg-container { padding: 24px 16px; }
+  .collage-placeholder { max-width: 300px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOAST NOTIFICATION
+     ============================================================ -->
+<div class="toast" id="toast"></div>
+
+<!-- ============================================================
+     PAGE 1: THE ECONOMIST LANDING (NON-AUTHENTICATED)
+     ============================================================ -->
+<div class="page active" id="page1">
+
+  <!-- Header -->
+  <header class="eco-header">
+    <a class="eco-logo" onclick="goToPage(1)">
+      <div class="eco-logo-box">
+        <span class="logo-the">The</span>
+        <span class="logo-economist">Economist</span>
+      </div>
+    </a>
+    <nav class="eco-nav">
+      <a href="#">The Economist Pro</a>
+      <a href="#" onclick="goToPage(2); return false;">Log in</a>
+      <span class="country-sel">Spain</span>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="landing-container">
+    <div class="landing-left">
+      <h1>Save 30% today.</h1>
+      <p class="sub">
+        Get unlimited access to <em>The Economist</em> - lock in your savings on
+        an annual subscription with our introductory offer.
+      </p>
+
+      <!-- Plan Toggle -->
+      <div class="plan-toggle">
+        <button class="active" id="toggleDigital" onclick="togglePlan('digital')">Digital</button>
+        <button id="togglePrint" onclick="togglePlan('print')">Digital + Print</button>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="pricing-cards">
+        <div class="pricing-card selected" id="cardAnnual" onclick="selectPlan('annual')">
+          <div class="intro-badge">INTRODUCTORY OFFER</div>
+          <div class="card-top">
+            <div class="plan-name">
+              <span class="radio-dot checked" id="dotAnnual"></span>
+              <div>
+                <div>Annual</div>
+                <div class="save-badge">Save €116.70*</div>
+              </div>
+            </div>
+            <div class="plan-price">€22.70/month</div>
+          </div>
+          <div class="plan-detail">Billed as <s>€389</s> €272.30 for first year, then auto-renews at €389 annually</div>
+        </div>
+
+        <div class="pricing-card" id="cardMonthly" onclick="selectPlan('monthly')">
+          <div class="card-top">
+            <div class="plan-name">
+              <span class="radio-dot" id="dotMonthly"></span>
+              <div>
+                <div>Monthly</div>
+                <div class="save-badge" style="color: var(--eco-navy);">Includes 1-month free trial</div>
+              </div>
+            </div>
+            <div class="plan-price">€38.90/month</div>
+          </div>
+          <div class="plan-detail">Auto-renews at €38.90 monthly when free trial ends</div>
+        </div>
+      </div>
+
+      <p class="savings-note">*Savings based on renewal price. Cancel auto-renewal at any time</p>
+
+      <button class="btn-checkout" onclick="goToPage(2)">Continue to checkout</button>
+    </div>
+
+    <div class="landing-right">
+      <div class="collage-placeholder">
+        <div class="collage-item" style="background: linear-gradient(135deg, #2C3E50 0%, #4CA1AF 100%);"></div>
+        <div class="collage-item" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #E3120B 100%);"></div>
+        <div class="collage-item" style="background: linear-gradient(135deg, #3E4A61 0%, #7B8794 50%, #E3120B 100%);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Strip -->
+  <div class="features-strip">
+    <div class="feature-item">
+      <div class="feature-icon gold">📖</div>
+      <h3>Award-winning journalism with informed analysis</h3>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon red">🔍</div>
+      <h3>Fact checked, data driven, in-depth coverage</h3>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon red">💬</div>
+      <h3>Full access to Insider — video debates with our senior editors</h3>
+    </div>
+  </div>
+
+  <!-- Section heading -->
+  <h2 class="section-heading">Get a global perspective</h2>
+
+  <!-- Footer with Cookie Settings -->
+  <footer class="eco-footer">
+    <span>© 2026 The Economist Newspaper Limited. Demo for OneTrust.</span>
+    <button id="ot-sdk-btn" class="ot-sdk-show-settings cookie-btn">⚙️ Cookie Settings</button>
+  </footer>
+</div>
+
+<!-- ============================================================
+     PAGE 2: REGISTRATION / CHECKOUT
+     ============================================================ -->
+<div class="page" id="page2">
+
+  <!-- Header -->
+  <header class="eco-header">
+    <a class="eco-logo" onclick="goToPage(1)">
+      <div class="eco-logo-box">
+        <span class="logo-the">The</span>
+        <span class="logo-economist">Economist</span>
+      </div>
+    </a>
+    <nav class="eco-nav">
+      <a href="#" onclick="goToPage(1); return false;">← Back</a>
+    </nav>
+  </header>
+
+  <div class="reg-container">
+    <!-- Left: Form -->
+    <div class="reg-left">
+      <h1>Invest in reason. Subscribe today</h1>
+
+      <div class="step-indicator">
+        <span class="step-number">1</span>
+        <span class="step-label">Account</span>
+      </div>
+      <p class="step-sublabel">Enter your email address to get started</p>
+
+      <div class="form-group">
+        <label for="regEmail">Email address</label>
+        <input type="email" id="regEmail" placeholder="you@example.com" autocomplete="email">
+      </div>
+
+      <!-- UCPM Consent Area (OneTrust Embedded Form) -->
+      <div class="ucpm-consent-area">
+        <div id="ot-container"></div>
+      </div>
+
+      <!-- Legal text -->
+      <p class="legal-text">
+        By continuing, we'll create an account for you if you don't already have one. This
+        means you agree to our <a href="#">Terms and Conditions</a> and acknowledge our
+        <a href="#">Privacy Policy</a>.
+      </p>
+
+      <!-- Continue button -->
+      <button class="btn-continue" id="btnContinue" onclick="handleContinue()">Continue</button>
+
+      <!-- Social login -->
+      <div class="social-divider">Or continue with</div>
+      <div class="social-buttons">
+        <button class="social-btn">
+          <span class="social-icon">🍎</span> Apple
+        </button>
+        <button class="social-btn">
+          <span class="social-icon" style="color:#4285F4; font-weight:700;">G</span> Google
+        </button>
+        <button class="social-btn">
+          <span class="social-icon" style="color:#1877F2; font-weight:700;">f</span> Facebook
+        </button>
+      </div>
+    </div>
+
+    <!-- Right: Subscription Summary -->
+    <div class="reg-sidebar">
+      <h3>YOUR SUBSCRIPTION</h3>
+      <div class="sidebar-plan">Annual Digital</div>
+      <div class="sidebar-row">
+        <span>Due today:</span>
+        <span class="amount">€272.30</span>
+      </div>
+      <div class="sidebar-row">
+        <span>Auto-renewal price</span>
+        <span class="amount">€389/year</span>
+      </div>
+
+      <div class="sidebar-included">
+        <h4>What's included:</h4>
+        <ul>
+          <li>
+            <span class="check-icon">✓</span>
+            <span>Includes Insider — weekly shows with our editors and global experts</span>
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            <span>Unlimited online access and the weekly digital edition</span>
+          </li>
+          <li>
+            <span class="check-icon">✓</span>
+            <span>All podcasts, narrated stories and exclusive newsletters</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="eco-footer">
+    <span>© 2026 The Economist Newspaper Limited. Demo for OneTrust.</span>
+    <button onclick="document.querySelector('#ot-sdk-btn').click()" class="cookie-btn">⚙️ Cookie Settings</button>
+  </footer>
+</div>
+
+<!-- ============================================================
+     DEBUG PANEL (Ctrl+Shift+D)
+     ============================================================ -->
+<div class="debug-panel" id="debugPanel">
+  <h4>🐛 OneTrust Debug Panel (Ctrl+Shift+D to toggle)</h4>
+  <div id="debugLog">Ready.\n</div>
+</div>
+
+<!-- ============================================================
+     AutoBlock Categorized Scripts (CMP)
+     ============================================================ -->
+<script type="text/plain" class="optanon-category-C0002">
+  console.log('[ECO-FIRE] ✅ C0002 Performance script FIRED (Google Analytics)');
+</script>
+<script type="text/plain" class="optanon-category-C0003">
+  console.log('[ECO-FIRE] ✅ C0003 Functional script FIRED (User Preferences)');
+</script>
+<script type="text/plain" class="optanon-category-C0004">
+  console.log('[ECO-FIRE] ✅ C0004 Targeting script FIRED (Facebook Pixel)');
+</script>
+<script type="text/plain" class="optanon-category-C0004">
+  console.log('[ECO-FIRE] ✅ C0004 Targeting script FIRED (Google Ads)');
+</script>
+<script type="text/plain" class="optanon-category-C0005">
+  console.log('[ECO-FIRE] ✅ C0005 Social Media script FIRED (LinkedIn Insight)');
+</script>
+
+<!-- ============================================================
+     MAIN JAVASCRIPT
+     ============================================================ -->
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     Configuration
+     ============================================================ */
+  var CP_ID = "c9322d35-cb63-4974-b65a-5d415f818a05";
+  var JWT_SECRET = 'oo7D5N8Ca0pQa9yWA0s9GGQiEx3Iym6mFJFuWULhzfh';
+
+  /* ============================================================
+     State
+     ============================================================ */
+  var currentPage = 1;
+  var otInstallStarted = false;
+  var otFormLoaded = false;
+  var pendingEmail = "";
+  var generatedJWT = null;
+
+  /* ============================================================
+     Debug Logging
+     ============================================================ */
+  var logEl = document.getElementById('debugLog');
+  function dlog(msg) {
+    var ts = new Date().toISOString().substr(11, 12);
+    var line = '[' + ts + '] ' + msg;
+    console.log('[ECO-DEMO] ' + line);
+    if (logEl) {
+      logEl.textContent += line + '\n';
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+  }
+
+  /* Toggle debug panel */
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+      e.preventDefault();
+      document.getElementById('debugPanel').classList.toggle('show');
+    }
+  });
+
+  /* ============================================================
+     Toast
+     ============================================================ */
+  function showToast(msg, duration) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, duration || 3000);
+  }
+
+  /* ============================================================
+     Page Navigation
+     ============================================================ */
+  window.goToPage = function(num) {
+    var pages = document.querySelectorAll('.page');
+    pages.forEach(function(p) { p.classList.remove('active'); });
+
+    var target = document.getElementById('page' + num);
+    if (target) {
+      setTimeout(function() {
+        target.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
+    }
+    currentPage = num;
+    dlog('Navigated to Page ' + num);
+
+    if (num === 2) {
+      dlog('Registration page loaded — UCPM form will load after email confirmation');
+    }
+  };
+
+  /* ============================================================
+     Plan Toggle (Page 1)
+     ============================================================ */
+  window.togglePlan = function(type) {
+    var dBtn = document.getElementById('toggleDigital');
+    var pBtn = document.getElementById('togglePrint');
+    if (type === 'digital') {
+      dBtn.classList.add('active');
+      pBtn.classList.remove('active');
+    } else {
+      pBtn.classList.add('active');
+      dBtn.classList.remove('active');
+    }
+  };
+
+  window.selectPlan = function(plan) {
+    var annual = document.getElementById('cardAnnual');
+    var monthly = document.getElementById('cardMonthly');
+    var dotA = document.getElementById('dotAnnual');
+    var dotM = document.getElementById('dotMonthly');
+    if (plan === 'annual') {
+      annual.classList.add('selected');
+      monthly.classList.remove('selected');
+      dotA.classList.add('checked');
+      dotM.classList.remove('checked');
+    } else {
+      monthly.classList.add('selected');
+      annual.classList.remove('selected');
+      dotM.classList.add('checked');
+      dotA.classList.remove('checked');
+    }
+  };
+
+  /* ============================================================
+     JWT Generation (Web Crypto API — HS256)
+     ============================================================ */
+  function base64url(buf) {
+    var s = '';
+    var b = new Uint8Array(buf);
+    for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+    return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  async function generateJWTForUser(email) {
+    dlog('Generating JWT for: ' + email);
+    try {
+      var enc = new TextEncoder();
+      var headerJSON  = JSON.stringify({"alg":"HS256","typ":"JWT"});
+      var payloadJSON = JSON.stringify({"sub": email});
+      var headerB64  = base64url(enc.encode(headerJSON));
+      var payloadB64 = base64url(enc.encode(payloadJSON));
+      var data = headerB64 + '.' + payloadB64;
+
+      var key = await crypto.subtle.importKey(
+        'raw', enc.encode(JWT_SECRET),
+        {name: 'HMAC', hash: 'SHA-256'}, false, ['sign']
+      );
+      var sig = await crypto.subtle.sign('HMAC', key, enc.encode(data));
+      var jwt = data + '.' + base64url(sig);
+
+      dlog('JWT generated successfully ✔');
+      dlog('JWT: ' + jwt.substr(0, 60) + '…');
+      return jwt;
+    } catch(e) {
+      dlog('JWT generation ERROR: ' + e.message);
+      return null;
+    }
+  }
+
+  /* ============================================================
+     Update OneTrust dataSubjectParams
+     ============================================================ */
+  function updateDataSubjectParams(email, jwt) {
+    if (window.OneTrust) {
+      window.OneTrust.dataSubjectParams = {
+        id          : email,
+        isAnonymous : false,
+        token       : jwt
+      };
+      dlog('dataSubjectParams UPDATED — id: ' + email);
+      dlog('dataSubjectParams UPDATED — isAnonymous: false');
+      dlog('Cross-domain consent: user is now identified ✔');
+    }
+  }
+
+  /* ============================================================
+     UCPM Form Management
+     ============================================================ */
+  function whenOTReady(callback) {
+    var timer = setInterval(function() {
+      if (window.OneTrust && window.OneTrust.webform && window.OneTrust.webform.InstallCP) {
+        clearInterval(timer);
+        callback();
+      }
+    }, 80);
+  }
+
+  function installFormIfNeeded() {
+    if (otInstallStarted) {
+      prefillEmailInForm();
+      return;
+    }
+    otInstallStarted = true;
+    dlog('Installing UCPM Collection Point: ' + CP_ID);
+    whenOTReady(function() {
+      OneTrust.webform.InstallCP(CP_ID, {
+        target: "#ot-container"
+      });
+      dlog('UCPM InstallCP called ✔');
+    });
+  }
+
+  function prefillEmailInForm() {
+    if (!otFormLoaded || !pendingEmail) return;
+    if (!window.OneTrust || !window.OneTrust.webform || !window.OneTrust.webform.preFill) return;
+    OneTrust.webform.preFill({
+      "Email": pendingEmail
+    }, CP_ID);
+    dlog('UCPM form pre-filled with email: ' + pendingEmail);
+  }
+
+  /* UCPM Events */
+  window.addEventListener("OnetrustFormLoaded", function() {
+    otFormLoaded = true;
+    dlog('UCPM form loaded event received ✔');
+    prefillEmailInForm();
+  });
+
+  window.addEventListener("OneTrustWebFormSubmitted", function(event) {
+    dlog('UCPM form submitted ✔');
+    if (event.detail) dlog('Submission detail: ' + JSON.stringify(event.detail));
+    showToast('✅ Preferences saved successfully!', 3000);
+  });
+
+  /* ============================================================
+     Handle Continue Button (Page 2)
+     ============================================================ */
+  window.handleContinue = async function() {
+    var emailInput = document.getElementById('regEmail');
+    var email = emailInput.value.trim();
+
+    if (!email || !emailInput.reportValidity()) {
+      dlog('Email validation failed');
+      return;
+    }
+
+    pendingEmail = email;
+    dlog('Email confirmed: ' + email);
+
+    /* Step 1: Generate JWT */
+    var jwt = await generateJWTForUser(email);
+    if (jwt) {
+      generatedJWT = jwt;
+      /* Step 2: Update dataSubjectParams for cross-domain consent */
+      updateDataSubjectParams(email, jwt);
+    }
+
+    /* Step 3: Install UCPM form */
+    installFormIfNeeded();
+    prefillEmailInForm();
+
+    /* Step 4: Feedback */
+    showToast('✅ Account created — review your preferences below', 3500);
+    dlog('Full registration flow completed — CMP + UCPM + Cross-domain active');
+  };
+
+  /* Enter key on email */
+  document.addEventListener('DOMContentLoaded', function() {
+    var regEmail = document.getElementById('regEmail');
+    if (regEmail) {
+      regEmail.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') { e.preventDefault(); handleContinue(); }
+      });
+    }
+    dlog('The Economist OneTrust Demo initialized');
+    dlog('CMP: cookie banner will appear on landing page');
+    dlog('UCPM: embedded form will load after email confirmation');
+    dlog('Cross-domain: JWT generated client-side (HS256)');
+    dlog('Press Ctrl+Shift+D to toggle this debug panel');
+  });
+
+})();
+</script>
+
+</body>
+</html>
