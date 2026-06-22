@@ -5,36 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dubai Tech & Innovation Summit 2026 | DWTC</title>
 
-  <!-- ============================================================
-       Google Fonts – Inter
-       ============================================================ -->
+  <!-- Google Fonts – Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- ============================================================
-       OneTrust SDK – Command Queue Initialisation
-       Must appear BEFORE OtFormStub.js so the queue is ready.
-       ============================================================ -->
+  <!-- OneTrust SDK – Command Queue Initialisation -->
   <script>
     window.OtSdk = window.OtSdk || function () {
       (OtSdk.q = OtSdk.q || []).push(arguments);
     };
   </script>
 
-  <!-- ============================================================
-       OneTrust – Embedded Collection Point Stub Loader
-       data-id  : tenant / configuration identifier
-       worker   : OneTrust Consent API endpoint
-       ============================================================ -->
+  <!-- OneTrust – Embedded Collection Point Stub Loader -->
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
     data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
     worker="https://consent-api.onetrust.com">
   </script>
 
-  <!-- ============================================================
-       STYLES
-       ============================================================ -->
   <style>
     /* ----- CSS CUSTOM PROPERTIES ----- */
     :root {
@@ -53,7 +41,6 @@
       --input-border:rgba(255,255,255,0.12);
     }
 
-    /* ----- RESET & BASE ----- */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -66,7 +53,7 @@
     a { color: var(--gold); text-decoration: none; transition: color .3s; }
     a:hover { color: var(--gold-light); }
 
-    /* ----- HEADER / NAVBAR ----- */
+    /* HEADER / NAVBAR */
     .header {
       position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -79,7 +66,7 @@
     .nav-links { display: flex; gap: 32px; list-style: none; }
     .nav-links a { font-weight: 500; font-size: 0.95rem; letter-spacing: 0.02em; }
 
-    /* ----- HERO SECTION ----- */
+    /* HERO SECTION */
     .hero {
       position: relative;
       min-height: 100vh;
@@ -89,14 +76,12 @@
       background: linear-gradient(160deg, #0a1628 0%, #0f2441 40%, #162d50 70%, #0a1628 100%);
       overflow: hidden;
     }
-    /* Geometric SVG overlay */
     .hero::before {
       content: '';
       position: absolute; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8a45c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       opacity: .6;
     }
-    /* Gold glow orbs */
     .hero::after {
       content: '';
       position: absolute;
@@ -170,7 +155,6 @@
       color: var(--navy);
     }
 
-    /* ----- SECTION UTILITY ----- */
     .section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
     .section-title {
       font-size: clamp(1.6rem, 3vw, 2.4rem);
@@ -186,7 +170,7 @@
       font-size: 1rem;
     }
 
-    /* ----- BENEFITS CARDS ----- */
+    /* BENEFITS */
     .benefits-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -209,7 +193,7 @@
     .benefit-card h3 { font-size: 1.2rem; margin-bottom: 10px; }
     .benefit-card p { color: var(--muted); font-size: 0.92rem; }
 
-    /* ----- REGISTRATION SECTION ----- */
+    /* REGISTRATION */
     .registration-section {
       padding: 80px 24px;
       background: linear-gradient(180deg, var(--navy) 0%, #0d1f35 50%, var(--navy) 100%);
@@ -219,8 +203,6 @@
       margin: 0 auto;
       position: relative;
     }
-
-    /* Glass card for each step */
     .step-card {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
@@ -230,11 +212,8 @@
       box-shadow: var(--shadow);
       transition: opacity .4s, transform .4s;
     }
-    .step-card.hidden {
-      display: none;
-    }
+    .step-card.hidden { display: none; }
 
-    /* Form elements */
     .form-group { margin-bottom: 20px; }
     .form-group label {
       display: block;
@@ -265,7 +244,6 @@
       display: none;
     }
 
-    /* Step indicator */
     .step-indicator {
       display: flex;
       justify-content: center;
@@ -285,49 +263,25 @@
 
     /* ============================================================
        OneTrust Embedded CP – COMPLETE DARK THEME OVERRIDES
-       Targets the exact rendered DOM structure:
-       .ot-consent-inline > .otwf-content > form.ot-form > ...
        ============================================================ */
-
-    /* --- Outer wrappers: strip all defaults --- */
     #ot-container {
       min-height: 100px;
       margin: 0;
     }
-    #ot-container .ot-consent-inline {
+    #ot-container .ot-consent-inline,
+    #ot-container .otwf-content,
+    #ot-container .ot-form,
+    #ot-container .ot-form.ot-scroll,
+    #ot-container .ot-form-content {
       background: transparent !important;
       border: none !important;
       border-radius: 0 !important;
       box-shadow: none !important;
       padding: 0 !important;
-    }
-    #ot-container .otwf-content {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-    }
-    /* Hide close button container */
-    #ot-container .otwf-close-cntr {
-      display: none !important;
-    }
-    /* Form element */
-    #ot-container .ot-form,
-    #ot-container .ot-form.ot-scroll {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
       margin: 0 !important;
     }
-    #ot-container .ot-form-content {
-      background: transparent !important;
-      border: none !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-    }
+    #ot-container .otwf-close-cntr { display: none !important; }
 
-    /* --- GLOBAL TYPOGRAPHY --- */
     #ot-container,
     #ot-container *,
     #ot-container .ot-label,
@@ -339,7 +293,6 @@
       color: var(--white) !important;
     }
 
-    /* --- ELEMENT GROUPS (.ot-el) – spacing --- */
     #ot-container .ot-el {
       background: transparent !important;
       border: none !important;
@@ -353,10 +306,11 @@
       margin-bottom: 24px !important;
     }
 
-    /* --- EMAIL FIELD --- */
+    /* --- EMAIL FIELD (visible, prefilled from Step 1) --- */
     #ot-container .ot-email {
       background: transparent !important;
       padding: 0 !important;
+      margin-bottom: 24px !important;
     }
     #ot-container .ot-email .ot-label {
       display: block !important;
@@ -386,7 +340,7 @@
       color: var(--muted) !important;
     }
 
-    /* --- CHECKBOX CONSENT (.otwf-chkbox) --- */
+    /* --- CHECKBOX CONSENT --- */
     #ot-container .otwf-chkbox {
       display: flex !important;
       align-items: flex-start !important;
@@ -429,7 +383,7 @@
       line-height: 1.4 !important;
     }
 
-    /* --- RADIO BUTTON GROUPS (fieldset.ot-radiogrp) --- */
+    /* --- RADIO BUTTON GROUPS --- */
     #ot-container .ot-radiogrp {
       border: none !important;
       border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -445,7 +399,6 @@
       padding: 0 !important;
       letter-spacing: 0.02em !important;
     }
-    /* Individual radio options */
     #ot-container .ot-radiogrp > .ot-el {
       display: flex !important;
       align-items: center !important;
@@ -486,10 +439,7 @@
       margin-top: 6px !important;
       display: block !important;
     }
-    /* Hide errors that are marked with .ot-n (not active) */
-    #ot-container .ot-error.ot-n {
-      display: none !important;
-    }
+    #ot-container .ot-error.ot-n { display: none !important; }
 
     /* --- SUBMIT BUTTON --- */
     #ot-container .ot-btns {
@@ -520,13 +470,9 @@
       opacity: 0.5 !important;
       cursor: not-allowed !important;
     }
+    #ot-container .ot-n { display: none !important; }
 
-    /* --- HIDDEN UTILITY inside OT --- */
-    #ot-container .ot-n {
-      display: none !important;
-    }
-
-    /* ----- THANK YOU (Step 3) ----- */
+    /* THANK YOU */
     .thankyou-content { text-align: center; padding: 20px 0; }
     .checkmark-circle {
       width: 80px; height: 80px;
@@ -545,7 +491,7 @@
     .thankyou-content h2 { font-size: 1.6rem; margin-bottom: 12px; }
     .thankyou-content p  { color: var(--muted); max-width: 440px; margin: 0 auto; }
 
-    /* ----- RECOMMENDED SECTION ----- */
+    /* RECOMMENDED */
     .rec-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -584,7 +530,7 @@
     .rec-card-body h3 { font-size: 1.05rem; margin-bottom: 6px; }
     .rec-card-body p  { color: var(--muted); font-size: 0.85rem; }
 
-    /* ----- FOOTER ----- */
+    /* FOOTER */
     .footer {
       text-align: center;
       padding: 32px 24px;
@@ -594,7 +540,6 @@
     }
     .footer a { color: var(--gold); }
 
-    /* ----- RESPONSIVE ----- */
     @media (max-width: 640px) {
       .header { padding: 10px 18px; }
       .header-logo { height: 36px; }
@@ -606,9 +551,7 @@
 </head>
 <body>
 
-  <!-- ===========================================================
-       HEADER
-       =========================================================== -->
+  <!-- HEADER -->
   <header class="header">
     <img
       src="500-5006156_transparent-world-trade-center-clipart-dubai-world-trade.png"
@@ -624,9 +567,7 @@
     </nav>
   </header>
 
-  <!-- ===========================================================
-       HERO SECTION
-       =========================================================== -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
       <span class="hero-badge">Exclusive Invitation</span>
@@ -640,57 +581,49 @@
     </div>
   </section>
 
-  <!-- ===========================================================
-       BENEFITS SECTION
-       =========================================================== -->
+  <!-- BENEFITS -->
   <section id="benefits" class="section">
     <h2 class="section-title">Why Attend?</h2>
     <p class="section-subtitle">Three days of insights, connections and innovation that will redefine how you do business.</p>
     <div class="benefits-grid">
       <div class="benefit-card">
-        <div class="benefit-icon">🤝</div>
+        <div class="benefit-icon">&#129309;</div>
         <h3>World-Class Networking</h3>
         <p>Connect with C-suite executives, investors and founders from across the MENA region and beyond.</p>
       </div>
       <div class="benefit-card">
-        <div class="benefit-icon">🎯</div>
+        <div class="benefit-icon">&#127919;</div>
         <h3>Personalised Sessions</h3>
-        <p>Tell us your interests and we’ll build a bespoke agenda so you never miss the sessions that matter most.</p>
+        <p>Tell us your interests and we&rsquo;ll build a bespoke agenda so you never miss the sessions that matter most.</p>
       </div>
       <div class="benefit-card">
-        <div class="benefit-icon">💡</div>
+        <div class="benefit-icon">&#128161;</div>
         <h3>Innovation Showcase</h3>
         <p>Experience live demos from 200+ exhibitors showcasing breakthroughs in AI, sustainability and smart cities.</p>
       </div>
     </div>
   </section>
 
-  <!-- ===========================================================
-       REGISTRATION SECTION  (Embedded Collection Point)
-       =========================================================== -->
+  <!-- REGISTRATION -->
   <section id="register" class="registration-section">
     <h2 class="section-title">Register Your Interest</h2>
     <p class="section-subtitle">Enter your email to get started, then set your consent and communication preferences.</p>
 
     <div class="form-wrapper">
 
-      <!-- ────────── STEP INDICATOR ────────── -->
       <div class="step-indicator">
         <span class="step-dot active" id="dot1"></span>
         <span class="step-dot" id="dot2"></span>
         <span class="step-dot" id="dot3"></span>
       </div>
 
-      <!-- ════════════════════════════════
-           STEP 1 – Email Only
-           ════════════════════════════════ -->
+      <!-- STEP 1 -->
       <div id="step1" class="step-card">
         <h3 style="margin-bottom:8px; font-size:1.15rem;">Get Started</h3>
         <p style="color:var(--muted); font-size:.88rem; margin-bottom:24px;">
-          Enter your email address to begin. On the next step you’ll set your consent and communication preferences.
+          Enter your email address to begin. On the next step you&rsquo;ll set your consent and communication preferences.
         </p>
 
-        <!-- Email (required) -->
         <div class="form-group">
           <label for="email">Email address <span style="color:#f87171">*</span></label>
           <input type="email" id="email" class="form-input" placeholder="you@company.com" required />
@@ -698,30 +631,25 @@
         </div>
 
         <button class="btn-primary" style="width:100%; margin-top:8px;" onclick="goToStep2()">
-          Next – Set Your Preferences →
+          Next &ndash; Set Your Preferences &rarr;
         </button>
       </div>
 
-      <!-- ════════════════════════════════
-           STEP 2 – OneTrust Embedded CP
-           ════════════════════════════════ -->
+      <!-- STEP 2 -->
       <div id="step2" class="step-card hidden">
         <h3 style="margin-bottom:8px; font-size:1.15rem;">Consent &amp; Communication Preferences</h3>
         <p style="color:var(--muted); font-size:.88rem; margin-bottom:20px;">
-          Choose how you’d like us to stay in touch and personalise your experience.
+          Choose how you&rsquo;d like us to stay in touch and personalise your experience.
         </p>
 
-        <!-- OneTrust Embedded Collection Point renders here -->
         <div id="ot-container"></div>
 
         <button class="btn-secondary" style="width:100%; margin-top:16px;" onclick="goBackToStep1()">
-          ← Back
+          &larr; Back
         </button>
       </div>
 
-      <!-- ════════════════════════════════
-           STEP 3 – Thank You
-           ════════════════════════════════ -->
+      <!-- STEP 3 -->
       <div id="step3" class="step-card hidden">
         <div class="thankyou-content">
           <div class="checkmark-circle">
@@ -730,41 +658,36 @@
             </svg>
           </div>
           <h2>Thank You!</h2>
-          <p>Your preferences have been saved. We’ll send you a personalised agenda closer to the event. See you in Dubai!</p>
+          <p>Your preferences have been saved. We&rsquo;ll send you a personalised agenda closer to the event. See you in Dubai!</p>
         </div>
       </div>
 
-    </div><!-- /form-wrapper -->
+    </div>
   </section>
 
-  <!-- ===========================================================
-       RECOMMENDED FOR YOU
-       =========================================================== -->
+  <!-- RECOMMENDED -->
   <section id="recommended" class="section">
     <h2 class="section-title">Recommended For You</h2>
-    <p class="section-subtitle">Based on your interests, we think you’ll love these sessions.</p>
+    <p class="section-subtitle">Based on your interests, we think you&rsquo;ll love these sessions.</p>
     <div class="rec-grid">
-      <!-- Card 1 -->
       <div class="rec-card">
-        <div class="rec-card-img" style="background:linear-gradient(135deg,#1a2744,#1a73e8);">🤖</div>
+        <div class="rec-card-img" style="background:linear-gradient(135deg,#1a2744,#1a73e8);">&#129302;</div>
         <div class="rec-card-body">
           <span class="tag tag-ai">AI &amp; Data</span>
           <h3>Keynote: The AI-Powered Enterprise</h3>
           <p>Discover how generative AI is reshaping industries across the Gulf and beyond.</p>
         </div>
       </div>
-      <!-- Card 2 -->
       <div class="rec-card">
-        <div class="rec-card-img" style="background:linear-gradient(135deg,#0f2e1f,#22c55e);">🌱</div>
+        <div class="rec-card-img" style="background:linear-gradient(135deg,#0f2e1f,#22c55e);">&#127793;</div>
         <div class="rec-card-body">
           <span class="tag tag-sust">Sustainability</span>
           <h3>Workshop: Net-Zero Supply Chains</h3>
           <p>Hands-on strategies for building sustainable logistics in the MENA region.</p>
         </div>
       </div>
-      <!-- Card 3 -->
       <div class="rec-card">
-        <div class="rec-card-img" style="background:linear-gradient(135deg,#2a1f0a,#c8a45c);">🥂</div>
+        <div class="rec-card-img" style="background:linear-gradient(135deg,#2a1f0a,#c8a45c);">&#129346;</div>
         <div class="rec-card-body">
           <span class="tag tag-event">Networking</span>
           <h3>VIP Networking Gala</h3>
@@ -774,9 +697,7 @@
     </div>
   </section>
 
-  <!-- ===========================================================
-       FOOTER
-       =========================================================== -->
+  <!-- FOOTER -->
   <footer class="footer">
     <p>
       <a href="https://www.dwtc.com/en/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
@@ -786,15 +707,12 @@
     <p style="margin-top:8px;">&copy; 2026 Dubai World Trade Centre. All rights reserved.</p>
   </footer>
 
-  <!-- ===========================================================
-       APPLICATION LOGIC
-       OneTrust Embedded CP: Install → Prefill → Submit flow
-       =========================================================== -->
+  <!-- APPLICATION LOGIC -->
   <script>
     /* ──────────────────────────────────────────────
-       CONFIG
+       CONFIG – Production CP for DWTC
        ────────────────────────────────────────────── */
-    const CP_ID = 'c9322d35-cb63-4974-b65a-5d415f818a05';
+    const CP_ID = 'f62f2ec1-6ce7-4b67-9052-55ca251f723d';
 
     /* ──────────────────────────────────────────────
        DOM REFERENCES
@@ -810,6 +728,7 @@
     const emailError  = document.getElementById('emailError');
 
     let cpInstalled = false;
+    let userEmail   = '';
 
     /* ──────────────────────────────────────────────
        STEP NAVIGATION HELPERS
@@ -819,9 +738,26 @@
     }
 
     /* ──────────────────────────────────────────────
+       DOM-LEVEL SET VALUE HELPER
+       Sets value on an OT-rendered field and fires
+       input/change events so the CP picks it up.
+       ────────────────────────────────────────────── */
+    const setVal = (sel, value) => {
+      if (value == null || value === '') return;
+      const el = otContainer.querySelector(sel);
+      if (!el) return;
+      if (el.type === 'checkbox') {
+        el.checked = !!value;
+      } else {
+        el.value = value;
+      }
+      el.dispatchEvent(new Event('input',  { bubbles: true }));
+      el.dispatchEvent(new Event('change', { bubbles: true }));
+    };
+
+    /* ──────────────────────────────────────────────
        STEP 1 → STEP 2
-       Validate email, then install the OneTrust
-       Embedded Collection Point and prefill.
+       Validate email, install OneTrust CP.
        ────────────────────────────────────────────── */
     function goToStep2() {
       const emailVal = emailInput.value.trim();
@@ -832,49 +768,64 @@
         return;
       }
       emailError.style.display = 'none';
+      userEmail = emailVal;
 
-      // Switch visibility
       step1El.classList.add('hidden');
       step2El.classList.remove('hidden');
       setActiveDot(2);
 
-      // Install OneTrust CP (only once)
       if (!cpInstalled) {
         try {
           OneTrust.webform.InstallCP(CP_ID, { target: '#ot-container' });
           cpInstalled = true;
           console.log('[DWTC] OneTrust CP installed:', CP_ID);
         } catch (e) {
-          console.warn('[DWTC] OneTrust InstallCP call failed:', e);
+          console.warn('[DWTC] OneTrust InstallCP failed:', e);
           otContainer.innerHTML =
             '<p style="text-align:center;color:var(--muted);padding:40px 0;">' +
             'Consent form is loading&hellip; If it does not appear, please allow third-party scripts.</p>';
         }
       }
-
-      // Prefill email once the CP is loaded
-      prefillOneTrust(emailVal);
     }
 
     /* ──────────────────────────────────────────────
-       PREFILL LOGIC
-       Listen for OneTrust's custom event indicating
-       the CP form has rendered, then push data.
+       PREFILL – fires when the OT form is ready
+       Method 1: OneTrust API preFill (Email + multi-select Preferences)
+       Method 2: DOM-level fallback for the email field
        ────────────────────────────────────────────── */
-    function prefillOneTrust(email) {
-      const handler = function () {
-        setTimeout(function () {
-          try {
-            OneTrust.webform.preFill({ "Email": email }, CP_ID);
-            console.log('[DWTC] Prefilled email:', email);
-          } catch (e) {
-            console.warn('[DWTC] preFill failed:', e);
-          }
-        }, 1000);
-        document.removeEventListener('OnetrustFormLoaded', handler);
-      };
-      document.addEventListener('OnetrustFormLoaded', handler);
-    }
+    window.addEventListener('OnetrustFormLoaded', (evt) => {
+      console.log('[DWTC] OnetrustFormLoaded event:', evt && evt.detail);
+
+      // Method 1: OneTrust API preFill
+      try {
+        OneTrust.webform.preFill({
+          "Email": userEmail,
+          "Brand Preferences (ICT)": [
+            "Gitex",
+            "GITEX Europe",
+            "GITEX Asia",
+            "GITEX AI Europe",
+            "GITEX Future Health",
+            "GISEC (Information Security)",
+            "AI Everything"
+          ]
+        }, CP_ID);
+        console.log('[DWTC] API preFill applied (Email + Preferences)');
+      } catch (e) {
+        console.warn('[DWTC] API preFill failed:', e);
+      }
+
+      // Method 2: DOM-level setValue as fallback for the email field
+      setTimeout(() => {
+        const otEmailInput = otContainer.querySelector('.ot-email input[type="email"]');
+        if (otEmailInput && userEmail) {
+          otEmailInput.value = userEmail;
+          otEmailInput.dispatchEvent(new Event('input',  { bubbles: true }));
+          otEmailInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('[DWTC] DOM preFill applied:', userEmail);
+        }
+      }, 500);
+    });
 
     /* ──────────────────────────────────────────────
        STEP 2 → STEP 1 (Back)
@@ -887,8 +838,6 @@
 
     /* ──────────────────────────────────────────────
        STEP 2 → STEP 3 (Thank You)
-       OneTrust fires 'OnetrustConsentGiven' after
-       the user submits the embedded CP form.
        ────────────────────────────────────────────── */
     document.addEventListener('OnetrustConsentGiven', function () {
       step2El.classList.add('hidden');
