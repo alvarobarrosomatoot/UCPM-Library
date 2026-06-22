@@ -353,11 +353,10 @@
       margin-bottom: 24px !important;
     }
 
-    /* --- EMAIL FIELD (visible, prefilled from Step 1) --- */
+    /* --- EMAIL FIELD --- */
     #ot-container .ot-email {
       background: transparent !important;
       padding: 0 !important;
-      margin-bottom: 24px !important;
     }
     #ot-container .ot-email .ot-label {
       display: block !important;
@@ -811,7 +810,6 @@
     const emailError  = document.getElementById('emailError');
 
     let cpInstalled = false;
-    let userEmail   = '';
 
     /* ──────────────────────────────────────────────
        STEP NAVIGATION HELPERS
@@ -821,27 +819,9 @@
     }
 
     /* ──────────────────────────────────────────────
-       DOM-LEVEL SET VALUE HELPER
-       Sets value on an OT-rendered field and fires
-       input/change events so the CP picks it up.
-       (Same pattern as the reference UCPM form)
-       ────────────────────────────────────────────── */
-    const setVal = (sel, value) => {
-      if (value == null || value === '') return;
-      const el = otContainer.querySelector(sel);
-      if (!el) return;
-      if (el.type === 'checkbox') {
-        el.checked = !!value;
-      } else {
-        el.value = value;
-      }
-      el.dispatchEvent(new Event('input',  { bubbles: true }));
-      el.dispatchEvent(new Event('change', { bubbles: true }));
-    };
-
-    /* ──────────────────────────────────────────────
        STEP 1 → STEP 2
-       Validate email, install OneTrust CP.
+       Validate email, then install the OneTrust
+       Embedded Collection Point and prefill.
        ────────────────────────────────────────────── */
     function goToStep2() {
       const emailVal = emailInput.value.trim();
@@ -852,7 +832,6 @@
         return;
       }
       emailError.style.display = 'none';
-      userEmail = emailVal;
 
       // Switch visibility
       step1El.classList.add('hidden');
@@ -866,44 +845,36 @@
           cpInstalled = true;
           console.log('[DWTC] OneTrust CP installed:', CP_ID);
         } catch (e) {
-          console.warn('[DWTC] OneTrust InstallCP failed:', e);
+          console.warn('[DWTC] OneTrust InstallCP call failed:', e);
           otContainer.innerHTML =
             '<p style="text-align:center;color:var(--muted);padding:40px 0;">' +
             'Consent form is loading&hellip; If it does not appear, please allow third-party scripts.</p>';
         }
       }
+
+      // Prefill email once the CP is loaded
+      prefillOneTrust(emailVal);
     }
 
     /* ──────────────────────────────────────────────
-       PREFILL – fires when the OT form is ready
-       Uses BOTH the OneTrust API method AND a
-       DOM-level fallback (belt-and-suspenders),
-       matching the pattern from the reference UCPM file.
+       PREFILL LOGIC
+       Listen for OneTrust's custom event indicating
+       the CP form has rendered, then push data.
        ────────────────────────────────────────────── */
-    window.addEventListener('OnetrustFormLoaded', (evt) => {
-      console.log('[DWTC] OnetrustFormLoaded event:', evt?.detail);
-
-      // Method 1: OneTrust API preFill
-      try {
-        OneTrust.webform.preFill({ "Email": userEmail }, CP_ID);
-        console.log('[DWTC] API preFill applied:', userEmail);
-      } catch (e) {
-        console.warn('[DWTC] API preFill failed:', e);
-      }
-
-      // Method 2: DOM-level setValue as fallback
-      // (small delay to ensure the OT fields are fully rendered)
-      setTimeout(() => {
-        // OT uses dynamic name/id attributes, so we query by parent class
-        const otEmailInput = otContainer.querySelector('.ot-email input[type="email"]');
-        if (otEmailInput && userEmail) {
-          otEmailInput.value = userEmail;
-          otEmailInput.dispatchEvent(new Event('input',  { bubbles: true }));
-          otEmailInput.dispatchEvent(new Event('change', { bubbles: true }));
-          console.log('[DWTC] DOM preFill applied:', userEmail);
-        }
-      }, 500);
-    });
+    function prefillOneTrust(email) {
+      const handler = function () {
+        setTimeout(function () {
+          try {
+            OneTrust.webform.preFill({ "Email": email }, CP_ID);
+            console.log('[DWTC] Prefilled email:', email);
+          } catch (e) {
+            console.warn('[DWTC] preFill failed:', e);
+          }
+        }, 1000);
+        document.removeEventListener('OnetrustFormLoaded', handler);
+      };
+      document.addEventListener('OnetrustFormLoaded', handler);
+    }
 
     /* ──────────────────────────────────────────────
        STEP 2 → STEP 1 (Back)
