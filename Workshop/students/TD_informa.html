@@ -1,1 +1,1271 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Informa Order Confirmation</title><style>body{font-family:Arial,sans-serif;background:#f3f3f4;margin:0}.container{max-width:1200px;margin:auto;padding:20px}.card{background:#fff;padding:24px;border:1px solid #ddd;margin-bottom:20px}.success{border-left:5px solid #248a4b}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:10px}footer{background:#687485;color:#fff;padding:20px;text-align:center}</style></head><body><script src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js" data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e" worker="https://consent-api.onetrust.com"></script><div class="container"><div class="card success"><h1>Order Confirmed</h1><p>Thank you for registering. Your conference tickets have been successfully purchased.</p><p><strong>Order:</strong> INF-2026-104839 | <strong>Status:</strong> Paid</p></div><div class="card"><h2>Conference Registration Details</h2><p><strong>AI Governance &amp; Data Privacy Summit Europe 2026</strong><br>ExCeL London<br>14-16 October 2026</p><p>Attendee: Sarah Thompson (sarah.thompson@example.com)</p></div><div class="card"><h2>Order Summary</h2><table><tr><th>Product</th><th>SKU</th><th>Qty</th><th>Price</th></tr><tr><td>Conference Pass</td><td>INF-CONF-2026-001</td><td>1</td><td>£1,295</td></tr><tr><td>Workshop Add-on: AI Risk Management</td><td>INF-WS-2026-017</td><td>1</td><td>£495</td></tr><tr><td>Networking Reception Ticket</td><td>INF-NET-2026-009</td><td>2</td><td>£190</td></tr></table><p><strong>Subtotal:</strong> £1,980 | <strong>VAT:</strong> £396 | <strong>Total:</strong> £2,376</p></div><div class="card"><h2>Agreements & Marketing Preferences</h2><p>The embedded OneTrust UCPM collection point will render above this content as part of the post-purchase journey.</p></div></div><footer>Brought to you by Informa Connect</footer></body></html>
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed | Informa Connect</title>
+
+  <style>
+    :root {
+      --page-bg: #f4f4f5;
+      --white: #ffffff;
+      --ink: #2f3036;
+      --muted: #6f7685;
+      --line: #e2e4ea;
+      --soft-panel: #f1f1f2;
+      --summary-bg: #e7e8ee;
+      --summary-row: #eef0f4;
+      --footer: #697586;
+      --brand-blue: #293e6c;
+      --brand-red: #dc5d64;
+      --brand-red-hover: #ce4f57;
+      --success: #23834d;
+      --success-light: #e8f6ee;
+      --warning: #b87300;
+      --radius: 4px;
+      --max-width: 1220px;
+      --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 12px 28px rgba(22,30,46,0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+      font-size: 16px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    button,
+    a,
+    input {
+      font-family: inherit;
+    }
+
+    a:focus,
+    button:focus,
+    input:focus {
+      outline: 3px solid rgba(41, 62, 108, 0.35);
+      outline-offset: 3px;
+    }
+
+    .top-strip {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .top-strip-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-width: 250px;
+    }
+
+    .brand-symbol {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 3px solid #737f91;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .brand-symbol::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 2px dotted #737f91;
+      border-radius: 50%;
+    }
+
+    .brand-symbol::after {
+      content: "";
+      position: absolute;
+      inset: 15px;
+      border: 2px solid #737f91;
+      border-radius: 50%;
+    }
+
+    .brand-text small {
+      display: block;
+      color: #737f91;
+      font-size: 11px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .brand-text strong {
+      color: #667385;
+      display: block;
+      font-size: 25px;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+    }
+
+    .brand-text strong span {
+      font-weight: 400;
+    }
+
+    .checkout-label {
+      color: var(--muted);
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .checkout-label strong {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .hero {
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 30px 28px;
+    }
+
+    .confirmation-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--success);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .success-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--success);
+      background: var(--success-light);
+      border: 2px solid var(--success);
+      font-size: 26px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: clamp(34px, 4vw, 48px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-copy {
+      margin: 0;
+      max-width: 760px;
+      color: #4e5562;
+      font-size: 17px;
+    }
+
+    .meta-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(160px, 1fr));
+      gap: 12px;
+      max-width: 820px;
+    }
+
+    .meta-tile {
+      background: #f6f7f9;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 13px 15px;
+    }
+
+    .meta-tile span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.055em;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .meta-tile strong {
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .paid {
+      color: var(--success) !important;
+    }
+
+    .layout {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 30px 28px 110px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 365px;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .main-stack {
+      display: grid;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid rgba(226,228,234,0.85);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+    }
+
+    .panel h2 {
+      margin: 0 0 22px;
+      color: #303238;
+      font-size: 31px;
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: -0.055em;
+    }
+
+    .panel-kicker {
+      margin: -12px 0 22px;
+      color: var(--muted);
+      max-width: 780px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .detail-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      min-height: 82px;
+    }
+
+    .detail-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .detail-card strong {
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    th,
+    td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: #f3f4f7;
+      color: #383b43;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.045em;
+    }
+
+    td {
+      font-size: 15px;
+      color: #30333a;
+    }
+
+    th:nth-child(3),
+    th:nth-child(4),
+    th:nth-child(5),
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(5) {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .sku {
+      color: var(--muted);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 14px;
+    }
+
+    .customer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .info-box {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      padding: 18px;
+      min-height: 160px;
+    }
+
+    .info-box h3 {
+      margin: 0 0 11px;
+      color: var(--brand-blue);
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .info-box p {
+      margin: 0;
+      color: #505766;
+      font-size: 15px;
+    }
+
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .next-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--white);
+      padding: 16px;
+      min-height: 160px;
+    }
+
+    .next-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #eceff5;
+      color: var(--brand-blue);
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+      margin-bottom: 10px;
+      font-weight: 900;
+    }
+
+    .next-card strong {
+      color: var(--brand-blue);
+      display: block;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+
+    .next-card span {
+      color: var(--muted);
+      display: block;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .preferences-panel {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      border: 1px solid rgba(226,228,234,0.85);
+    }
+
+    .preferences-inner {
+      background: var(--soft-panel);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .preferences-inner h2 {
+      margin: 0 0 20px;
+      color: #303238;
+      font-size: 31px;
+      line-height: 1.08;
+      font-weight: 900;
+      letter-spacing: -0.055em;
+    }
+
+    .agreement-box {
+      background: var(--white);
+      border: 1px solid #dfe2e8;
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 14px;
+      color: #2f3036;
+    }
+
+    .agreement-box p {
+      margin: 0;
+    }
+
+    .agreement-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .fake-checkbox {
+      width: 19px;
+      height: 19px;
+      border: 2px solid #757a82;
+      border-radius: 2px;
+      margin-top: 2px;
+      flex: 0 0 auto;
+      background: var(--white);
+    }
+
+    .channel-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 0;
+    }
+
+    .channel {
+      padding: 0 22px;
+      border-right: 1px solid var(--line);
+    }
+
+    .channel:first-child {
+      padding-left: 0;
+    }
+
+    .channel:last-child {
+      border-right: 0;
+      padding-right: 0;
+    }
+
+    .channel-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #24262b;
+    }
+
+    .required {
+      color: #c64146;
+    }
+
+    .radio-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .fake-radio {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: #303238;
+      font-size: 14px;
+    }
+
+    .fake-radio::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border: 2px solid #757a82;
+      border-radius: 50%;
+      background: var(--white);
+      display: inline-block;
+    }
+
+    .preference-note {
+      margin: 14px 0 0;
+      color: #2f3036;
+    }
+
+    .preference-note + .preference-note {
+      margin-top: 8px;
+    }
+
+    .side-summary {
+      position: sticky;
+      top: 24px;
+    }
+
+    .summary-box {
+      background: var(--summary-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid #dfe1e8;
+      margin-bottom: 16px;
+    }
+
+    .summary-head {
+      padding: 18px;
+      border-bottom: 2px solid #f8f8f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .summary-head h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .currency {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #4f5664;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .summary-row {
+      padding: 16px 18px;
+      background: var(--summary-bg);
+      border-bottom: 2px solid #f8f8f9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: #424650;
+    }
+
+    .summary-products {
+      background: var(--summary-row);
+      padding: 8px 18px 10px;
+      border-bottom: 2px solid #f8f8f9;
+    }
+
+    .summary-product {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 14px;
+      color: #454b58;
+    }
+
+    .summary-product strong {
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .summary-product small {
+      display: block;
+      margin-top: 3px;
+      color: #737b8c;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+    }
+
+    .totals {
+      padding: 17px 18px 20px;
+      background: #e3e5eb;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: #3d424c;
+      margin-bottom: 10px;
+    }
+
+    .total-row.grand {
+      margin-top: 13px;
+      padding-top: 13px;
+      border-top: 1px solid #cdd2dc;
+      margin-bottom: 0;
+      color: #303238;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .invoice-button {
+      width: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: var(--brand-red);
+      color: #111827;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 16px 18px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .invoice-button:hover {
+      background: var(--brand-red-hover);
+      transform: translateY(-1px);
+    }
+
+    .side-note {
+      margin: 13px 0 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .benefits {
+      margin-top: 38px;
+      display: grid;
+    }
+
+    .benefit {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid #d8dce5;
+    }
+
+    .benefit:last-child {
+      border-bottom: 0;
+    }
+
+    .benefit-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #e0e3eb;
+      color: var(--brand-blue);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .benefit strong {
+      display: block;
+      color: var(--brand-blue);
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+
+    .benefit span {
+      color: var(--muted);
+      font-size: 13px;
+      display: block;
+      line-height: 1.36;
+    }
+
+    .footer {
+      background: var(--footer);
+      color: #ffffff;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      min-height: 112px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .footer .brand-text small,
+    .footer .brand-text strong {
+      color: #ffffff;
+    }
+
+    .footer .brand-symbol {
+      border-color: rgba(255,255,255,0.88);
+    }
+
+    .footer .brand-symbol::before,
+    .footer .brand-symbol::after {
+      border-color: rgba(255,255,255,0.88);
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 20px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .footer-nav a {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1060px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-summary {
+        position: static;
+        order: -1;
+      }
+
+      .customer-grid,
+      .next-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .top-strip-inner,
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .checkout-label {
+        text-align: left;
+      }
+
+      .hero-inner,
+      .layout,
+      .top-strip-inner,
+      .footer-inner {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .confirmation-card {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-grid,
+      .details-grid,
+      .customer-grid,
+      .next-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel,
+      .preferences-panel {
+        padding: 21px;
+      }
+
+      .preferences-inner {
+        padding: 20px;
+      }
+
+      .channel-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .channel {
+        padding: 0;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 16px;
+      }
+
+      .channel:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .footer-nav {
+        justify-content: flex-start;
+        gap: 14px 18px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+      }
+
+      .top-strip,
+      .footer,
+      .benefits,
+      .invoice-button,
+      .side-note {
+        display: none;
+      }
+
+      .layout {
+        display: block;
+        padding: 20px;
+      }
+
+      .panel,
+      .preferences-panel,
+      .confirmation-card,
+      .summary-box {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      .side-summary {
+        position: static;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<script
+  src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+  data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e"
+  worker="https://consent-api.onetrust.com"
+></script>
+
+  <header class="top-strip" aria-label="Informa Connect header">
+    <div class="top-strip-inner">
+      <div class="brand" aria-label="Informa Connect">
+        <div class="brand-symbol" aria-hidden="true"></div>
+        <div class="brand-text">
+          <small>Brought to you by</small>
+          <strong>informa<span>connect</span></strong>
+        </div>
+      </div>
+
+      <div class="checkout-label" aria-label="Checkout progress">
+        Checkout complete · <strong>Order confirmed</strong>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="order-confirmed-heading">
+      <div class="hero-inner">
+        <article class="confirmation-card">
+          <div class="success-icon" aria-hidden="true">✓</div>
+
+          <div>
+            <h1 id="order-confirmed-heading">Order Confirmed</h1>
+            <p class="hero-copy">
+              Thank you for registering. Your conference tickets have been successfully purchased.
+            </p>
+
+            <div class="meta-grid" aria-label="Order confirmation metadata">
+              <div class="meta-tile">
+                <span>Order reference</span>
+                <strong>INF-2026-104839</strong>
+              </div>
+
+              <div class="meta-tile">
+                <span>Order date</span>
+                <strong>3 July 2026</strong>
+              </div>
+
+              <div class="meta-tile">
+                <span>Payment status</span>
+                <strong class="paid">Paid</strong>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="layout">
+      <div class="main-stack">
+        <section class="panel" aria-labelledby="registration-heading">
+          <h2 id="registration-heading">Conference Registration Details</h2>
+          <p class="panel-kicker">
+            Your registration has been confirmed for the following Informa Connect event.
+          </p>
+
+          <div class="details-grid">
+            <div class="detail-card">
+              <span>Event Name</span>
+              <strong>AI Governance &amp; Data Privacy Summit Europe 2026</strong>
+            </div>
+
+            <div class="detail-card">
+              <span>Location</span>
+              <strong>ExCeL London</strong>
+            </div>
+
+            <div class="detail-card">
+              <span>Date</span>
+              <strong>14-16 October 2026</strong>
+            </div>
+
+            <div class="detail-card">
+              <span>Registration Type</span>
+              <strong>Conference Pass</strong>
+            </div>
+
+            <div class="detail-card">
+              <span>Attendee Name</span>
+              <strong>Sarah Thompson</strong>
+            </div>
+
+            <div class="detail-card">
+              <span>Email</span>
+              <strong>sarah.thompson@example.com</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="main-order-summary-heading">
+          <h2 id="main-order-summary-heading">Order Summary</h2>
+          <p class="panel-kicker">
+            Review the products included in your confirmed order.
+          </p>
+
+          <div class="table-wrap">
+            <table aria-label="Products purchased">
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">SKU</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Unit Price</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td><strong>Conference Pass</strong></td>
+                  <td><span class="sku">INF-CONF-2026-001</span></td>
+                  <td>1</td>
+                  <td>£1,295.00</td>
+                  <td>£1,295.00</td>
+                </tr>
+
+                <tr>
+                  <td><strong>Workshop Add-on: AI Risk Management</strong></td>
+                  <td><span class="sku">INF-WS-2026-017</span></td>
+                  <td>1</td>
+                  <td>£495.00</td>
+                  <td>£495.00</td>
+                </tr>
+
+                <tr>
+                  <td><strong>Networking Reception Ticket</strong></td>
+                  <td><span class="sku">INF-NET-2026-009</span></td>
+                  <td>2</td>
+                  <td>£95.00</td>
+                  <td>£190.00</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="customer-heading">
+          <h2 id="customer-heading">Customer Information</h2>
+
+          <div class="customer-grid">
+            <article class="info-box">
+              <h3>Billing Address</h3>
+              <p>
+                Sarah Thompson<br />
+                240 Blackfriars Road<br />
+                London<br />
+                SE1 8BF<br />
+                United Kingdom
+              </p>
+            </article>
+
+            <article class="info-box">
+              <h3>Payment Method</h3>
+              <p>
+                Visa ending 4821<br />
+                Payment authorised<br />
+                Transaction ID: PAY-7892146
+              </p>
+            </article>
+
+            <article class="info-box">
+              <h3>Registration Contact</h3>
+              <p>
+                Informa Connect Customer Services<br />
+                eventsupport@informaconnect.com<br />
+                +44 (0)20 8052 0400
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="next-steps-heading">
+          <h2 id="next-steps-heading">Next Steps</h2>
+
+          <div class="next-grid">
+            <article class="next-card">
+              <div class="next-icon" aria-hidden="true">✉</div>
+              <strong>Ticket confirmation email sent</strong>
+              <span>Your registration confirmation has been sent to the attendee email address.</span>
+            </article>
+
+            <article class="next-card">
+              <div class="next-icon" aria-hidden="true">🎟</div>
+              <strong>Event access information will follow</strong>
+              <span>Joining instructions and badge collection details will be shared closer to the event.</span>
+            </article>
+
+            <article class="next-card">
+              <div class="next-icon" aria-hidden="true">↓</div>
+              <strong>Download invoice</strong>
+              <span>Your invoice is available from this order confirmation page and email.</span>
+            </article>
+
+            <article class="next-card">
+              <div class="next-icon" aria-hidden="true">?</div>
+              <strong>Contact event support</strong>
+              <span>Our support team can help with registration changes or event questions.</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="preferences-panel" aria-labelledby="agreements-heading">
+          <div class="preferences-inner">
+            <h2 id="agreements-heading">Agreements</h2>
+
+            <div class="agreement-box">
+              <div class="agreement-row">
+                <span class="fake-checkbox" aria-hidden="true"></span>
+                <p>
+                  I agree to the <a href="#">Terms and Conditions</a> and
+                  <a href="#">Privacy Notice</a>. <span class="required">*</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="agreement-box">
+              <p>
+                I would like to receive tailored information, including industry insights,
+                exclusive networking opportunities and access to offers for events and
+                products from Informa Connect and Informa, the organiser of this event.
+              </p>
+
+              <div class="channel-grid" aria-label="Marketing preference channels">
+                <div class="channel">
+                  <span class="channel-label">Email <span class="required">*</span></span>
+                  <div class="radio-row">
+                    <span class="fake-radio">Yes</span>
+                    <span class="fake-radio">No</span>
+                  </div>
+                </div>
+
+                <div class="channel">
+                  <span class="channel-label">Phone <span class="required">*</span></span>
+                  <div class="radio-row">
+                    <span class="fake-radio">Yes</span>
+                    <span class="fake-radio">No</span>
+                  </div>
+                </div>
+
+                <div class="channel">
+                  <span class="channel-label">SMS / Instant message <span class="required">*</span></span>
+                  <div class="radio-row">
+                    <span class="fake-radio">Yes</span>
+                    <span class="fake-radio">No</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="agreement-box">
+              <p>
+                I would like to receive information about the latest innovations, products
+                and services from the <a href="#">exhibitors and sponsors</a> of
+                AI Governance &amp; Data Privacy Summit Europe 2026.
+              </p>
+
+              <div class="channel-grid" aria-label="Sponsor preference channels">
+                <div class="channel">
+                  <span class="channel-label">Email <span class="required">*</span></span>
+                  <div class="radio-row">
+                    <span class="fake-radio">Yes</span>
+                    <span class="fake-radio">No</span>
+                  </div>
+                </div>
+
+                <div class="channel">
+                  <span class="channel-label">Phone <span class="required">*</span></span>
+                  <div class="radio-row">
+                    <span class="fake-radio">Yes</span>
+                    <span class="fake-radio">No</span>
+                  </div>
+                </div>
+
+                <div class="channel">
+                  <span class="channel-label">SMS / Instant message <span class="required">*</span></span>
+                  <div class="radio-row">
+                    <span class="fake-radio">Yes</span>
+                    <span class="fake-radio">No</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="preference-note">
+              You can opt out at any time by clicking unsubscribe or contacting us or the sender.
+            </p>
+            <p class="preference-note">
+              For further details, see our <a href="#">Privacy Notice</a>.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="side-summary" aria-labelledby="sidebar-summary-heading">
+        <section class="summary-box">
+          <div class="summary-head">
+            <h2 id="sidebar-summary-heading">Order Summary</h2>
+            <span class="currency">GBP⌄</span>
+          </div>
+
+          <div class="summary-row">
+            <span>4 passes selected</span>
+            <span aria-hidden="true">⌄</span>
+          </div>
+
+          <div class="summary-products">
+            <div class="summary-product">
+              <span>
+                Conference Pass
+                <small>INF-CONF-2026-001</small>
+              </span>
+              <strong>£1,295.00</strong>
+            </div>
+
+            <div class="summary-product">
+              <span>
+                Workshop Add-on: AI Risk Management
+                <small>INF-WS-2026-017</small>
+              </span>
+              <strong>£495.00</strong>
+            </div>
+
+            <div class="summary-product">
+              <span>
+                Networking Reception Ticket × 2
+                <small>INF-NET-2026-009</small>
+              </span>
+              <strong>£190.00</strong>
+            </div>
+          </div>
+
+          <div class="totals">
+            <div class="total-row">
+              <span>Subtotal</span>
+              <strong>£1,980.00</strong>
+            </div>
+
+            <div class="total-row">
+              <span>VAT</span>
+              <strong>£396.00</strong>
+            </div>
+
+            <div class="total-row grand">
+              <span>Grand Total</span>
+              <strong>£2,376.00</strong>
+            </div>
+          </div>
+        </section>
+
+        <button class="invoice-button" type="button" aria-label="Download invoice">
+          Download Invoice
+        </button>
+
+        <p class="side-note">
+          Need help? Contact event support with your order reference.
+        </p>
+
+        <div class="benefits" aria-label="Booking benefits">
+          <div class="benefit">
+            <div class="benefit-icon" aria-hidden="true">↔</div>
+            <div>
+              <strong>Easy ticket exchange</strong>
+              <span>Upgrade or downgrade at any time. Edit delegates without extra fees.</span>
+            </div>
+          </div>
+
+          <div class="benefit">
+            <div class="benefit-icon" aria-hidden="true">□</div>
+            <div>
+              <strong>Flexible cancellation</strong>
+              <span>Transfer booking to another event or contact support for cancellation options.</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer" aria-label="Informa Connect footer">
+    <div class="footer-inner">
+      <div class="brand" aria-label="Informa Connect">
+        <div class="brand-symbol" aria-hidden="true"></div>
+        <div class="brand-text">
+          <small>Brought to you by</small>
+          <strong>informa<span>connect</span></strong>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="#">Home</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">CCPA: Do not sell my personal info</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
