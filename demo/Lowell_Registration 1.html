@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register your online account | Lowell</title>
+
+  <!-- Google Fonts – Nunito Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- OneTrust SDK – Command Queue -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <!-- OneTrust – Embedded Collection Point Stub Loader -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
+    worker="https://consent-api.onetrust.com">
+  </script>
+
+  <style>
+    :root {
+      --pomegranate:      #E84813;
+      --pomegranate-dark: #C93B0C;
+      --anzac:            #DEAB52;
+      --jade:             #00B67B;
+      --jade-dark:        #009867;
+      --ink:        #1a2233;
+      --ink-soft:   #3a4256;
+      --muted:      #6b7280;
+      --border:     #e4e7ec;
+      --border-soft:#eef0f3;
+      --page-bg:    #f7f5f2;
+      --card-bg:    #ffffff;
+      --panel-bg:   #fdfcfa;
+      --pomegranate-tint: #fdece6;
+      --jade-tint:        #e5f7f0;
+      --anzac-tint:       #faf1de;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 1px 2px rgba(20, 28, 46, 0.06);
+      --shadow-md: 0 8px 24px rgba(20, 28, 46, 0.08);
+      --max-width: 1160px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--ink);
+      font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      line-height: 1.55;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--pomegranate); text-decoration: none; font-weight: 700; }
+    a:hover { text-decoration: underline; }
+    button, input, select, textarea { font-family: inherit; }
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 3px solid rgba(232, 72, 19, 0.35);
+      outline-offset: 3px;
+    }
+
+    /* TOP BAR */
+    .topbar { background: var(--card-bg); border-bottom: 1px solid var(--border); }
+    .topbar-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 18px 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--pomegranate);
+      display: grid; place-items: center;
+      color: #fff; font-weight: 900; font-size: 22px; letter-spacing: -0.02em;
+    }
+    .logo-text { font-size: 26px; font-weight: 900; color: var(--ink); letter-spacing: -0.02em; }
+    .top-actions { display: flex; align-items: center; gap: 20px; font-size: 14px; font-weight: 700; color: var(--ink-soft); }
+    .top-actions a { color: var(--ink-soft); }
+    .top-actions .quick-pay { background: var(--pomegranate); color: #fff; padding: 9px 18px; border-radius: 999px; }
+    .top-actions .quick-pay:hover { background: var(--pomegranate-dark); text-decoration: none; }
+
+    /* HERO */
+    .hero {
+      background:
+        radial-gradient(1200px 400px at 90% -20%, var(--pomegranate-tint) 0%, transparent 60%),
+        radial-gradient(900px 300px at 0% 100%, var(--jade-tint) 0%, transparent 60%),
+        var(--card-bg);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .hero-inner { max-width: var(--max-width); margin: 0 auto; padding: 44px 28px 20px; }
+    .hero h1 {
+      margin: 0 0 10px; font-size: clamp(28px, 4vw, 42px); line-height: 1.1;
+      font-weight: 900; letter-spacing: -0.02em; color: var(--ink);
+    }
+    .hero p { margin: 0 0 8px; color: var(--ink-soft); font-size: 17px; max-width: 640px; }
+
+    /* STEPPER */
+    .stepper { display: flex; align-items: center; gap: 8px; margin: 30px 0 0; flex-wrap: wrap; }
+    .stepper-item {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--muted); font-size: 13px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .stepper-num {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: #eaecef; color: var(--muted);
+      display: grid; place-items: center; font-size: 14px; font-weight: 900;
+      transition: background .3s, color .3s, transform .3s; flex-shrink: 0;
+    }
+    .stepper-item.active .stepper-num {
+      background: var(--pomegranate); color: #fff; transform: scale(1.06);
+      box-shadow: 0 4px 12px rgba(232, 72, 19, 0.35);
+    }
+    .stepper-item.active { color: var(--pomegranate); }
+    .stepper-item.done .stepper-num { background: var(--jade); color: #fff; }
+    .stepper-item.done { color: var(--jade-dark); }
+    .stepper-divider { flex: 0 0 40px; height: 2px; background: #eaecef; transition: background .3s; }
+    .stepper-divider.done { background: var(--jade); }
+
+    /* LAYOUT */
+    .layout {
+      max-width: var(--max-width); margin: 0 auto;
+      padding: 32px 28px 90px;
+      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 32px; align-items: start;
+    }
+    .main-col { min-width: 0; }
+    .side-col { position: sticky; top: 24px; }
+
+    /* CARDS */
+    .card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 32px;
+    }
+    .card + .card { margin-top: 20px; }
+    .card h2 { margin: 0 0 6px; font-size: 26px; font-weight: 900; letter-spacing: -0.015em; color: var(--ink); }
+    .card-kicker { margin: 0 0 24px; color: var(--ink-soft); font-size: 16px; max-width: 620px; }
+
+    /* FORMS */
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { font-size: 14px; font-weight: 800; color: var(--ink); }
+    .field label .req { color: var(--pomegranate); margin-left: 3px; }
+    .field .hint { font-size: 13px; color: var(--muted); }
+    .field input, .field select {
+      padding: 13px 14px; background: #fff;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      color: var(--ink); font-size: 15px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .field input:focus, .field select:focus {
+      outline: none; border-color: var(--pomegranate);
+      box-shadow: 0 0 0 3px rgba(232, 72, 19, 0.15);
+    }
+
+    .btn {
+      border: 0; border-radius: 999px; padding: 14px 28px; cursor: pointer;
+      font-size: 15px; font-weight: 800;
+      transition: background 160ms ease, transform 160ms ease, opacity .2s;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--pomegranate); color: #fff;
+      box-shadow: 0 6px 16px rgba(232, 72, 19, 0.28);
+    }
+    .btn-primary:hover:not([disabled]) { background: var(--pomegranate-dark); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--border); }
+    .btn-ghost:hover { background: var(--border-soft); }
+
+    .actions { margin-top: 26px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .actions.end { justify-content: flex-end; }
+
+    .info-note {
+      margin-top: 18px; display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px; background: var(--jade-tint);
+      border: 1px solid rgba(0, 182, 123, 0.25); border-radius: var(--radius-sm);
+      color: var(--ink-soft); font-size: 14px;
+    }
+    .info-note .icon {
+      flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--jade); color: #fff;
+      display: grid; place-items: center; font-weight: 900; font-size: 14px;
+    }
+
+    /* Summary block on Step 3 */
+    .summary-block {
+      background: var(--panel-bg); border: 1px solid var(--border-soft);
+      border-radius: var(--radius-sm); padding: 18px 20px; margin-bottom: 22px;
+    }
+    .summary-block h3 {
+      margin: 0 0 12px; font-size: 15px; font-weight: 800; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .summary-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px; }
+    .summary-list dt { font-size: 13px; color: var(--muted); font-weight: 700; margin-bottom: 2px; }
+    .summary-list dd { margin: 0; font-size: 15px; font-weight: 700; color: var(--ink); word-break: break-word; }
+    .summary-block .edit {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; border: 0; padding: 0;
+      color: var(--pomegranate); font-weight: 800; font-size: 14px;
+      cursor: pointer; text-decoration: underline; margin-top: 14px;
+    }
+
+    /* ============ ONETRUST — LOWELL LIGHT THEME ============ */
+    #ot-container { min-height: 140px; margin: 0; }
+    #ot-container .ot-consent-inline,
+    #ot-container .otwf-content,
+    #ot-container .ot-form,
+    #ot-container .ot-form.ot-scroll,
+    #ot-container .ot-form-content {
+      background: transparent !important; border: none !important;
+      border-radius: 0 !important; box-shadow: none !important;
+      padding: 0 !important; margin: 0 !important;
+    }
+    #ot-container .otwf-close-cntr { display: none !important; }
+
+    #ot-container, #ot-container *,
+    #ot-container .ot-label, #ot-container label, #ot-container legend,
+    #ot-container span, #ot-container p {
+      font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, Arial, sans-serif !important;
+      color: var(--ink) !important;
+    }
+    #ot-container .ot-el {
+      background: transparent !important; border: none !important;
+      box-shadow: none !important; padding: 0 !important;
+    }
+    #ot-container .ot-form-content > .ot-el,
+    #ot-container .ot-form-content > .ot-email,
+    #ot-container .ot-form-content > .otwf-chkbox,
+    #ot-container .ot-form-content > .ot-radiogrp { margin-bottom: 16px !important; }
+
+    #ot-container .ot-email {
+      background: #fff !important; border: 1.5px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important; padding: 18px 20px !important;
+      margin-bottom: 14px !important;
+    }
+    #ot-container .ot-email .ot-label {
+      display: block !important; font-weight: 800 !important; font-size: 14px !important;
+      margin-bottom: 8px !important; color: var(--ink) !important;
+    }
+    #ot-container .ot-email input[type="email"] {
+      width: 100% !important; padding: 13px 14px !important;
+      background: #fff !important; border: 1.5px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important; color: var(--ink) !important;
+      font-family: inherit !important; font-size: 15px !important;
+      transition: border-color .2s, box-shadow .2s !important;
+      -webkit-appearance: none !important;
+    }
+    #ot-container .ot-email input[type="email"]:focus {
+      outline: none !important; border-color: var(--pomegranate) !important;
+      box-shadow: 0 0 0 3px rgba(232, 72, 19, 0.15) !important;
+    }
+    #ot-container .ot-email input[type="email"]::placeholder { color: #97a0b0 !important; }
+
+    #ot-container .otwf-chkbox {
+      display: flex !important; align-items: flex-start !important; gap: 14px !important;
+      padding: 18px 20px !important; background: #fff !important;
+      border: 1.5px solid var(--border) !important; border-radius: var(--radius-sm) !important;
+      margin-bottom: 12px !important; transition: border-color .2s, background .2s !important;
+    }
+    #ot-container .otwf-chkbox:hover {
+      border-color: rgba(232, 72, 19, 0.4) !important; background: #fffbf9 !important;
+    }
+    #ot-container .otwf-chkbox input[type="checkbox"] {
+      flex-shrink: 0 !important; width: 20px !important; height: 20px !important;
+      margin-top: 2px !important; accent-color: var(--pomegranate) !important; cursor: pointer !important;
+    }
+    #ot-container .otwf-chkbox label { cursor: pointer !important; line-height: 1.5 !important; }
+    #ot-container .otwf-chkbox .ot-label {
+      font-weight: 700 !important; font-size: 15px !important; color: var(--ink) !important;
+    }
+    #ot-container .otwf-chkbox .ot-asterisk,
+    #ot-container .ot-asterisk { color: var(--pomegranate) !important; margin-left: 4px !important; }
+    #ot-container .otwf-chkbox .ot-desc {
+      font-size: 13px !important; color: var(--muted) !important;
+      margin-top: 4px !important; line-height: 1.45 !important; font-weight: 400 !important;
+    }
+
+    #ot-container .ot-radiogrp {
+      border: 1.5px solid var(--border) !important; background: #fff !important;
+      border-radius: var(--radius-sm) !important; padding: 18px 20px !important;
+      margin-bottom: 12px !important;
+    }
+    #ot-container .ot-radiogrp legend,
+    #ot-container .ot-radiogrp legend.ot-label {
+      font-weight: 800 !important; font-size: 15px !important;
+      color: var(--ink) !important; margin-bottom: 12px !important; padding: 0 !important;
+    }
+    #ot-container .ot-radiogrp > .ot-el {
+      display: inline-flex !important; align-items: center !important; gap: 8px !important;
+      padding: 8px 16px !important; background: var(--panel-bg) !important;
+      border: 1.5px solid var(--border) !important; border-radius: 999px !important;
+      margin: 0 8px 8px 0 !important;
+      transition: border-color .2s, background .2s !important; cursor: pointer !important;
+    }
+    #ot-container .ot-radiogrp > .ot-el:hover {
+      border-color: var(--pomegranate) !important; background: var(--pomegranate-tint) !important;
+    }
+    #ot-container .ot-radiogrp input[type="radio"] {
+      flex-shrink: 0 !important; width: 17px !important; height: 17px !important;
+      accent-color: var(--pomegranate) !important; cursor: pointer !important;
+    }
+    #ot-container .ot-radiogrp label { cursor: pointer !important; }
+    #ot-container .ot-radiogrp label .ot-label {
+      font-weight: 700 !important; font-size: 14px !important; color: var(--ink) !important;
+    }
+
+    #ot-container .ot-error {
+      color: var(--pomegranate) !important; font-size: 13px !important;
+      font-weight: 700 !important; margin-top: 6px !important; display: block !important;
+    }
+    #ot-container .ot-error.ot-n { display: none !important; }
+
+    #ot-container .ot-btns {
+      margin-top: 22px !important; padding: 0 !important;
+      background: transparent !important; border: none !important;
+    }
+    #ot-container .ot-submit {
+      width: 100% !important; padding: 15px 28px !important;
+      background: var(--pomegranate) !important; color: #fff !important;
+      font-weight: 800 !important; font-size: 15px !important; font-family: inherit !important;
+      border: 0 !important; border-radius: 999px !important; cursor: pointer !important;
+      transition: background 160ms ease, transform 160ms ease !important;
+      box-shadow: 0 6px 16px rgba(232, 72, 19, 0.28) !important;
+    }
+    #ot-container .ot-submit:hover:not([disabled]) {
+      background: var(--pomegranate-dark) !important; transform: translateY(-1px) !important;
+    }
+    #ot-container .ot-submit[disabled] { opacity: 0.55 !important; cursor: not-allowed !important; }
+    #ot-container .ot-n { display: none !important; }
+
+    .prefs-footnote { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
+
+    /* STEP 4 */
+    .success-card { text-align: center; padding: 60px 32px; }
+    .success-icon {
+      width: 88px; height: 88px; border-radius: 50%;
+      background: var(--jade-tint); border: 3px solid var(--jade);
+      color: var(--jade-dark);
+      display: grid; place-items: center;
+      margin: 0 auto 22px; font-size: 44px; font-weight: 900;
+      animation: pop .5s ease;
+    }
+    @keyframes pop {
+      0%   { transform: scale(0); opacity: 0; }
+      70%  { transform: scale(1.12); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .success-card h2 { font-size: 32px; margin: 0 0 12px; }
+    .success-card p { color: var(--ink-soft); font-size: 17px; max-width: 500px; margin: 0 auto 28px; }
+    .success-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* SIDE COL */
+    .side-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 22px 24px;
+      box-shadow: var(--shadow-sm); margin-bottom: 18px;
+    }
+    .side-card h3 { margin: 0 0 6px; font-size: 17px; font-weight: 900; color: var(--ink); }
+    .side-card p { margin: 0 0 12px; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+    .side-card ul { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+    .side-card li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink-soft); }
+    .side-card li::before {
+      content: "\2713"; flex-shrink: 0;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--jade-tint); color: var(--jade-dark);
+      display: grid; place-items: center;
+      font-weight: 900; font-size: 12px; margin-top: 1px;
+    }
+    .help-card { background: var(--anzac-tint); border-color: rgba(222, 171, 82, 0.4); }
+    .help-card h3 { color: #7c5a1a; }
+    .help-card a { color: #7c5a1a; text-decoration: underline; }
+
+    /* FOOTER */
+    .footer { background: var(--ink); color: rgba(255,255,255,0.85); padding: 32px 28px 24px; }
+    .footer-inner {
+      max-width: var(--max-width); margin: 0 auto;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 20px; font-size: 13px;
+    }
+    .footer a { color: #fff; font-weight: 700; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 14px 22px; }
+    .footer-legal {
+      margin: 18px auto 0; max-width: var(--max-width);
+      color: rgba(255,255,255,0.55); font-size: 12px; line-height: 1.5;
+    }
+
+    /* VISIBILITY */
+    .hidden { display: none !important; }
+    .fade-in { animation: fadeIn .4s ease both; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1000px) {
+      .layout { grid-template-columns: 1fr; }
+      .side-col { position: static; order: -1; }
+    }
+    @media (max-width: 640px) {
+      .topbar-inner { padding: 14px 18px; gap: 12px; }
+      .top-actions { gap: 10px; font-size: 13px; }
+      .top-actions a:not(.quick-pay) { display: none; }
+      .hero-inner, .layout { padding-left: 18px; padding-right: 18px; }
+      .hero-inner { padding-top: 30px; }
+      .card { padding: 22px; }
+      .form-grid, .summary-list { grid-template-columns: 1fr; }
+      .stepper { gap: 4px; }
+      .stepper-item span:not(.stepper-num) { display: none; }
+      .stepper-divider { flex: 0 0 18px; }
+      .actions { flex-direction: column-reverse; }
+      .actions .btn { width: 100%; }
+      #ot-container .ot-radiogrp > .ot-el {
+        display: flex !important; margin-right: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar" aria-label="Lowell top navigation">
+    <div class="topbar-inner">
+      <a href="#" class="logo" aria-label="Lowell home">
+        <span class="logo-mark" aria-hidden="true">L</span>
+        <span class="logo-text">Lowell</span>
+      </a>
+      <nav class="top-actions" aria-label="Main actions">
+        <a href="#">Help &amp; Support</a>
+        <a href="#">Sign in</a>
+        <a href="#" class="quick-pay">Quick Pay</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 id="hero-heading">Register your online account</h1>
+      <p id="hero-copy">Take control of your Lowell account in a few simple steps. You&rsquo;re not alone — we&rsquo;re here to help.</p>
+
+      <div class="stepper" aria-label="Registration progress">
+        <div id="step-item-1" class="stepper-item active">
+          <span class="stepper-num">1</span><span>Verify account</span>
+        </div>
+        <div id="step-divider-1" class="stepper-divider"></div>
+        <div id="step-item-2" class="stepper-item">
+          <span class="stepper-num">2</span><span>Your details</span>
+        </div>
+        <div id="step-divider-2" class="stepper-divider"></div>
+        <div id="step-item-3" class="stepper-item">
+          <span class="stepper-num">3</span><span>Preferences</span>
+        </div>
+        <div id="step-divider-3" class="stepper-divider"></div>
+        <div id="step-item-4" class="stepper-item">
+          <span class="stepper-num">4</span><span>All set</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="layout">
+    <div class="main-col">
+
+      <!-- STEP 1 -->
+      <section id="step-1" class="card fade-in" aria-labelledby="s1-title">
+        <h2 id="s1-title">Let&rsquo;s find your account</h2>
+        <p class="card-kicker">
+          Confirm any details from a letter or email we&rsquo;ve sent you.
+        </p>
+
+        <form id="verify-form" novalidate>
+          <div class="form-grid">
+            <div class="field full">
+              <label for="ref">Lowell reference number</label>
+              <input type="text" id="ref" name="ref" inputmode="numeric" autocomplete="off" placeholder="e.g. 123456789" />
+              <span class="hint">You&rsquo;ll find this in the top right-hand corner of any letter we&rsquo;ve sent you.</span>
+            </div>
+            <div class="field">
+              <label for="postcode">Postcode</label>
+              <input type="text" id="postcode" name="postcode" autocomplete="postal-code" placeholder="e.g. LS15 8GH" />
+            </div>
+            <div class="field">
+              <label for="dob">Date of birth</label>
+              <input type="date" id="dob" name="dob" />
+            </div>
+          </div>
+
+          <div class="info-note">
+            <span class="icon" aria-hidden="true">i</span>
+            <span>Your information is protected and only used to find your account. We never charge interest or fees when you engage with us.</span>
+          </div>
+
+          <div class="actions end">
+            <button type="submit" class="btn btn-primary">Continue &rarr;</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- STEP 2 -->
+      <section id="step-2" class="card hidden" aria-labelledby="s2-title">
+        <h2 id="s2-title">Tell us a bit about you</h2>
+        <p class="card-kicker">
+          We&rsquo;ll use these details to keep in touch about your account and secure your online access.
+        </p>
+
+        <form id="details-form" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="first-name">First name</label>
+              <input type="text" id="first-name" name="firstName" autocomplete="given-name" placeholder="e.g. Sarah" />
+            </div>
+            <div class="field">
+              <label for="last-name">Last name</label>
+              <input type="text" id="last-name" name="lastName" autocomplete="family-name" placeholder="e.g. Thompson" />
+            </div>
+            <div class="field full">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" />
+              <span class="hint">We&rsquo;ll send your welcome email and account updates here.</span>
+            </div>
+            <div class="field full">
+              <label for="mobile">Mobile number <span style="color:var(--muted);font-weight:700;">(optional)</span></label>
+              <input type="tel" id="mobile" name="mobile" autocomplete="tel" placeholder="e.g. 07123 456 789" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn btn-ghost" data-back="1">&larr; Back</button>
+            <button type="submit" class="btn btn-primary">Continue &rarr;</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- STEP 3 -->
+      <section id="step-3" class="card hidden" aria-labelledby="s3-title">
+        <h2 id="s3-title">Set your communication preferences</h2>
+        <p class="card-kicker">
+          Choose how you&rsquo;d like Lowell to stay in touch. You can change these at any time from your online account.
+        </p>
+
+        <div class="summary-block">
+          <h3>Your details</h3>
+          <dl class="summary-list">
+            <div><dt>Name</dt><dd id="summary-name">—</dd></div>
+            <div><dt>Email</dt><dd id="summary-email">—</dd></div>
+          </dl>
+          <button type="button" class="edit" data-back="2">&larr; Edit details</button>
+        </div>
+
+        <div id="ot-container" aria-live="polite">
+          <p style="text-align:center;color:var(--muted);padding:40px 0;margin:0;">
+            Loading your preferences form&hellip;
+          </p>
+        </div>
+
+        <p class="prefs-footnote">
+          You can opt out at any time. For more information, see our <a href="#">Privacy Notice</a>.
+        </p>
+      </section>
+
+      <!-- STEP 4 -->
+      <section id="step-4" class="card success-card hidden" aria-labelledby="s4-title">
+        <div class="success-icon" aria-hidden="true">&check;</div>
+        <h2 id="s4-title">You&rsquo;re all set!</h2>
+        <p>
+          Welcome to Lowell, <strong id="welcome-name">there</strong>. Your online account is ready.
+          We&rsquo;ve sent a confirmation to <strong id="welcome-email">your email</strong> —
+          please check your inbox to activate your account.
+        </p>
+        <div class="success-actions">
+          <a href="#" class="btn btn-primary">Go to my account</a>
+          <a href="#" class="btn btn-ghost">Download the Lowell app</a>
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="side-col">
+      <section class="side-card">
+        <h3>What you can do online</h3>
+        <ul>
+          <li>See all your accounts and balances in one place</li>
+          <li>Set up affordable Direct Debit payment plans</li>
+          <li>Make quick payments with Apple Pay or Google Pay</li>
+          <li>Free access to your TransUnion credit score</li>
+          <li>Update your details and communication preferences</li>
+        </ul>
+      </section>
+      <section class="side-card help-card">
+        <h3>Need help registering?</h3>
+        <p>Our friendly team is here to help you get set up.</p>
+        <p style="margin:0;"><a href="#">Contact support</a> &middot; <a href="#">FAQs</a></p>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="logo">
+        <span class="logo-mark" aria-hidden="true" style="background:#fff;color:var(--pomegranate);">L</span>
+        <span class="logo-text" style="color:#fff;">Lowell</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#">Home</a>
+        <a href="#">Contact us</a>
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Modern Slavery</a>
+      </nav>
+    </div>
+    <p class="footer-legal">
+      &copy; Copyright 2026 &middot; Lowell Portfolio I Ltd (04857418) and Lowell Financial Ltd (04558936) are registered in England and Wales.
+      Registered Office: No.1 The Square, Thorpe Park View, Thorpe Park, Leeds, LS15 8GH.
+      Lowell Financial Ltd is authorised and regulated by the Financial Conduct Authority.
+    </p>
+  </footer>
+
+  <!-- ============ APPLICATION LOGIC ============ -->
+  <script>
+    /* CONFIG */
+    const CP_ID = '6ed87545-c4ba-4dc1-ac8a-17fb30a4f110';
+
+    /* STATE */
+    let cpInstalled  = false;
+    let userFirstName = '';
+    let userLastName  = '';
+    let userEmail     = '';
+
+    /* DOM */
+    const heroHeading = document.getElementById('hero-heading');
+    const heroCopy    = document.getElementById('hero-copy');
+    const steps = {
+      1: document.getElementById('step-1'),
+      2: document.getElementById('step-2'),
+      3: document.getElementById('step-3'),
+      4: document.getElementById('step-4'),
+    };
+    const stepItems = {
+      1: document.getElementById('step-item-1'),
+      2: document.getElementById('step-item-2'),
+      3: document.getElementById('step-item-3'),
+      4: document.getElementById('step-item-4'),
+    };
+    const stepDividers = {
+      1: document.getElementById('step-divider-1'),
+      2: document.getElementById('step-divider-2'),
+      3: document.getElementById('step-divider-3'),
+    };
+    const verifyForm  = document.getElementById('verify-form');
+    const detailsForm = document.getElementById('details-form');
+    const firstNameEl = document.getElementById('first-name');
+    const lastNameEl  = document.getElementById('last-name');
+    const emailEl     = document.getElementById('email');
+    const summaryName  = document.getElementById('summary-name');
+    const summaryEmail = document.getElementById('summary-email');
+    const welcomeName  = document.getElementById('welcome-name');
+    const welcomeEmail = document.getElementById('welcome-email');
+    const otContainer  = document.getElementById('ot-container');
+
+    /* STEP TRANSITIONS */
+    function goToStep(target) {
+      Object.entries(steps).forEach(([k, el]) => {
+        const n = Number(k);
+        el.classList.toggle('hidden', n !== target);
+        if (n === target) {
+          el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in');
+        }
+      });
+      Object.entries(stepItems).forEach(([k, el]) => {
+        const n = Number(k);
+        el.classList.remove('active', 'done');
+        const numEl = el.querySelector('.stepper-num');
+        if (n < target) { el.classList.add('done'); numEl.textContent = '\u2713'; }
+        else if (n === target) { el.classList.add('active'); numEl.textContent = String(n); }
+        else { numEl.textContent = String(n); }
+      });
+      Object.entries(stepDividers).forEach(([k, el]) => {
+        el.classList.toggle('done', Number(k) < target);
+      });
+      const heroTexts = {
+        1: { h: 'Register your online account',
+             p: 'Take control of your Lowell account in a few simple steps. You\u2019re not alone \u2014 we\u2019re here to help.' },
+        2: { h: 'Just a few more details',
+             p: 'Almost there. We\u2019ll use these details to keep your account secure and stay in touch.' },
+        3: { h: 'How would you like us to keep in touch?',
+             p: 'Set your preferences so we can contact you the way that suits you best.' },
+        4: { h: 'Welcome to Lowell',
+             p: 'Your account is ready. You\u2019re now in control.' },
+      }[target];
+      if (heroTexts) {
+        heroHeading.textContent = heroTexts.h;
+        heroCopy.textContent    = heroTexts.p;
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (target === 3 && !cpInstalled) waitForOneTrust();
+    }
+
+    /* STEP 1 → STEP 2 (no validation) */
+    verifyForm.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      goToStep(2);
+    });
+
+    /* STEP 2 → STEP 3 (no validation, use demo defaults if empty) */
+    detailsForm.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      userFirstName = firstNameEl.value.trim() || 'Sarah';
+      userLastName  = lastNameEl.value.trim()  || 'Thompson';
+      userEmail     = emailEl.value.trim()     || 'sarah.thompson@example.com';
+
+      summaryName.textContent  = `${userFirstName} ${userLastName}`;
+      summaryEmail.textContent = userEmail;
+
+      goToStep(3);
+    });
+
+    /* BACK BUTTONS */
+    document.addEventListener('click', function (ev) {
+      const btn = ev.target.closest('[data-back]');
+      if (!btn) return;
+      const target = Number(btn.dataset.back);
+      if (target >= 1 && target <= 4) goToStep(target);
+    });
+
+    /* ONETRUST INSTALL + PREFILL */
+    function installCP() {
+      if (cpInstalled) return;
+      try {
+        OneTrust.webform.InstallCP(CP_ID, { target: '#ot-container' });
+        cpInstalled = true;
+        console.log('[Lowell] OneTrust CP installed:', CP_ID);
+      } catch (e) {
+        console.warn('[Lowell] OneTrust InstallCP not ready, retrying...', e);
+        setTimeout(installCP, 200);
+      }
+    }
+    function waitForOneTrust(retries = 40) {
+      if (typeof OneTrust !== 'undefined' && OneTrust.webform && OneTrust.webform.InstallCP) {
+        installCP();
+      } else if (retries > 0) {
+        setTimeout(() => waitForOneTrust(retries - 1), 200);
+      } else {
+        console.warn('[Lowell] OneTrust SDK failed to load in time.');
+        otContainer.innerHTML =
+          '<p style="text-align:center;color:var(--muted);padding:40px 0;margin:0;">' +
+          'Preferences form could not load. Please refresh or allow third-party scripts.</p>';
+      }
+    }
+
+    /* PREFILL on form render */
+    window.addEventListener('OnetrustFormLoaded', (evt) => {
+      console.log('[Lowell] OnetrustFormLoaded event:', evt && evt.detail);
+      try {
+        OneTrust.webform.preFill({
+          "Email":      userEmail,
+          "First Name": userFirstName,
+          "Last Name":  userLastName,
+          "Name":       `${userFirstName} ${userLastName}`.trim()
+        }, CP_ID);
+        console.log('[Lowell] API preFill applied — Email:', userEmail,
+                    '| Name:', `${userFirstName} ${userLastName}`);
+      } catch (e) {
+        console.warn('[Lowell] API preFill failed:', e);
+      }
+      setTimeout(() => {
+        const otEmailInput = otContainer.querySelector('.ot-email input[type="email"]');
+        if (otEmailInput && userEmail) {
+          otEmailInput.value = userEmail;
+          otEmailInput.dispatchEvent(new Event('input',  { bubbles: true }));
+          otEmailInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('[Lowell] DOM preFill applied:', userEmail);
+        }
+        const allInputs = otContainer.querySelectorAll('input[type="text"]');
+        allInputs.forEach(inp => {
+          const lbl = (inp.closest('.ot-el')?.querySelector('.ot-label')?.textContent || '').toLowerCase();
+          if (!inp.value) {
+            if (lbl.includes('first')) { inp.value = userFirstName; }
+            else if (lbl.includes('last')) { inp.value = userLastName; }
+            else if (lbl === 'name' || lbl.includes('full name')) { inp.value = `${userFirstName} ${userLastName}`.trim(); }
+            else { return; }
+            inp.dispatchEvent(new Event('input',  { bubbles: true }));
+            inp.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+      }, 500);
+    });
+
+    /* ============================================================
+       WEB FORM SUBMITTED → progress to STEP 4
+       Fires when the OneTrust CP has been successfully submitted.
+       ============================================================ */
+    window.addEventListener('OneTrustWebFormSubmitted', (event) => {
+      console.log('[Lowell] OneTrustWebFormSubmitted event triggered', event.detail);
+      welcomeName.textContent  = userFirstName || 'there';
+      welcomeEmail.textContent = userEmail    || 'your email';
+      goToStep(4);
+    });
+  </script>
+</body>
+</html>
