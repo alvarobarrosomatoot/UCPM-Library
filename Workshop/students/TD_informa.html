@@ -3,7 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Order Confirmed | Informa Connect</title>
+  <title>Complete Your Registration | Informa Connect</title>
+
+  <!-- OneTrust SDK – Command Queue Initialisation (MUST be before OtFormStub.js) -->
+  <script>
+    window.OtSdk = window.OtSdk || function () {
+      (OtSdk.q = OtSdk.q || []).push(arguments);
+    };
+  </script>
+
+  <!-- OneTrust – Embedded Collection Point Stub Loader (Informa CP) -->
+  <script
+    src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
+    data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e"
+    worker="https://consent-api.onetrust.com">
+  </script>
 
   <style>
     :root {
@@ -25,16 +39,11 @@
       --radius: 4px;
       --max-width: 1220px;
       --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 12px 28px rgba(22,30,46,0.06);
+      --input-bg: #ffffff;
+      --input-border: #dfe2e8;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       background: var(--page-bg);
@@ -43,207 +52,137 @@
       line-height: 1.45;
       font-size: 16px;
     }
-
-    a {
-      color: inherit;
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-
-    button,
-    a,
-    input {
-      font-family: inherit;
-    }
-
-    a:focus,
-    button:focus,
-    input:focus {
+    a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+    button, a, input { font-family: inherit; }
+    a:focus, button:focus, input:focus {
       outline: 3px solid rgba(41, 62, 108, 0.35);
       outline-offset: 3px;
     }
 
-    .top-strip {
-      background: var(--white);
-      border-bottom: 1px solid var(--line);
-    }
-
+    /* ============ HEADER ============ */
+    .top-strip { background: var(--white); border-bottom: 1px solid var(--line); }
     .top-strip-inner {
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 18px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
     }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      min-width: 250px;
-    }
-
+    .brand { display: flex; align-items: center; gap: 13px; min-width: 250px; }
     .brand-symbol {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 3px solid #737f91;
-      position: relative;
-      flex: 0 0 auto;
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 3px solid #737f91; position: relative; flex: 0 0 auto;
     }
-
     .brand-symbol::before {
-      content: "";
-      position: absolute;
-      inset: 6px;
-      border: 2px dotted #737f91;
-      border-radius: 50%;
+      content: ""; position: absolute; inset: 6px;
+      border: 2px dotted #737f91; border-radius: 50%;
     }
-
     .brand-symbol::after {
-      content: "";
-      position: absolute;
-      inset: 15px;
-      border: 2px solid #737f91;
-      border-radius: 50%;
+      content: ""; position: absolute; inset: 15px;
+      border: 2px solid #737f91; border-radius: 50%;
     }
-
-    .brand-text small {
-      display: block;
-      color: #737f91;
-      font-size: 11px;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
+    .brand-text small { display: block; color: #737f91; font-size: 11px; line-height: 1; margin-bottom: 4px; }
     .brand-text strong {
-      color: #667385;
-      display: block;
-      font-size: 25px;
-      line-height: 1;
-      letter-spacing: -0.05em;
-      font-weight: 800;
+      color: #667385; display: block; font-size: 25px; line-height: 1;
+      letter-spacing: -0.05em; font-weight: 800;
     }
+    .brand-text strong span { font-weight: 400; }
+    .checkout-label { color: var(--muted); font-size: 14px; text-align: right; }
+    .checkout-label strong { color: var(--ink); font-weight: 800; }
 
-    .brand-text strong span {
-      font-weight: 400;
-    }
-
-    .checkout-label {
-      color: var(--muted);
-      font-size: 14px;
-      text-align: right;
-    }
-
-    .checkout-label strong {
-      color: var(--ink);
-      font-weight: 800;
-    }
-
-    .hero {
-      background: var(--white);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .hero-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 30px 28px;
-    }
-
+    /* ============ HERO ============ */
+    .hero { background: var(--white); border-bottom: 1px solid var(--line); }
+    .hero-inner { max-width: var(--max-width); margin: 0 auto; padding: 30px 28px; }
     .confirmation-card {
       background: var(--white);
       border: 1px solid var(--line);
-      border-left: 6px solid var(--success);
+      border-left: 6px solid var(--brand-blue);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 28px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 20px;
-      align-items: flex-start;
+      display: grid; grid-template-columns: auto minmax(0, 1fr);
+      gap: 20px; align-items: flex-start;
+      transition: border-color .3s ease;
     }
+    .confirmation-card.is-confirmed { border-left-color: var(--success); }
 
-    .success-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: var(--success);
-      background: var(--success-light);
-      border: 2px solid var(--success);
-      font-size: 26px;
-      font-weight: 900;
+    .hero-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: grid; place-items: center;
+      color: var(--brand-blue); background: #eceff5;
+      border: 2px solid var(--brand-blue);
+      font-size: 22px; font-weight: 900;
+      transition: color .3s, background .3s, border-color .3s;
+    }
+    .confirmation-card.is-confirmed .hero-icon {
+      color: var(--success); background: var(--success-light);
+      border-color: var(--success); font-size: 26px;
     }
 
     h1 {
-      margin: 0 0 8px;
-      color: var(--ink);
-      font-size: clamp(34px, 4vw, 48px);
-      line-height: 1;
-      font-weight: 900;
-      letter-spacing: -0.055em;
+      margin: 0 0 8px; color: var(--ink);
+      font-size: clamp(30px, 4vw, 44px); line-height: 1.05;
+      font-weight: 900; letter-spacing: -0.055em;
     }
-
-    .hero-copy {
-      margin: 0;
-      max-width: 760px;
-      color: #4e5562;
-      font-size: 17px;
-    }
+    .hero-copy { margin: 0; max-width: 760px; color: #4e5562; font-size: 17px; }
 
     .meta-grid {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(160px, 1fr));
-      gap: 12px;
-      max-width: 820px;
+      margin-top: 22px; display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px; max-width: 820px;
     }
-
     .meta-tile {
-      background: #f6f7f9;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 13px 15px;
+      background: #f6f7f9; border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 13px 15px;
     }
-
     .meta-tile span {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.055em;
-      font-weight: 800;
-      margin-bottom: 4px;
+      display: block; color: var(--muted); font-size: 12px;
+      text-transform: uppercase; letter-spacing: 0.055em;
+      font-weight: 800; margin-bottom: 4px;
     }
+    .meta-tile strong { color: var(--ink); font-size: 15px; }
+    .paid { color: var(--success) !important; }
+    .pending { color: var(--warning) !important; }
 
-    .meta-tile strong {
-      color: var(--ink);
-      font-size: 15px;
+    /* ============ STEP INDICATOR ============ */
+    .step-indicator {
+      display: flex; justify-content: center; align-items: center;
+      gap: 16px; margin: 24px auto 8px; max-width: 620px;
     }
-
-    .paid {
-      color: var(--success) !important;
+    .step-item {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--muted); font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
     }
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: #e0e3eb; color: var(--muted);
+      display: grid; place-items: center;
+      font-size: 13px; font-weight: 900;
+      transition: background .3s, color .3s, transform .3s;
+    }
+    .step-item.active .step-num {
+      background: var(--brand-blue); color: #fff; transform: scale(1.08);
+    }
+    .step-item.active { color: var(--brand-blue); }
+    .step-item.done .step-num {
+      background: var(--success); color: #fff;
+    }
+    .step-item.done { color: var(--success); }
+    .step-divider {
+      width: 40px; height: 2px; background: #e0e3eb;
+      transition: background .3s;
+    }
+    .step-divider.done { background: var(--success); }
 
+    /* ============ LAYOUT ============ */
     .layout {
-      max-width: var(--max-width);
-      margin: 0 auto;
+      max-width: var(--max-width); margin: 0 auto;
       padding: 30px 28px 110px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) 365px;
-      gap: 34px;
-      align-items: start;
+      gap: 34px; align-items: start;
     }
-
-    .main-stack {
-      display: grid;
-      gap: 24px;
-    }
-
+    .main-stack { display: grid; gap: 24px; min-width: 0; }
     .panel {
       background: var(--white);
       border: 1px solid rgba(226,228,234,0.85);
@@ -251,622 +190,533 @@
       padding: 28px;
       box-shadow: 0 1px 0 rgba(0,0,0,0.03);
     }
-
     .panel h2 {
-      margin: 0 0 22px;
-      color: #303238;
-      font-size: 31px;
-      line-height: 1.08;
-      font-weight: 900;
-      letter-spacing: -0.055em;
+      margin: 0 0 22px; color: #303238;
+      font-size: 31px; line-height: 1.08;
+      font-weight: 900; letter-spacing: -0.055em;
     }
+    .panel-kicker { margin: -12px 0 22px; color: var(--muted); max-width: 780px; }
 
-    .panel-kicker {
-      margin: -12px 0 22px;
-      color: var(--muted);
-      max-width: 780px;
-    }
-
-    .details-grid {
+    /* ============ STEP 1 REGISTRATION FORM ============ */
+    .reg-form-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .detail-card {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
-      min-height: 82px;
-    }
-
-    .detail-card span {
-      display: block;
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 5px;
-    }
-
-    .detail-card strong {
-      color: var(--ink);
-      font-size: 16px;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--white);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 760px;
-    }
-
-    th,
-    td {
-      padding: 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--line);
-      vertical-align: top;
-    }
-
-    th {
-      background: #f3f4f7;
-      color: #383b43;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.045em;
-    }
-
-    td {
-      font-size: 15px;
-      color: #30333a;
-    }
-
-    th:nth-child(3),
-    th:nth-child(4),
-    th:nth-child(5),
-    td:nth-child(3),
-    td:nth-child(4),
-    td:nth-child(5) {
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    tbody tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .sku {
-      color: var(--muted);
-      font-family: "Courier New", Courier, monospace;
-      font-size: 14px;
-    }
-
-    .customer-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
     }
-
-    .info-box {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      font-size: 14px; font-weight: 700; color: var(--ink);
+    }
+    .form-field label .required { color: #c64146; margin-left: 3px; }
+    .form-field input {
+      padding: 12px 14px;
       background: var(--white);
-      padding: 18px;
-      min-height: 160px;
-    }
-
-    .info-box h3 {
-      margin: 0 0 11px;
-      color: var(--brand-blue);
-      font-size: 18px;
-      line-height: 1.2;
-    }
-
-    .info-box p {
-      margin: 0;
-      color: #505766;
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius);
+      color: var(--ink);
       font-size: 15px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-field input:focus {
+      outline: none;
+      border-color: var(--brand-blue);
+      box-shadow: 0 0 0 3px rgba(41, 62, 108, 0.2);
+    }
+    .form-field input.error {
+      border-color: #c64146;
+      box-shadow: 0 0 0 3px rgba(198, 65, 70, 0.15);
+    }
+    .field-error {
+      color: #c64146; font-size: 13px; display: none;
+    }
+    .field-error.visible { display: block; }
+
+    .form-actions {
+      margin-top: 22px;
+      display: flex; justify-content: flex-end; gap: 12px;
+    }
+    .btn {
+      border: 0; border-radius: var(--radius);
+      padding: 14px 26px; cursor: pointer;
+      font-size: 15px; font-weight: 900;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      transition: background 160ms ease, transform 160ms ease, opacity .2s;
+    }
+    .btn-primary {
+      background: var(--brand-red); color: #111827;
+    }
+    .btn-primary:hover { background: var(--brand-red-hover); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent; color: var(--brand-blue);
+      border: 2px solid var(--brand-blue);
+    }
+    .btn-secondary:hover { background: var(--brand-blue); color: #fff; }
+
+    .form-note {
+      margin-top: 14px;
+      color: var(--muted); font-size: 13px;
     }
 
-    .next-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
+    /* ============ DETAILS (STEP 2 confirmed) ============ */
+    .details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .detail-card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 16px; min-height: 82px;
     }
+    .detail-card span { display: block; color: var(--muted); font-size: 13px; margin-bottom: 5px; }
+    .detail-card strong { color: var(--ink); font-size: 16px; word-break: break-word; }
 
+    .edit-details {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: transparent; border: 0; padding: 0;
+      color: var(--brand-blue); font-size: 14px; font-weight: 700;
+      cursor: pointer; text-decoration: underline;
+      margin-top: 12px;
+    }
+    .edit-details:hover { color: #1e2f52; }
+
+    /* ============ TABLE ============ */
+    .table-wrap {
+      overflow-x: auto; border: 1px solid var(--line);
+      border-radius: var(--radius); background: var(--white);
+      position: relative;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 640px; }
+    th, td { padding: 16px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th {
+      background: #f3f4f7; color: #383b43; font-size: 13px;
+      text-transform: uppercase; letter-spacing: 0.045em;
+    }
+    td { font-size: 15px; color: #30333a; }
+    th:nth-child(3), th:nth-child(4), th:nth-child(5),
+    td:nth-child(3), td:nth-child(4), td:nth-child(5) {
+      text-align: right; white-space: nowrap;
+    }
+    tbody tr:last-child td { border-bottom: 0; }
+    .sku { color: var(--muted); font-family: "Courier New", Courier, monospace; font-size: 14px; }
+
+    /* ============ CUSTOMER / NEXT STEPS ============ */
+    .customer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .info-box {
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--white); padding: 18px; min-height: 160px;
+    }
+    .info-box h3 { margin: 0 0 11px; color: var(--brand-blue); font-size: 18px; line-height: 1.2; }
+    .info-box p { margin: 0; color: #505766; font-size: 15px; }
+    .next-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
     .next-card {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--white);
-      padding: 16px;
-      min-height: 160px;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--white); padding: 16px; min-height: 160px;
     }
-
     .next-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: #eceff5;
-      color: var(--brand-blue);
-      display: grid;
-      place-items: center;
-      font-size: 19px;
-      margin-bottom: 10px;
-      font-weight: 900;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: #eceff5; color: var(--brand-blue);
+      display: grid; place-items: center;
+      font-size: 19px; margin-bottom: 10px; font-weight: 900;
     }
+    .next-card strong { color: var(--brand-blue); display: block; margin-bottom: 6px; line-height: 1.25; }
+    .next-card span { color: var(--muted); display: block; font-size: 13px; line-height: 1.35; }
 
-    .next-card strong {
-      color: var(--brand-blue);
-      display: block;
-      margin-bottom: 6px;
-      line-height: 1.25;
-    }
-
-    .next-card span {
-      color: var(--muted);
-      display: block;
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
+    /* ============ PREFERENCES / ONETRUST ============ */
     .preferences-panel {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 28px;
-      border: 1px solid rgba(226,228,234,0.85);
+      background: var(--white); border-radius: var(--radius);
+      padding: 28px; border: 1px solid rgba(226,228,234,0.85);
     }
-
     .preferences-inner {
       background: var(--soft-panel);
       border-radius: var(--radius);
       padding: 28px;
     }
-
     .preferences-inner h2 {
+      margin: 0 0 20px; color: #303238;
+      font-size: 31px; line-height: 1.08;
+      font-weight: 900; letter-spacing: -0.055em;
+    }
+    .preferences-intro {
       margin: 0 0 20px;
-      color: #303238;
-      font-size: 31px;
-      line-height: 1.08;
-      font-weight: 900;
-      letter-spacing: -0.055em;
+      color: #505766;
+      font-size: 15px;
+      max-width: 780px;
     }
 
-    .agreement-box {
+    /* --- OneTrust Container: Informa Light Theme Overrides --- */
+    #ot-container { min-height: 120px; margin: 0; }
+
+    #ot-container .ot-consent-inline,
+    #ot-container .otwf-content,
+    #ot-container .ot-form,
+    #ot-container .ot-form.ot-scroll,
+    #ot-container .ot-form-content {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    #ot-container .otwf-close-cntr { display: none !important; }
+
+    #ot-container,
+    #ot-container *,
+    #ot-container .ot-label,
+    #ot-container label,
+    #ot-container legend,
+    #ot-container span,
+    #ot-container p {
+      font-family: Arial, Helvetica, sans-serif !important;
+      color: var(--ink) !important;
+    }
+
+    #ot-container .ot-el {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    #ot-container .ot-form-content > .ot-el,
+    #ot-container .ot-form-content > .ot-email,
+    #ot-container .ot-form-content > .otwf-chkbox,
+    #ot-container .ot-form-content > .ot-radiogrp {
+      margin-bottom: 18px !important;
+    }
+
+    /* --- Email field --- */
+    #ot-container .ot-email {
+      background: var(--white) !important;
+      border: 1px solid var(--input-border) !important;
+      border-radius: var(--radius) !important;
+      padding: 20px 22px !important;
+      margin-bottom: 14px !important;
+    }
+    #ot-container .ot-email .ot-label {
+      display: block !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      margin-bottom: 8px !important;
+      color: var(--ink) !important;
+    }
+    #ot-container .ot-email input[type="email"] {
+      width: 100% !important;
+      padding: 12px 14px !important;
+      background: #ffffff !important;
+      border: 1px solid var(--input-border) !important;
+      border-radius: var(--radius) !important;
+      color: var(--ink) !important;
+      font-family: Arial, Helvetica, sans-serif !important;
+      font-size: 15px !important;
+      transition: border-color .2s, box-shadow .2s !important;
+      -webkit-appearance: none !important;
+    }
+    #ot-container .ot-email input[type="email"]:focus {
+      outline: none !important;
+      border-color: var(--brand-blue) !important;
+      box-shadow: 0 0 0 3px rgba(41, 62, 108, 0.2) !important;
+    }
+    #ot-container .ot-email input[type="email"]::placeholder { color: #97a0b0 !important; }
+
+    /* --- Checkbox consent --- */
+    #ot-container .otwf-chkbox {
+      display: flex !important;
+      align-items: flex-start !important;
+      gap: 12px !important;
+      padding: 20px 22px !important;
+      background: var(--white) !important;
+      border: 1px solid var(--input-border) !important;
+      border-radius: var(--radius) !important;
+      margin-bottom: 14px !important;
+      transition: border-color .2s !important;
+    }
+    #ot-container .otwf-chkbox:hover { border-color: rgba(41, 62, 108, 0.35) !important; }
+    #ot-container .otwf-chkbox input[type="checkbox"] {
+      flex-shrink: 0 !important;
+      width: 19px !important;
+      height: 19px !important;
+      margin-top: 2px !important;
+      accent-color: var(--brand-blue) !important;
+      cursor: pointer !important;
+    }
+    #ot-container .otwf-chkbox label { cursor: pointer !important; line-height: 1.45 !important; }
+    #ot-container .otwf-chkbox .ot-label {
+      font-weight: 400 !important;
+      font-size: 15px !important;
+      color: var(--ink) !important;
+    }
+    #ot-container .otwf-chkbox .ot-asterisk,
+    #ot-container .ot-asterisk {
+      color: #c64146 !important;
+      margin-left: 4px !important;
+    }
+    #ot-container .otwf-chkbox .ot-desc {
+      font-size: 13px !important;
+      color: var(--muted) !important;
+      margin-top: 6px !important;
+      line-height: 1.4 !important;
+    }
+
+    /* --- Radio button groups --- */
+    #ot-container .ot-radiogrp {
+      border: 1px solid var(--input-border) !important;
+      background: var(--white) !important;
+      border-radius: var(--radius) !important;
+      padding: 20px 22px !important;
+      margin-bottom: 14px !important;
+    }
+    #ot-container .ot-radiogrp legend,
+    #ot-container .ot-radiogrp legend.ot-label {
+      font-weight: 700 !important;
+      font-size: 15px !important;
+      color: var(--brand-blue) !important;
+      margin-bottom: 14px !important;
+      padding: 0 !important;
+      letter-spacing: 0 !important;
+    }
+    #ot-container .ot-radiogrp > .ot-el {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 8px 14px !important;
+      background: #f6f7f9 !important;
+      border: 1px solid var(--input-border) !important;
+      border-radius: var(--radius) !important;
+      margin: 0 8px 8px 0 !important;
+      transition: border-color .2s, background .2s !important;
+      cursor: pointer !important;
+    }
+    #ot-container .ot-radiogrp > .ot-el:hover {
+      border-color: rgba(41, 62, 108, 0.35) !important;
+      background: #eef0f4 !important;
+    }
+    #ot-container .ot-radiogrp input[type="radio"] {
+      flex-shrink: 0 !important;
+      width: 17px !important;
+      height: 17px !important;
+      accent-color: var(--brand-blue) !important;
+      cursor: pointer !important;
+    }
+    #ot-container .ot-radiogrp label { cursor: pointer !important; }
+    #ot-container .ot-radiogrp label .ot-label {
+      font-weight: 500 !important;
+      font-size: 14px !important;
+      color: var(--ink) !important;
+    }
+
+    /* --- Errors --- */
+    #ot-container .ot-error {
+      color: #c64146 !important;
+      font-size: 13px !important;
+      margin-top: 6px !important;
+      display: block !important;
+    }
+    #ot-container .ot-error.ot-n { display: none !important; }
+
+    /* --- Submit button --- */
+    #ot-container .ot-btns {
+      margin-top: 20px !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+    }
+    #ot-container .ot-submit {
+      width: 100% !important;
+      padding: 16px 18px !important;
+      background: var(--brand-red) !important;
+      color: #111827 !important;
+      font-weight: 900 !important;
+      font-size: 15px !important;
+      font-family: Arial, Helvetica, sans-serif !important;
+      border: 0 !important;
+      border-radius: var(--radius) !important;
+      cursor: pointer !important;
+      transition: background 160ms ease, transform 160ms ease !important;
+      letter-spacing: 0.04em !important;
+      text-transform: uppercase !important;
+    }
+    #ot-container .ot-submit:hover:not([disabled]) {
+      background: var(--brand-red-hover) !important;
+      transform: translateY(-1px) !important;
+    }
+    #ot-container .ot-submit[disabled] {
+      opacity: 0.55 !important;
+      cursor: not-allowed !important;
+    }
+    #ot-container .ot-n { display: none !important; }
+
+    .preference-note { margin: 14px 0 0; color: #2f3036; font-size: 14px; }
+    .preference-note + .preference-note { margin-top: 8px; }
+
+    /* --- Post-submit thank-you --- */
+    .ot-thankyou {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
       background: var(--white);
-      border: 1px solid #dfe2e8;
+      border: 1px solid var(--input-border);
       border-radius: var(--radius);
-      padding: 20px 22px;
-      margin-bottom: 14px;
-      color: #2f3036;
     }
-
-    .agreement-box p {
-      margin: 0;
+    .ot-thankyou.visible { display: block; }
+    .ot-thankyou .checkmark-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--success-light);
+      border: 2px solid var(--success);
+      color: var(--success);
+      display: grid; place-items: center;
+      margin: 0 auto 16px;
+      font-size: 32px; font-weight: 900;
     }
+    .ot-thankyou h3 { margin: 0 0 8px; color: var(--ink); font-size: 22px; }
+    .ot-thankyou p { margin: 0; color: var(--muted); }
 
-    .agreement-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
-    .fake-checkbox {
-      width: 19px;
-      height: 19px;
-      border: 2px solid #757a82;
-      border-radius: 2px;
-      margin-top: 2px;
-      flex: 0 0 auto;
-      background: var(--white);
-    }
-
-    .channel-grid {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 0;
-    }
-
-    .channel {
-      padding: 0 22px;
-      border-right: 1px solid var(--line);
-    }
-
-    .channel:first-child {
-      padding-left: 0;
-    }
-
-    .channel:last-child {
-      border-right: 0;
-      padding-right: 0;
-    }
-
-    .channel-label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 14px;
-      color: #24262b;
-    }
-
-    .required {
-      color: #c64146;
-    }
-
-    .radio-row {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .fake-radio {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      color: #303238;
-      font-size: 14px;
-    }
-
-    .fake-radio::before {
-      content: "";
-      width: 18px;
-      height: 18px;
-      border: 2px solid #757a82;
-      border-radius: 50%;
-      background: var(--white);
-      display: inline-block;
-    }
-
-    .preference-note {
-      margin: 14px 0 0;
-      color: #2f3036;
-    }
-
-    .preference-note + .preference-note {
-      margin-top: 8px;
-    }
-
+    /* ============ SIDEBAR ============ */
     .side-summary {
       position: sticky;
       top: 24px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
     }
-
     .summary-box {
-      background: var(--summary-bg);
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid #dfe1e8;
-      margin-bottom: 16px;
+      background: var(--summary-bg); border-radius: var(--radius);
+      overflow: hidden; border: 1px solid #dfe1e8; margin-bottom: 16px;
     }
-
     .summary-head {
-      padding: 18px;
-      border-bottom: 2px solid #f8f8f9;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
+      padding: 18px; border-bottom: 2px solid #f8f8f9;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
     }
-
     .summary-head h2 {
-      margin: 0;
-      font-size: 24px;
-      line-height: 1.1;
-      font-weight: 900;
-      letter-spacing: -0.04em;
+      margin: 0; font-size: 24px; line-height: 1.1;
+      font-weight: 900; letter-spacing: -0.04em;
     }
-
     .currency {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #4f5664;
-      font-size: 13px;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 6px;
+      color: #4f5664; font-size: 13px; white-space: nowrap;
     }
-
+    .chevron {
+      width: 10px; height: 10px; display: inline-block;
+      border-right: 2px solid #4f5664;
+      border-bottom: 2px solid #4f5664;
+      transform: rotate(45deg);
+      margin-top: -4px;
+    }
     .summary-row {
-      padding: 16px 18px;
-      background: var(--summary-bg);
+      padding: 16px 18px; background: var(--summary-bg);
       border-bottom: 2px solid #f8f8f9;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      color: #424650;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; color: #424650;
     }
-
     .summary-products {
       background: var(--summary-row);
-      padding: 8px 18px 10px;
-      border-bottom: 2px solid #f8f8f9;
+      padding: 8px 18px 10px; border-bottom: 2px solid #f8f8f9;
     }
-
     .summary-product {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      padding: 10px 0;
-      font-size: 14px;
-      color: #454b58;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 12px; padding: 10px 0; font-size: 14px; color: #454b58;
     }
-
-    .summary-product strong {
-      font-size: 14px;
-      white-space: nowrap;
-    }
-
+    .summary-product strong { font-size: 14px; white-space: nowrap; }
     .summary-product small {
-      display: block;
-      margin-top: 3px;
-      color: #737b8c;
-      font-family: "Courier New", Courier, monospace;
-      font-size: 12px;
+      display: block; margin-top: 3px; color: #737b8c;
+      font-family: "Courier New", Courier, monospace; font-size: 12px;
     }
-
-    .totals {
-      padding: 17px 18px 20px;
-      background: #e3e5eb;
-    }
-
+    .totals { padding: 17px 18px 20px; background: #e3e5eb; }
     .total-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      color: #3d424c;
-      margin-bottom: 10px;
+      display: flex; justify-content: space-between; gap: 16px;
+      color: #3d424c; margin-bottom: 10px;
     }
-
     .total-row.grand {
-      margin-top: 13px;
-      padding-top: 13px;
-      border-top: 1px solid #cdd2dc;
-      margin-bottom: 0;
-      color: #303238;
-      font-size: 20px;
-      font-weight: 900;
+      margin-top: 13px; padding-top: 13px;
+      border-top: 1px solid #cdd2dc; margin-bottom: 0;
+      color: #303238; font-size: 20px; font-weight: 900;
     }
-
     .invoice-button {
-      width: 100%;
-      border: 0;
-      border-radius: var(--radius);
-      background: var(--brand-red);
-      color: #111827;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 16px 18px;
-      cursor: pointer;
-      font-size: 15px;
-      transition: background 160ms ease, transform 160ms ease;
+      width: 100%; border: 0; border-radius: var(--radius);
+      background: var(--brand-red); color: #111827;
+      font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 16px 18px; cursor: pointer; font-size: 15px;
+      transition: background 160ms ease, transform 160ms ease, opacity .2s;
     }
-
-    .invoice-button:hover {
-      background: var(--brand-red-hover);
-      transform: translateY(-1px);
-    }
-
-    .side-note {
-      margin: 13px 0 0;
-      color: var(--muted);
-      text-align: center;
-      font-size: 13px;
-    }
-
-    .benefits {
-      margin-top: 38px;
-      display: grid;
-    }
-
+    .invoice-button:hover:not([disabled]) { background: var(--brand-red-hover); transform: translateY(-1px); }
+    .invoice-button[disabled] { opacity: 0.4; cursor: not-allowed; }
+    .side-note { margin: 13px 0 0; color: var(--muted); text-align: center; font-size: 13px; }
+    .benefits { margin-top: 38px; display: grid; }
     .benefit {
-      display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 14px;
-      padding: 18px 0;
-      border-bottom: 1px solid #d8dce5;
+      display: grid; grid-template-columns: 48px 1fr;
+      gap: 14px; padding: 18px 0; border-bottom: 1px solid #d8dce5;
     }
-
-    .benefit:last-child {
-      border-bottom: 0;
-    }
-
+    .benefit:last-child { border-bottom: 0; }
     .benefit-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: #e0e3eb;
-      color: var(--brand-blue);
-      display: grid;
-      place-items: center;
-      font-size: 20px;
-      font-weight: 900;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: #e0e3eb; color: var(--brand-blue);
+      display: grid; place-items: center;
+      font-size: 20px; font-weight: 900;
     }
+    .benefit strong { display: block; color: var(--brand-blue); margin-bottom: 4px; font-size: 16px; }
+    .benefit span { color: var(--muted); font-size: 13px; display: block; line-height: 1.36; }
 
-    .benefit strong {
-      display: block;
-      color: var(--brand-blue);
-      margin-bottom: 4px;
-      font-size: 16px;
-    }
-
-    .benefit span {
-      color: var(--muted);
-      font-size: 13px;
-      display: block;
-      line-height: 1.36;
-    }
-
-    .footer {
-      background: var(--footer);
-      color: #ffffff;
-    }
-
+    /* ============ FOOTER ============ */
+    .footer { background: var(--footer); color: #ffffff; }
     .footer-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      min-height: 112px;
-      padding: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 28px;
+      max-width: var(--max-width); margin: 0 auto;
+      min-height: 112px; padding: 28px;
+      display: flex; align-items: center; justify-content: space-between; gap: 28px;
     }
-
-    .footer .brand-text small,
-    .footer .brand-text strong {
-      color: #ffffff;
-    }
-
-    .footer .brand-symbol {
-      border-color: rgba(255,255,255,0.88);
-    }
-
-    .footer .brand-symbol::before,
-    .footer .brand-symbol::after {
-      border-color: rgba(255,255,255,0.88);
-    }
-
+    .footer .brand-text small, .footer .brand-text strong { color: #ffffff; }
+    .footer .brand-symbol { border-color: rgba(255,255,255,0.88); }
+    .footer .brand-symbol::before, .footer .brand-symbol::after { border-color: rgba(255,255,255,0.88); }
     .footer-nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 20px;
-      font-size: 14px;
-      font-weight: 800;
+      display: flex; flex-wrap: wrap; justify-content: flex-end;
+      gap: 20px; font-size: 14px; font-weight: 800;
+    }
+    .footer-nav a { color: #ffffff; text-decoration: none; }
+    .footer-nav a:hover { text-decoration: underline; }
+
+    /* ============ STEP VISIBILITY ============ */
+    .hidden { display: none !important; }
+
+    /* Smooth reveal */
+    .fade-in {
+      animation: fadeIn .4s ease both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    .footer-nav a {
-      color: #ffffff;
-      text-decoration: none;
-    }
-
-    .footer-nav a:hover {
-      text-decoration: underline;
-    }
-
+    /* ============ RESPONSIVE ============ */
     @media (max-width: 1060px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .side-summary {
-        position: static;
-        order: -1;
-      }
-
-      .customer-grid,
-      .next-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .layout { grid-template-columns: 1fr; }
+      .side-summary { position: static; order: -1; max-height: none; overflow: visible; }
+      .customer-grid, .next-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-
+    @media (max-width: 960px) {
+      #ot-container .ot-radiogrp > .ot-el { display: flex !important; margin-right: 0 !important; }
+    }
     @media (max-width: 760px) {
-      .top-strip-inner,
-      .footer-inner {
-        flex-direction: column;
-        align-items: flex-start;
+      .top-strip-inner, .footer-inner { flex-direction: column; align-items: flex-start; }
+      .checkout-label { text-align: left; }
+      .hero-inner, .layout, .top-strip-inner, .footer-inner {
+        padding-left: 18px; padding-right: 18px;
       }
-
-      .checkout-label {
-        text-align: left;
-      }
-
-      .hero-inner,
-      .layout,
-      .top-strip-inner,
-      .footer-inner {
-        padding-left: 18px;
-        padding-right: 18px;
-      }
-
-      .confirmation-card {
-        grid-template-columns: 1fr;
-      }
-
-      .meta-grid,
-      .details-grid,
-      .customer-grid,
-      .next-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .panel,
-      .preferences-panel {
-        padding: 21px;
-      }
-
-      .preferences-inner {
-        padding: 20px;
-      }
-
-      .channel-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .channel {
-        padding: 0;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-        padding-bottom: 16px;
-      }
-
-      .channel:last-child {
-        border-bottom: 0;
-        padding-bottom: 0;
-      }
-
-      .footer-nav {
-        justify-content: flex-start;
-        gap: 14px 18px;
-      }
+      .confirmation-card { grid-template-columns: 1fr; }
+      .details-grid, .customer-grid, .next-grid, .reg-form-grid { grid-template-columns: 1fr; }
+      .panel, .preferences-panel { padding: 21px; }
+      .preferences-inner { padding: 20px; }
+      .footer-nav { justify-content: flex-start; gap: 14px 18px; }
+      .step-indicator { gap: 8px; }
+      .step-divider { width: 20px; }
+      .step-item span:not(.step-num) { display: none; }
     }
-
     @media print {
-      body {
-        background: #ffffff;
+      body { background: #ffffff; }
+      .top-strip, .footer, .benefits, .invoice-button, .side-note, .step-indicator { display: none; }
+      .layout { display: block; padding: 20px; }
+      .panel, .preferences-panel, .confirmation-card, .summary-box {
+        box-shadow: none; break-inside: avoid;
       }
-
-      .top-strip,
-      .footer,
-      .benefits,
-      .invoice-button,
-      .side-note {
-        display: none;
-      }
-
-      .layout {
-        display: block;
-        padding: 20px;
-      }
-
-      .panel,
-      .preferences-panel,
-      .confirmation-card,
-      .summary-box {
-        box-shadow: none;
-        break-inside: avoid;
-      }
-
-      .side-summary {
-        position: static;
-      }
+      .side-summary { position: static; }
     }
   </style>
 </head>
-
 <body>
-<script
-  src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
-  data-id="44ce8162-e7a5-4962-8406-3d9e975ad91e"
-  worker="https://consent-api.onetrust.com"
-></script>
 
   <header class="top-strip" aria-label="Informa Connect header">
     <div class="top-strip-inner">
@@ -877,36 +727,33 @@
           <strong>informa<span>connect</span></strong>
         </div>
       </div>
-
       <div class="checkout-label" aria-label="Checkout progress">
-        Checkout complete · <strong>Order confirmed</strong>
+        <span id="checkout-progress-label">Checkout · <strong>Complete registration</strong></span>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="hero" aria-labelledby="order-confirmed-heading">
+    <section class="hero" aria-labelledby="hero-heading">
       <div class="hero-inner">
-        <article class="confirmation-card">
-          <div class="success-icon" aria-hidden="true">✓</div>
-
-          <div>
-            <h1 id="order-confirmed-heading">Order Confirmed</h1>
-            <p class="hero-copy">
-              Thank you for registering. Your conference tickets have been successfully purchased.
+        <article id="hero-card" class="confirmation-card">
+          <div id="hero-icon" class="hero-icon" aria-hidden="true">1</div>
+          <div style="min-width:0;">
+            <h1 id="hero-heading">Complete Your Registration</h1>
+            <p id="hero-copy" class="hero-copy">
+              Your payment has been received. Please provide your attendee details to finalise your booking.
             </p>
 
-            <div class="meta-grid" aria-label="Order confirmation metadata">
+            <!-- Meta grid only appears when confirmed -->
+            <div id="meta-grid" class="meta-grid hidden" aria-label="Order confirmation metadata">
               <div class="meta-tile">
                 <span>Order reference</span>
                 <strong>INF-2026-104839</strong>
               </div>
-
               <div class="meta-tile">
                 <span>Order date</span>
                 <strong>3 July 2026</strong>
               </div>
-
               <div class="meta-tile">
                 <span>Payment status</span>
                 <strong class="paid">Paid</strong>
@@ -914,56 +761,91 @@
             </div>
           </div>
         </article>
+
+        <!-- STEP INDICATOR -->
+        <div class="step-indicator" aria-label="Registration progress">
+          <div id="step-item-1" class="step-item active">
+            <span class="step-num">1</span>
+            <span>Your details</span>
+          </div>
+          <div id="step-divider-1" class="step-divider"></div>
+          <div id="step-item-2" class="step-item">
+            <span class="step-num">2</span>
+            <span>Confirm &amp; agreements</span>
+          </div>
+        </div>
       </div>
     </section>
 
     <div class="layout">
       <div class="main-stack">
-        <section class="panel" aria-labelledby="registration-heading">
-          <h2 id="registration-heading">Conference Registration Details</h2>
+
+        <!-- ============ STEP 1: REGISTRATION FORM ============ -->
+        <section id="step-1" class="panel fade-in" aria-labelledby="step1-heading">
+          <h2 id="step1-heading">Attendee Registration</h2>
           <p class="panel-kicker">
-            Your registration has been confirmed for the following Informa Connect event.
+            Enter the name and email of the person attending
+            <strong style="color:var(--ink);">AI Governance &amp; Data Privacy Summit Europe 2026</strong>.
+            The confirmation email and joining instructions will be sent to this address.
           </p>
 
-          <div class="details-grid">
-            <div class="detail-card">
-              <span>Event Name</span>
-              <strong>AI Governance &amp; Data Privacy Summit Europe 2026</strong>
+          <form id="reg-form" novalidate>
+            <div class="reg-form-grid">
+              <div class="form-field">
+                <label for="first-name">First name <span class="required">*</span></label>
+                <input type="text" id="first-name" name="firstName"
+                       autocomplete="given-name" required
+                       placeholder="e.g. Sarah" />
+                <span class="field-error" id="first-name-error">Please enter a first name.</span>
+              </div>
+              <div class="form-field">
+                <label for="last-name">Last name <span class="required">*</span></label>
+                <input type="text" id="last-name" name="lastName"
+                       autocomplete="family-name" required
+                       placeholder="e.g. Thompson" />
+                <span class="field-error" id="last-name-error">Please enter a last name.</span>
+              </div>
+              <div class="form-field full">
+                <label for="email">Email address <span class="required">*</span></label>
+                <input type="email" id="email" name="email"
+                       autocomplete="email" required
+                       placeholder="you@company.com" />
+                <span class="field-error" id="email-error">Please enter a valid email address.</span>
+              </div>
             </div>
 
-            <div class="detail-card">
-              <span>Location</span>
-              <strong>ExCeL London</strong>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="continue-btn">
+                Continue &rarr;
+              </button>
             </div>
 
-            <div class="detail-card">
-              <span>Date</span>
-              <strong>14-16 October 2026</strong>
-            </div>
-
-            <div class="detail-card">
-              <span>Registration Type</span>
-              <strong>Conference Pass</strong>
-            </div>
-
-            <div class="detail-card">
-              <span>Attendee Name</span>
-              <strong>Sarah Thompson</strong>
-            </div>
-
-            <div class="detail-card">
-              <span>Email</span>
-              <strong>sarah.thompson@example.com</strong>
-            </div>
-          </div>
+            <p class="form-note">
+              Next you&rsquo;ll review your booking and set your communication preferences before final confirmation.
+            </p>
+          </form>
         </section>
 
-        <section class="panel" aria-labelledby="main-order-summary-heading">
-          <h2 id="main-order-summary-heading">Order Summary</h2>
-          <p class="panel-kicker">
-            Review the products included in your confirmed order.
-          </p>
+        <!-- ============ STEP 2: CONFIRMED DETAILS + AGREEMENTS ============ -->
+        <section id="step-2-details" class="panel hidden" aria-labelledby="registration-heading">
+          <h2 id="registration-heading">Conference Registration Details</h2>
+          <p class="panel-kicker">Your registration has been confirmed for the following Informa Connect event.</p>
+          <div class="details-grid">
+            <div class="detail-card"><span>Event Name</span><strong>AI Governance &amp; Data Privacy Summit Europe 2026</strong></div>
+            <div class="detail-card"><span>Location</span><strong>ExCeL London</strong></div>
+            <div class="detail-card"><span>Date</span><strong>14-16 October 2026</strong></div>
+            <div class="detail-card"><span>Registration Type</span><strong>Conference Pass</strong></div>
+            <div class="detail-card"><span>Attendee Name</span><strong id="attendee-name">—</strong></div>
+            <div class="detail-card"><span>Email</span><strong id="attendee-email">—</strong></div>
+          </div>
+          <button type="button" class="edit-details" id="edit-details-btn">
+            &larr; Edit attendee details
+          </button>
+        </section>
 
+        <section id="step-2-order" class="panel hidden" aria-labelledby="main-order-summary-heading">
+          <h2 id="main-order-summary-heading">Order Summary</h2>
+          <p class="panel-kicker">Review the products included in your confirmed order.</p>
           <div class="table-wrap">
             <table aria-label="Products purchased">
               <thead>
@@ -975,93 +857,63 @@
                   <th scope="col">Total</th>
                 </tr>
               </thead>
-
               <tbody>
                 <tr>
                   <td><strong>Conference Pass</strong></td>
                   <td><span class="sku">INF-CONF-2026-001</span></td>
-                  <td>1</td>
-                  <td>£1,295.00</td>
-                  <td>£1,295.00</td>
+                  <td>1</td><td>&pound;1,295.00</td><td>&pound;1,295.00</td>
                 </tr>
-
                 <tr>
                   <td><strong>Workshop Add-on: AI Risk Management</strong></td>
                   <td><span class="sku">INF-WS-2026-017</span></td>
-                  <td>1</td>
-                  <td>£495.00</td>
-                  <td>£495.00</td>
+                  <td>1</td><td>&pound;495.00</td><td>&pound;495.00</td>
                 </tr>
-
                 <tr>
                   <td><strong>Networking Reception Ticket</strong></td>
                   <td><span class="sku">INF-NET-2026-009</span></td>
-                  <td>2</td>
-                  <td>£95.00</td>
-                  <td>£190.00</td>
+                  <td>2</td><td>&pound;95.00</td><td>&pound;190.00</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <section class="panel" aria-labelledby="customer-heading">
+        <section id="step-2-customer" class="panel hidden" aria-labelledby="customer-heading">
           <h2 id="customer-heading">Customer Information</h2>
-
           <div class="customer-grid">
             <article class="info-box">
               <h3>Billing Address</h3>
-              <p>
-                Sarah Thompson<br />
-                240 Blackfriars Road<br />
-                London<br />
-                SE1 8BF<br />
-                United Kingdom
-              </p>
+              <p><span id="billing-name">—</span><br />240 Blackfriars Road<br />London<br />SE1 8BF<br />United Kingdom</p>
             </article>
-
             <article class="info-box">
               <h3>Payment Method</h3>
-              <p>
-                Visa ending 4821<br />
-                Payment authorised<br />
-                Transaction ID: PAY-7892146
-              </p>
+              <p>Visa ending 4821<br />Payment authorised<br />Transaction ID: PAY-7892146</p>
             </article>
-
             <article class="info-box">
               <h3>Registration Contact</h3>
-              <p>
-                Informa Connect Customer Services<br />
-                eventsupport@informaconnect.com<br />
-                +44 (0)20 8052 0400
-              </p>
+              <p>Informa Connect Customer Services<br />eventsupport@informaconnect.com<br />+44 (0)20 8052 0400</p>
             </article>
           </div>
         </section>
 
-        <section class="panel" aria-labelledby="next-steps-heading">
+        <section id="step-2-next" class="panel hidden" aria-labelledby="next-steps-heading">
           <h2 id="next-steps-heading">Next Steps</h2>
-
           <div class="next-grid">
             <article class="next-card">
-              <div class="next-icon" aria-hidden="true">✉</div>
+              <div class="next-icon" aria-hidden="true">&#9993;</div>
               <strong>Ticket confirmation email sent</strong>
               <span>Your registration confirmation has been sent to the attendee email address.</span>
             </article>
-
             <article class="next-card">
-              <div class="next-icon" aria-hidden="true">🎟</div>
+              <div class="next-icon" aria-hidden="true">&#127903;</div>
               <strong>Event access information will follow</strong>
               <span>Joining instructions and badge collection details will be shared closer to the event.</span>
             </article>
-
             <article class="next-card">
-              <div class="next-icon" aria-hidden="true">↓</div>
+              <div class="next-icon" aria-hidden="true">&darr;</div>
               <strong>Download invoice</strong>
               <span>Your invoice is available from this order confirmation page and email.</span>
             </article>
-
             <article class="next-card">
               <div class="next-icon" aria-hidden="true">?</div>
               <strong>Contact event support</strong>
@@ -1070,94 +922,31 @@
           </div>
         </section>
 
-        <section class="preferences-panel" aria-labelledby="agreements-heading">
+        <!-- ============ AGREEMENTS → ONETRUST EMBEDDED CP ============ -->
+        <section id="step-2-agreements" class="preferences-panel hidden" aria-labelledby="agreements-heading">
           <div class="preferences-inner">
-            <h2 id="agreements-heading">Agreements</h2>
-
-            <div class="agreement-box">
-              <div class="agreement-row">
-                <span class="fake-checkbox" aria-hidden="true"></span>
-                <p>
-                  I agree to the <a href="#">Terms and Conditions</a> and
-                  <a href="#">Privacy Notice</a>. <span class="required">*</span>
-                </p>
-              </div>
-            </div>
-
-            <div class="agreement-box">
-              <p>
-                I would like to receive tailored information, including industry insights,
-                exclusive networking opportunities and access to offers for events and
-                products from Informa Connect and Informa, the organiser of this event.
-              </p>
-
-              <div class="channel-grid" aria-label="Marketing preference channels">
-                <div class="channel">
-                  <span class="channel-label">Email <span class="required">*</span></span>
-                  <div class="radio-row">
-                    <span class="fake-radio">Yes</span>
-                    <span class="fake-radio">No</span>
-                  </div>
-                </div>
-
-                <div class="channel">
-                  <span class="channel-label">Phone <span class="required">*</span></span>
-                  <div class="radio-row">
-                    <span class="fake-radio">Yes</span>
-                    <span class="fake-radio">No</span>
-                  </div>
-                </div>
-
-                <div class="channel">
-                  <span class="channel-label">SMS / Instant message <span class="required">*</span></span>
-                  <div class="radio-row">
-                    <span class="fake-radio">Yes</span>
-                    <span class="fake-radio">No</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="agreement-box">
-              <p>
-                I would like to receive information about the latest innovations, products
-                and services from the <a href="#">exhibitors and sponsors</a> of
-                AI Governance &amp; Data Privacy Summit Europe 2026.
-              </p>
-
-              <div class="channel-grid" aria-label="Sponsor preference channels">
-                <div class="channel">
-                  <span class="channel-label">Email <span class="required">*</span></span>
-                  <div class="radio-row">
-                    <span class="fake-radio">Yes</span>
-                    <span class="fake-radio">No</span>
-                  </div>
-                </div>
-
-                <div class="channel">
-                  <span class="channel-label">Phone <span class="required">*</span></span>
-                  <div class="radio-row">
-                    <span class="fake-radio">Yes</span>
-                    <span class="fake-radio">No</span>
-                  </div>
-                </div>
-
-                <div class="channel">
-                  <span class="channel-label">SMS / Instant message <span class="required">*</span></span>
-                  <div class="radio-row">
-                    <span class="fake-radio">Yes</span>
-                    <span class="fake-radio">No</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <p class="preference-note">
-              You can opt out at any time by clicking unsubscribe or contacting us or the sender.
+            <h2 id="agreements-heading">Agreements &amp; Communication Preferences</h2>
+            <p class="preferences-intro">
+              Please review the terms below and let us know how you&rsquo;d like Informa Connect
+              and our event partners to stay in touch with you.
             </p>
-            <p class="preference-note">
-              For further details, see our <a href="#">Privacy Notice</a>.
-            </p>
+
+            <!-- OneTrust Embedded Collection Point mounts here -->
+            <div id="ot-container" aria-live="polite">
+              <p style="text-align:center;color:var(--muted);padding:40px 0;margin:0;">
+                Loading consent form&hellip;
+              </p>
+            </div>
+
+            <!-- Post-submit confirmation -->
+            <div id="ot-thankyou" class="ot-thankyou" role="status" aria-live="polite">
+              <div class="checkmark-circle">&check;</div>
+              <h3>Preferences saved</h3>
+              <p>Thank you. Your consent and communication preferences have been recorded.</p>
+            </div>
+
+            <p class="preference-note">You can opt out at any time by clicking unsubscribe or contacting us or the sender.</p>
+            <p class="preference-note">For further details, see our <a href="#">Privacy Notice</a>.</p>
           </div>
         </section>
       </div>
@@ -1166,77 +955,44 @@
         <section class="summary-box">
           <div class="summary-head">
             <h2 id="sidebar-summary-heading">Order Summary</h2>
-            <span class="currency">GBP⌄</span>
+            <span class="currency">GBP<i class="chevron" aria-hidden="true"></i></span>
           </div>
-
           <div class="summary-row">
             <span>4 passes selected</span>
-            <span aria-hidden="true">⌄</span>
+            <i class="chevron" aria-hidden="true"></i>
           </div>
-
           <div class="summary-products">
             <div class="summary-product">
-              <span>
-                Conference Pass
-                <small>INF-CONF-2026-001</small>
-              </span>
-              <strong>£1,295.00</strong>
+              <span>Conference Pass<small>INF-CONF-2026-001</small></span>
+              <strong>&pound;1,295.00</strong>
             </div>
-
             <div class="summary-product">
-              <span>
-                Workshop Add-on: AI Risk Management
-                <small>INF-WS-2026-017</small>
-              </span>
-              <strong>£495.00</strong>
+              <span>Workshop Add-on: AI Risk Management<small>INF-WS-2026-017</small></span>
+              <strong>&pound;495.00</strong>
             </div>
-
             <div class="summary-product">
-              <span>
-                Networking Reception Ticket × 2
-                <small>INF-NET-2026-009</small>
-              </span>
-              <strong>£190.00</strong>
+              <span>Networking Reception Ticket &times; 2<small>INF-NET-2026-009</small></span>
+              <strong>&pound;190.00</strong>
             </div>
           </div>
-
           <div class="totals">
-            <div class="total-row">
-              <span>Subtotal</span>
-              <strong>£1,980.00</strong>
-            </div>
-
-            <div class="total-row">
-              <span>VAT</span>
-              <strong>£396.00</strong>
-            </div>
-
-            <div class="total-row grand">
-              <span>Grand Total</span>
-              <strong>£2,376.00</strong>
-            </div>
+            <div class="total-row"><span>Subtotal</span><strong>&pound;1,980.00</strong></div>
+            <div class="total-row"><span>VAT</span><strong>&pound;396.00</strong></div>
+            <div class="total-row grand"><span>Grand Total</span><strong>&pound;2,376.00</strong></div>
           </div>
         </section>
-
-        <button class="invoice-button" type="button" aria-label="Download invoice">
-          Download Invoice
-        </button>
-
-        <p class="side-note">
-          Need help? Contact event support with your order reference.
-        </p>
-
+        <button class="invoice-button" type="button" id="invoice-btn" disabled aria-label="Download invoice">Download Invoice</button>
+        <p class="side-note" id="side-note-text">Complete registration to enable invoice download.</p>
         <div class="benefits" aria-label="Booking benefits">
           <div class="benefit">
-            <div class="benefit-icon" aria-hidden="true">↔</div>
+            <div class="benefit-icon" aria-hidden="true">&harr;</div>
             <div>
               <strong>Easy ticket exchange</strong>
               <span>Upgrade or downgrade at any time. Edit delegates without extra fees.</span>
             </div>
           </div>
-
           <div class="benefit">
-            <div class="benefit-icon" aria-hidden="true">□</div>
+            <div class="benefit-icon" aria-hidden="true">&#9744;</div>
             <div>
               <strong>Flexible cancellation</strong>
               <span>Transfer booking to another event or contact support for cancellation options.</span>
@@ -1256,16 +1012,246 @@
           <strong>informa<span>connect</span></strong>
         </div>
       </div>
-
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="#">Home</a>
-        <a href="#">Contact</a>
-        <a href="#">Privacy</a>
-        <a href="#">Terms of Use</a>
-        <a href="#">Terms &amp; Conditions</a>
+        <a href="#">Home</a><a href="#">Contact</a><a href="#">Privacy</a>
+        <a href="#">Terms of Use</a><a href="#">Terms &amp; Conditions</a>
         <a href="#">CCPA: Do not sell my personal info</a>
       </nav>
     </div>
   </footer>
+
+  <!-- ============ APPLICATION LOGIC ============ -->
+  <script>
+    /* -------------------------------------------------------
+       CONFIG – Informa Connect production CP
+       ------------------------------------------------------- */
+    const CP_ID = '44ce8162-e7a5-4962-8406-3d9e975ad91e';
+
+    /* -------------------------------------------------------
+       DOM REFERENCES
+       ------------------------------------------------------- */
+    const heroCard      = document.getElementById('hero-card');
+    const heroIcon      = document.getElementById('hero-icon');
+    const heroHeading   = document.getElementById('hero-heading');
+    const heroCopy      = document.getElementById('hero-copy');
+    const metaGrid      = document.getElementById('meta-grid');
+    const progressLabel = document.getElementById('checkout-progress-label');
+
+    const stepItem1     = document.getElementById('step-item-1');
+    const stepItem2     = document.getElementById('step-item-2');
+    const stepDivider1  = document.getElementById('step-divider-1');
+
+    const step1         = document.getElementById('step-1');
+    const step2Blocks   = [
+      document.getElementById('step-2-details'),
+      document.getElementById('step-2-order'),
+      document.getElementById('step-2-customer'),
+      document.getElementById('step-2-next'),
+      document.getElementById('step-2-agreements')
+    ];
+
+    const regForm       = document.getElementById('reg-form');
+    const firstNameEl   = document.getElementById('first-name');
+    const lastNameEl    = document.getElementById('last-name');
+    const emailEl       = document.getElementById('email');
+    const firstNameErr  = document.getElementById('first-name-error');
+    const lastNameErr   = document.getElementById('last-name-error');
+    const emailErr      = document.getElementById('email-error');
+
+    const attendeeNameEl = document.getElementById('attendee-name');
+    const attendeeEmailEl= document.getElementById('attendee-email');
+    const billingNameEl  = document.getElementById('billing-name');
+
+    const editDetailsBtn = document.getElementById('edit-details-btn');
+    const invoiceBtn     = document.getElementById('invoice-btn');
+    const sideNoteText   = document.getElementById('side-note-text');
+
+    const otContainer    = document.getElementById('ot-container');
+    const otThankyou     = document.getElementById('ot-thankyou');
+
+    let cpInstalled  = false;
+    let userEmail    = '';
+    let userFullName = '';
+
+    /* -------------------------------------------------------
+       VALIDATION HELPERS
+       ------------------------------------------------------- */
+    const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function setError(input, errEl, show) {
+      input.classList.toggle('error', show);
+      errEl.classList.toggle('visible', show);
+    }
+
+    function validateStep1() {
+      const fn = firstNameEl.value.trim();
+      const ln = lastNameEl.value.trim();
+      const em = emailEl.value.trim();
+
+      const fnBad = fn.length < 1;
+      const lnBad = ln.length < 1;
+      const emBad = !EMAIL_RX.test(em);
+
+      setError(firstNameEl, firstNameErr, fnBad);
+      setError(lastNameEl,  lastNameErr,  lnBad);
+      setError(emailEl,     emailErr,     emBad);
+
+      if (fnBad) { firstNameEl.focus(); return false; }
+      if (lnBad) { lastNameEl.focus();  return false; }
+      if (emBad) { emailEl.focus();     return false; }
+      return true;
+    }
+
+    /* -------------------------------------------------------
+       STEP TRANSITIONS
+       ------------------------------------------------------- */
+    function goToStep2() {
+      // Update hero to "confirmed" state
+      heroCard.classList.add('is-confirmed');
+      heroIcon.textContent = '\u2713';
+      heroHeading.textContent = 'Order Confirmed';
+      heroCopy.textContent = 'Thank you for registering. Your conference tickets have been successfully purchased.';
+      metaGrid.classList.remove('hidden');
+      progressLabel.innerHTML = 'Checkout complete · <strong>Order confirmed</strong>';
+
+      // Step indicator
+      stepItem1.classList.remove('active');
+      stepItem1.classList.add('done');
+      stepItem1.querySelector('.step-num').textContent = '\u2713';
+      stepDivider1.classList.add('done');
+      stepItem2.classList.add('active');
+
+      // Panel visibility
+      step1.classList.add('hidden');
+      step2Blocks.forEach(b => {
+        b.classList.remove('hidden');
+        b.classList.add('fade-in');
+      });
+
+      // Enable invoice CTA
+      invoiceBtn.disabled = false;
+      sideNoteText.textContent = 'Need help? Contact event support with your order reference.';
+
+      // Scroll to top of confirmed section
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Install OneTrust CP now (only once)
+      if (!cpInstalled) waitForOneTrust();
+    }
+
+    function goBackToStep1() {
+      // Revert hero
+      heroCard.classList.remove('is-confirmed');
+      heroIcon.textContent = '1';
+      heroHeading.textContent = 'Complete Your Registration';
+      heroCopy.textContent = 'Your payment has been received. Please provide your attendee details to finalise your booking.';
+      metaGrid.classList.add('hidden');
+      progressLabel.innerHTML = 'Checkout · <strong>Complete registration</strong>';
+
+      // Step indicator
+      stepItem1.classList.remove('done');
+      stepItem1.classList.add('active');
+      stepItem1.querySelector('.step-num').textContent = '1';
+      stepDivider1.classList.remove('done');
+      stepItem2.classList.remove('active');
+
+      // Panel visibility
+      step1.classList.remove('hidden');
+      step2Blocks.forEach(b => b.classList.add('hidden'));
+
+      invoiceBtn.disabled = true;
+      sideNoteText.textContent = 'Complete registration to enable invoice download.';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* -------------------------------------------------------
+       FORM SUBMIT (Step 1 → Step 2)
+       ------------------------------------------------------- */
+    regForm.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      if (!validateStep1()) return;
+
+      userFullName = (firstNameEl.value.trim() + ' ' + lastNameEl.value.trim()).replace(/\s+/g, ' ');
+      userEmail    = emailEl.value.trim();
+
+      // Populate confirmed details
+      attendeeNameEl.textContent  = userFullName;
+      attendeeEmailEl.textContent = userEmail;
+      billingNameEl.textContent   = userFullName;
+
+      goToStep2();
+    });
+
+    // Clear per-field errors on input
+    [firstNameEl, lastNameEl, emailEl].forEach((el, i) => {
+      const errEls = [firstNameErr, lastNameErr, emailErr];
+      el.addEventListener('input', () => setError(el, errEls[i], false));
+    });
+
+    editDetailsBtn.addEventListener('click', goBackToStep1);
+
+    /* -------------------------------------------------------
+       ONETRUST INSTALL + PREFILL
+       ------------------------------------------------------- */
+    function installCP() {
+      if (cpInstalled) return;
+      try {
+        OneTrust.webform.InstallCP(CP_ID, { target: '#ot-container' });
+        cpInstalled = true;
+        console.log('[Informa] OneTrust CP installed:', CP_ID);
+      } catch (e) {
+        console.warn('[Informa] OneTrust InstallCP not ready, retrying...', e);
+        setTimeout(installCP, 200);
+      }
+    }
+
+    function waitForOneTrust(retries = 40) {
+      if (typeof OneTrust !== 'undefined' && OneTrust.webform && OneTrust.webform.InstallCP) {
+        installCP();
+      } else if (retries > 0) {
+        setTimeout(() => waitForOneTrust(retries - 1), 200);
+      } else {
+        console.warn('[Informa] OneTrust SDK failed to load in time.');
+        otContainer.innerHTML =
+          '<p style="text-align:center;color:var(--muted);padding:40px 0;margin:0;">' +
+          'Consent form could not load. Please refresh or allow third-party scripts.</p>';
+      }
+    }
+
+    /* Prefill Email (and Name if the CP has such fields) once OT form renders */
+    window.addEventListener('OnetrustFormLoaded', (evt) => {
+      console.log('[Informa] OnetrustFormLoaded event:', evt && evt.detail);
+
+      // Method 1 – API preFill
+      try {
+        OneTrust.webform.preFill({
+          "Email": userEmail,
+          "First Name": firstNameEl.value.trim(),
+          "Last Name":  lastNameEl.value.trim()
+        }, CP_ID);
+        console.log('[Informa] API preFill applied — Email:', userEmail);
+      } catch (e) {
+        console.warn('[Informa] API preFill failed:', e);
+      }
+
+      // Method 2 – DOM-level fallback for the email field
+      setTimeout(() => {
+        const otEmailInput = otContainer.querySelector('.ot-email input[type="email"]');
+        if (otEmailInput && userEmail) {
+          otEmailInput.value = userEmail;
+          otEmailInput.dispatchEvent(new Event('input',  { bubbles: true }));
+          otEmailInput.dispatchEvent(new Event('change', { bubbles: true }));
+          console.log('[Informa] DOM preFill applied:', userEmail);
+        }
+      }, 500);
+    });
+
+    /* Post-submit UX */
+    document.addEventListener('OnetrustConsentGiven', function () {
+      otContainer.style.display = 'none';
+      otThankyou.classList.add('visible');
+    });
+  </script>
 </body>
 </html>
