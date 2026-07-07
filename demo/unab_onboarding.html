@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNAB — Contract Signing & Onboarding</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --unab-blue:#003b71;
+  --unab-blue-dark:#002950;
+  --unab-red:#c8102e;
+  --unab-gold:#f5a623;
+  --bg:#f4f6fa;
+  --surface:#ffffff;
+  --surface2:#f8fafc;
+  --border:#e2e8f0;
+  --text:#1a202c;
+  --muted:#64748b;
+  --green:#16a34a;
+  --red:#dc2626;
+  --radius:12px;
+  --shadow:0 4px 16px rgba(0,59,113,.08);
+}
+html{font-size:15px}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{color:var(--unab-blue);text-decoration:none}
+.header{background:#fff;border-bottom:2px solid var(--unab-blue);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow)}
+.header .brand{display:flex;align-items:center;gap:16px}
+.header .brand img{height:48px;width:auto}
+.header .brand-txt{display:flex;flex-direction:column}
+.header .brand-txt .t1{font-size:1.05rem;font-weight:700;color:var(--unab-blue);letter-spacing:-.3px}
+.header .brand-txt .t2{font-size:.78rem;color:var(--muted);font-weight:500}
+.gear-btn{background:transparent;border:1px solid var(--border);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--unab-blue);transition:all .2s;display:flex;align-items:center;justify-content:center}
+.gear-btn:hover{background:var(--unab-blue);color:#fff;transform:rotate(45deg)}
+.main{max-width:900px;margin:0 auto;padding:32px 24px}
+.stepper{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;padding:0 20px;position:relative}
+.stepper::before{content:'';position:absolute;top:20px;left:40px;right:40px;height:2px;background:var(--border);z-index:0}
+.step{display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:1;flex:1}
+.step-circle{width:40px;height:40px;border-radius:50%;background:#fff;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);transition:all .3s}
+.step.active .step-circle{background:var(--unab-blue);border-color:var(--unab-blue);color:#fff;box-shadow:0 4px 12px rgba(0,59,113,.3)}
+.step.done .step-circle{background:var(--green);border-color:var(--green);color:#fff}
+.step-lbl{font-size:.72rem;color:var(--muted);font-weight:600;text-align:center;max-width:100px}
+.step.active .step-lbl{color:var(--unab-blue)}
+.step.done .step-lbl{color:var(--green)}
+.card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px;margin-bottom:20px;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card h2{color:var(--unab-blue);font-size:1.6rem;margin-bottom:8px;font-weight:800;letter-spacing:-.5px}
+.card .subtitle{color:var(--muted);font-size:.95rem;margin-bottom:24px;line-height:1.5}
+.welcome-box{background:linear-gradient(135deg,var(--unab-blue),var(--unab-blue-dark));color:#fff;padding:32px;border-radius:var(--radius);margin-bottom:24px}
+.welcome-box h1{font-size:1.8rem;margin-bottom:8px;font-weight:800}
+.welcome-box p{opacity:.9;line-height:1.6;font-size:1rem}
+.user-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.15);padding:10px 18px;border-radius:30px;margin-top:16px;backdrop-filter:blur(6px)}
+.user-badge .avatar{width:32px;height:32px;border-radius:50%;background:var(--unab-gold);display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:.9rem}
+.user-badge .u-info{display:flex;flex-direction:column}
+.user-badge .u-info .u-name{font-weight:700;font-size:.85rem}
+.user-badge .u-info .u-email{font-size:.72rem;opacity:.85}
+.contract-list{display:grid;gap:12px;margin-top:24px}
+.contract-preview{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:14px}
+.contract-preview .cp-ico{width:40px;height:40px;border-radius:8px;background:#fff;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--unab-blue);font-size:1.1rem}
+.contract-preview .cp-name{font-weight:600;color:var(--text);flex:1}
+.contract-preview .cp-status{font-size:.75rem;color:var(--muted);font-weight:600}
+.contract-header{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.contract-header .ico{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--unab-blue),var(--unab-blue-dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 4px 12px rgba(0,59,113,.25)}
+.contract-header h2{margin:0;font-size:1.4rem}
+.contract-header .badge{background:var(--surface2);color:var(--muted);font-size:.7rem;padding:3px 10px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:4px;display:inline-block}
+.contract-summary{background:var(--surface2);border-left:4px solid var(--unab-blue);padding:18px 22px;border-radius:8px;line-height:1.7;color:var(--text);font-size:.92rem;margin-bottom:20px}
+.contract-summary strong{color:var(--unab-blue)}
+.view-full-btn{background:none;border:1px dashed var(--unab-blue);color:var(--unab-blue);padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;font-size:.88rem;display:inline-flex;align-items:center;gap:8px;transition:all .2s;margin-bottom:24px}
+.view-full-btn:hover{background:var(--unab-blue);color:#fff}
+.consent-choice{display:grid;gap:12px;margin-bottom:24px}
+.choice-row{background:var(--surface2);border:2px solid var(--border);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .2s}
+.choice-row:hover{border-color:var(--unab-blue)}
+.choice-row input[type=radio]{width:18px;height:18px;accent-color:var(--unab-blue);cursor:pointer}
+.choice-row label{cursor:pointer;font-weight:600;flex:1;font-size:.92rem}
+.choice-row.active-accept{border-color:var(--green);background:rgba(22,163,74,.05)}
+.choice-row.active-decline{border-color:var(--red);background:rgba(220,38,38,.05)}
+.choice-row .c-desc{font-weight:400;color:var(--muted);font-size:.78rem;display:block;margin-top:2px}
+.sig-block{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:24px}
+.sig-block label{display:block;font-weight:700;color:var(--unab-blue);font-size:.85rem;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.sig-hint{font-size:.78rem;color:var(--muted);margin-bottom:14px;line-height:1.5}
+.sig-checkbox-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px}
+.sig-checkbox-row input[type=checkbox]{width:20px;height:20px;accent-color:var(--unab-blue);cursor:pointer;margin-top:2px;flex-shrink:0}
+.sig-checkbox-row label{font-weight:500;color:var(--text);text-transform:none;letter-spacing:0;font-size:.9rem;line-height:1.5;margin:0;cursor:pointer}
+.sig-input{width:100%;background:#fff;border:2px solid var(--border);border-radius:8px;padding:14px 18px;font-family:'Brush Script MT','Segoe Script',cursive;font-size:1.6rem;color:var(--unab-blue);transition:border .2s}
+.sig-input:focus{outline:none;border-color:var(--unab-blue);box-shadow:0 0 0 3px rgba(0,59,113,.1)}
+.sig-input::placeholder{color:#cbd5e1;font-style:italic}
+.sig-meta{margin-top:10px;font-size:.75rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+.sig-meta i{color:var(--unab-blue);margin-right:4px}
+.nav-buttons{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
+.btn{padding:12px 26px;border:none;border-radius:8px;font-weight:700;font-size:.92rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;font-family:inherit}
+.btn-primary{background:var(--unab-blue);color:#fff}
+.btn-primary:hover:not(:disabled){background:var(--unab-blue-dark);box-shadow:0 4px 12px rgba(0,59,113,.3);transform:translateY(-1px)}
+.btn-primary:disabled{background:#cbd5e1;cursor:not-allowed;opacity:.6}
+.btn-secondary{background:#fff;color:var(--unab-blue);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--unab-blue);background:var(--surface2)}
+.btn-success{background:var(--green);color:#fff}
+.btn-success:hover{background:#15803d}
+.success-hero{text-align:center;padding:32px 20px 16px}
+.success-hero .check-ico{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--green),#15803d);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:20px;box-shadow:0 8px 24px rgba(22,163,74,.3);animation:pop .5s ease}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:scale(1)}}
+.success-hero h2{color:var(--green);margin-bottom:10px;font-size:1.8rem}
+.success-hero p{color:var(--muted);font-size:1rem;max-width:500px;margin:0 auto;line-height:1.6}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;background:var(--surface2);border-radius:10px;padding:20px;text-align:left}
+.summary-grid .s-item{padding:8px 0}
+.summary-grid .s-item .s-lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:2px}
+.summary-grid .s-item .s-val{font-size:.9rem;color:var(--text);font-weight:600;word-break:break-word}
+.debug-toggle{margin-top:24px;text-align:center}
+.debug-toggle button{background:none;border:none;color:var(--muted);font-size:.78rem;cursor:pointer;text-decoration:underline}
+.debug-panel{display:none;margin-top:16px;background:#0f172a;color:#e2e8f0;border-radius:10px;padding:20px;font-family:'Cascadia Code','Fira Code',monospace;font-size:.78rem;text-align:left;max-height:400px;overflow:auto}
+.debug-panel.show{display:block}
+.debug-panel h4{color:#60a5fa;font-size:.82rem;margin-bottom:8px;font-family:'Segoe UI',sans-serif}
+.debug-panel pre{white-space:pre-wrap;word-break:break-all;line-height:1.5;margin-bottom:14px}
+.debug-panel .ok{color:#4ade80}
+.debug-panel .err{color:#f87171}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.75);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;animation:fadeIn .2s ease}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:var(--radius);max-width:720px;width:100%;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.modal-header{padding:20px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{color:var(--unab-blue);font-size:1.15rem;display:flex;align-items:center;gap:10px}
+.modal-close{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted);width:32px;height:32px;border-radius:50%}
+.modal-close:hover{background:var(--surface2);color:var(--red)}
+.modal-body{padding:26px;overflow-y:auto;line-height:1.7;color:var(--text);font-size:.92rem}
+.modal-body h4{color:var(--unab-blue);margin:16px 0 6px;font-size:1rem}
+.modal-body p{margin-bottom:10px}
+.modal-body ul{margin:8px 0 12px 22px}
+.modal-body li{margin-bottom:4px}
+.modal-footer{padding:14px 26px;border-top:1px solid var(--border);text-align:right}
+.cfg-overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:flex-end;z-index:150;animation:fadeIn .2s ease}
+.cfg-overlay.show{display:flex}
+.cfg-panel{background:#fff;width:100%;max-width:520px;height:100vh;overflow-y:auto;padding:0;box-shadow:-10px 0 40px rgba(0,0,0,.2);animation:slideIn .3s ease}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.cfg-panel .cfg-head{background:var(--unab-blue);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:2}
+.cfg-panel .cfg-head h3{font-size:1.05rem;display:flex;align-items:center;gap:10px}
+.cfg-panel .cfg-head button{background:rgba(255,255,255,.15);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem}
+.cfg-panel .cfg-body{padding:24px}
+.cfg-panel .cfg-section{margin-bottom:26px}
+.cfg-panel .cfg-section h4{color:var(--unab-blue);font-size:.85rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.cfg-panel label{display:block;font-weight:600;font-size:.82rem;margin-bottom:5px;color:var(--text)}
+.cfg-panel input,.cfg-panel textarea{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:6px;font-size:.85rem;font-family:inherit;color:var(--text);margin-bottom:12px}
+.cfg-panel input:focus,.cfg-panel textarea:focus{outline:none;border-color:var(--unab-blue);box-shadow:0 0 0 3px rgba(0,59,113,.1)}
+.cfg-panel textarea{font-family:'Cascadia Code','Fira Code',monospace;font-size:.72rem;resize:vertical;min-height:80px;word-break:break-all}
+.cfg-panel .cfg-hint{font-size:.72rem;color:var(--muted);margin-top:-8px;margin-bottom:12px;line-height:1.4}
+.cfg-panel .cfg-save{background:var(--unab-blue);color:#fff;border:none;padding:12px 24px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;font-size:.9rem}
+.cfg-panel .cfg-save:hover{background:var(--unab-blue-dark)}
+.toast-wrap{position:fixed;top:82px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:#fff;border-left:4px solid var(--unab-blue);padding:12px 20px;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,.15);font-size:.85rem;font-weight:600;animation:toastIn .3s ease;max-width:340px}
+.toast.success{border-color:var(--green);color:var(--green)}
+.toast.error{border-color:var(--red);color:var(--red)}
+.toast.info{border-color:var(--unab-blue);color:var(--unab-blue)}
+@keyframes toastIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:640px){
+  .header{padding:12px 16px}
+  .header .brand-txt .t2{display:none}
+  .main{padding:20px 14px}
+  .card{padding:22px}
+  .step-lbl{display:none}
+  .summary-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="brand">
+    <img src="https://unabwps3.s3.amazonaws.com/unab/assets/uploads/2023/02/logo.png" alt="UNAB" onerror="this.style.display='none'">
+    <div class="brand-txt">
+      <span class="t1">Student Onboarding Portal</span>
+      <span class="t2">Contract Signing & Enrollment · Universidad UNAB</span>
+    </div>
+  </div>
+  <button class="gear-btn" onclick="openConfig()" title="Settings"><i class="fa-solid fa-gear"></i></button>
+</header>
+
+<div class="toast-wrap" id="toasts"></div>
+
+<div class="main">
+  <div class="stepper" id="stepper">
+    <div class="step" data-step="0"><div class="step-circle">1</div><div class="step-lbl">Welcome</div></div>
+    <div class="step" data-step="1"><div class="step-circle">2</div><div class="step-lbl">Enrollment</div></div>
+    <div class="step" data-step="2"><div class="step-circle">3</div><div class="step-lbl">Privacy / GDPR</div></div>
+    <div class="step" data-step="3"><div class="step-circle">4</div><div class="step-lbl">Code of Conduct</div></div>
+    <div class="step" data-step="4"><div class="step-circle">5</div><div class="step-lbl">Background Check</div></div>
+    <div class="step" data-step="5"><div class="step-circle"><i class="fa-solid fa-check"></i></div><div class="step-lbl">Complete</div></div>
+  </div>
+
+  <div class="card step-view" data-view="0">
+    <div class="welcome-box">
+      <h1>Welcome to UNAB, <span id="welcomeName">Student</span> 👋</h1>
+      <p>You are just a few clicks away from completing your enrollment. Please review and sign the following documents to activate your student account.</p>
+      <div class="user-badge">
+        <div class="avatar" id="welcomeInitial">S</div>
+        <div class="u-info">
+          <span class="u-name" id="welcomeFullName">Student Name</span>
+          <span class="u-email" id="welcomeEmail">student@unab.edu</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="font-size:1.15rem;color:var(--unab-blue);margin-bottom:6px">Documents to sign</h2>
+    <p class="subtitle" style="margin-bottom:14px">4 mandatory agreements required for enrollment activation.</p>
+
+    <div class="contract-list">
+      <div class="contract-preview"><div class="cp-ico"><i class="fa-solid fa-file-signature"></i></div><div class="cp-name">Enrollment Agreement</div><div class="cp-status">Required</div></div>
+      <div class="contract-preview"><div class="cp-ico"><i class="fa-solid fa-shield-halved"></i></div><div class="cp-name">Privacy Policy & GDPR</div><div class="cp-status">Required</div></div>
+      <div class="contract-preview"><div class="cp-ico"><i class="fa-solid fa-scale-balanced"></i></div><div class="cp-name">Student Code of Conduct</div><div class="cp-status">Required</div></div>
+      <div class="contract-preview"><div class="cp-ico"><i class="fa-solid fa-user-shield"></i></div><div class="cp-name">Background Check Authorization</div><div class="cp-status">Required</div></div>
+    </div>
+
+    <div class="nav-buttons" style="margin-top:26px">
+      <span></span>
+      <button class="btn btn-primary" onclick="goToStep(1)">Start Signing <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <div id="contractSteps"></div>
+
+  <div class="card step-view" data-view="5" style="display:none">
+    <div class="success-hero">
+      <div class="check-ico"><i class="fa-solid fa-check"></i></div>
+      <h2>Enrollment Complete!</h2>
+      <p>Your consent has been securely recorded and your student account is now being activated. You will receive a confirmation email at <strong id="finalEmail">-</strong> shortly.</p>
+
+      <div class="summary-grid">
+        <div class="s-item"><div class="s-lbl">Student</div><div class="s-val" id="finalName">-</div></div>
+        <div class="s-item"><div class="s-lbl">Email</div><div class="s-val" id="finalEmail2">-</div></div>
+        <div class="s-item"><div class="s-lbl">Age</div><div class="s-val" id="finalAge">-</div></div>
+        <div class="s-item"><div class="s-lbl">Consent ID</div><div class="s-val" id="finalReceipt" style="font-family:monospace;font-size:.78rem">-</div></div>
+      </div>
+
+      <div class="debug-toggle">
+        <button onclick="toggleDebug()"><i class="fa-solid fa-code"></i> Show technical debug info</button>
+        <div class="debug-panel" id="debugPanel">
+          <h4><i class="fa-solid fa-upload"></i> Request Payload sent to OneTrust</h4>
+          <pre id="dbgPayload">-</pre>
+          <h4><i class="fa-solid fa-download"></i> API Response</h4>
+          <pre id="dbgResponse">-</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="contractModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-file-lines"></i> <span id="modalTitle">Contract</span></h3>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="cfg-overlay" id="cfgOverlay">
+  <div class="cfg-panel">
+    <div class="cfg-head">
+      <h3><i class="fa-solid fa-gear"></i> Configuration</h3>
+      <button onclick="closeConfig()">&times;</button>
+    </div>
+    <div class="cfg-body">
+
+      <div class="cfg-section">
+        <h4><i class="fa-solid fa-user"></i> Prefilled Student Data</h4>
+        <label>Email</label>
+        <input type="email" id="cfgEmail" value="carlos.mendez@unab.edu">
+        <label>Full Name</label>
+        <input type="text" id="cfgName" value="Carlos Méndez">
+        <label>Age</label>
+        <input type="number" id="cfgAge" value="21" min="16" max="99">
+      </div>
+
+      <div class="cfg-section">
+        <h4><i class="fa-solid fa-cloud"></i> OneTrust API</h4>
+        <label>Endpoint URL</label>
+        <input type="url" id="cfgUrl" value="https://privacyportaltrial.onetrust.com/request/v1/consentreceipts">
+        <label>OAuth Bearer Token (Authorization header)</label>
+        <textarea id="cfgToken">Bearer YTVhY2NhNWRmODU1NGEyOGExYTZlNDUzYWM3ZmVjMzQ6WXllNVVRZmFHT3lzVTdkc2pBZkIwaUVWM0lKclJVN0Q=</textarea>
+        <div class="cfg-hint">Sent in the <code>Authorization</code> header.</div>
+        <label>Collection Point JWT (requestInformation)</label>
+        <textarea id="cfgJwt" style="min-height:120px">eyJhbGciOiJSUzUxMiJ9.eyJvdEp3dFZlcnNpb24iOjEsInByb2Nlc3NJZCI6IjY5Mzg2MzRjLTU0MjYtNDI0ZC1hNTgxLWQ0NGMxYTg1N2QxNiIsInByb2Nlc3NWZXJzaW9uIjoxLCJpYXQiOiIyMDI2LTA3LTA3VDEyOjQwOjAyLjY3MyIsIm1vYyI6IkFQSSIsInBvbGljeV91cmkiOm51bGwsInN1YiI6IkVtYWlsIiwiaXNzIjpudWxsLCJ0ZW5hbnRJZCI6IjBjZWI3YzBjLWQyN2UtNDNjNi05YzljLTg3NzY5NDI4NTY0OCIsImRlc2NyaXB0aW9uIjoiQ29udHJhY3QgQ29sbGVjdGlvbiBQb2ludCIsImNvbnNlbnRUeXBlIjoiQ09ORElUSU9OQUxUUklHR0VSIiwiYWxsb3dOb3RHaXZlbkNvbnNlbnRzIjp0cnVlLCJkb3VibGVPcHRJbiI6ZmFsc2UsInB1cnBvc2VzIjpbeyJ2ZXJzaW9uIjoxLCJwYXJlbnRJZCI6bnVsbCwiZW5hYmxlR2VvbG9jYXRpb24iOnRydWUsImltcGxpY2l0Q29uc2VudExpZmVTcGFuIjowLCJpZCI6ImIzODZjZDI2LTViNDgtNDgxZi04NGQ3LTFhMzhlMzgyNjA2MCIsInRvcGljcyI6W10sImN1c3RvbVByZWZlcmVuY2VzIjpbXX0seyJ2ZXJzaW9uIjoxLCJwYXJlbnRJZCI6bnVsbCwiZW5hYmxlR2VvbG9jYXRpb24iOnRydWUsImltcGxpY2l0Q29uc2VudExpZmVTcGFuIjowLCJpZCI6ImQ4MTUyNDE4LTliZjMtNDk5Mi1iZWY3LWQ0ZWRjODQxYjI0OCIsInRvcGljcyI6W10sImN1c3RvbVByZWZlcmVuY2VzIjpbXX0seyJ2ZXJzaW9uIjoxLCJwYXJlbnRJZCI6bnVsbCwiZW5hYmxlR2VvbG9jYXRpb24iOnRydWUsImltcGxpY2l0Q29uc2VudExpZmVTcGFuIjowLCJpZCI6ImQ0OWNhYzk1LTAwYWUtNDU5ZC05MzdjLTZmMjZlNDMyMThkYiIsInRvcGljcyI6W10sImN1c3RvbVByZWZlcmVuY2VzIjpbXX0seyJ2ZXJzaW9uIjoxLCJwYXJlbnRJZCI6bnVsbCwiZW5hYmxlR2VvbG9jYXRpb24iOnRydWUsImltcGxpY2l0Q29uc2VudExpZmVTcGFuIjowLCJpZCI6ImEzYjRjNWY0LWVjZTYtNDU5OS1hNzU2LWI3YWFlMDRjNWUzZSIsInRvcGljcyI6W10sImN1c3RvbVByZWZlcmVuY2VzIjpbXX1dLCJub3RpY2VzIjpbXSwiZHNEYXRhRWxlbWVudHMiOlsiQWdlIiwiTmFtZSJdLCJhdXRoZW50aWNhdGlvblJlcXVpcmVkIjpmYWxzZSwicmVjb25maXJtQWN0aXZlUHVycG9zZSI6ZmFsc2UsIm92ZXJyaWRlQWN0aXZlUHVycG9zZSI6dHJ1ZSwiZHluYW1pY0NvbGxlY3Rpb25Qb2ludCI6ZmFsc2UsImFkZGl0aW9uYWxJZGVudGlmaWVycyI6W10sIm11bHRpcGxlSWRlbnRpZmllclR5cGVzIjpmYWxzZSwiZW5hYmxlUGFyZW50UHJpbWFyeUlkZW50aWZpZXJzIjpmYWxzZSwicGFyZW50UHJpbWFyeUlkZW50aWZpZXJzVHlwZSI6bnVsbCwiYWRkaXRpb25hbFBhcmVudElkZW50aWZpZXJUeXBlcyI6W10sImVuYWJsZUdlb2xvY2F0aW9uIjpmYWxzZSwiZGF0YUVsZW1lbnRUeXBlTWFwIjp7IkFnZSI6Ik5VTUJFUiIsIk5hbWUiOiJVU0VSX0lOUFVUIn0sInRlbmFudEtleSI6MTUwNTB9.LwymzH0lUNOUdtthv1S6x0i13AqPdhpb0ysE_RyvuZA-TnZhHjG9_sWon59pn8-A9LJZmlOsZ-pXNAPARqMrosNJ8fdy0aItq6r_fUlR7LSy_fch4fleKWDdcHpM_QgjONTKQ1FN3sdeVvgDdMh1fhF5JpxKJxtE9wGfbO4SRMU7CgiP3Gz_EVEpsKL1T05-BP4fdpi2809Mo6kKVwPL8RvK-FTRmkVcdGH4J9-add53-79QJ1YlLZtd1KXf1uU1nFcyGC--VV1SrS6x4OEXFa4Jg-oJO8Gn33nGdeEvxjd7iGucMzdTrbEbJfPP0tmzNf2HgN-HVpbjRYOtA2gNQj1ECu1RzFlMcmCzF4A1U7Em49EIaYIyKC9-NHVGi8lb9E7scbItB4LJxHlQ80HSytg2T1CPS4jcBY-omd14b9IfcRvrIpSPufvSA8ke2WdcSHHrt4IRakYtjkX3_ddrJM-ALCH9thu8fq4xSUwzXIEfqrobl2s4ZCQC0Md3TtK7Tx8Z7Jr3g59vS0EF9-5unuLf2dYKiUJcVh-eQr92Zf7fEtlBk8chjpTffDimv2bBIBYtzJ5bhZJDmDuWabT3JuNAIFdjtVQieeu_YC-H8dqoit5MFJpj6AxgW1RoxYK_rAfqtHNCOi9Va51t_Z-m9_ftNHexjWql8NcAdS_RtDA</textarea>
+      </div>
+
+      <div class="cfg-section">
+        <h4><i class="fa-solid fa-list-check"></i> Purpose IDs</h4>
+        <label>Enrollment Agreement</label>
+        <input type="text" id="cfgPurpose0" value="b386cd26-5b48-481f-84d7-1a38e3826060">
+        <label>Privacy Policy / GDPR</label>
+        <input type="text" id="cfgPurpose1" value="d8152418-9bf3-4992-bef7-d4edc841b248">
+        <label>Student Code of Conduct</label>
+        <input type="text" id="cfgPurpose2" value="d49cac95-00ae-459d-937c-6f26e43218db">
+        <label>Background Check Authorization</label>
+        <input type="text" id="cfgPurpose3" value="a3b4c5f4-ece6-4599-a756-b7aae04c5e3e">
+      </div>
+
+      <button class="cfg-save" onclick="saveConfig()"><i class="fa-solid fa-check"></i> Save & Apply</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CONTRACTS = [
+  {
+    key:'enrollment',
+    title:'Enrollment Agreement',
+    icon:'fa-file-signature',
+    purposeKey:'cfgPurpose0',
+    summary:'This Enrollment Agreement establishes the terms and conditions between the student and Universidad UNAB regarding academic services, tuition fees, program duration, and institutional obligations for the current academic period.',
+    fullText:`
+      <h4>1. Purpose of the Agreement</h4>
+      <p>This document formalises the enrollment of the student in Universidad UNAB for the corresponding academic period and defines the rights and obligations of both parties.</p>
+      <h4>2. Academic Services</h4>
+      <p>UNAB commits to providing lectures, tutoring, access to campus facilities (libraries, labs, sports complex), digital learning platforms and student support services throughout the duration of the enrolled program.</p>
+      <h4>3. Tuition and Payment</h4>
+      <ul>
+        <li>Tuition fees are payable according to the payment plan selected during registration.</li>
+        <li>Late payments incur a 5% administrative surcharge after 15 calendar days.</li>
+        <li>Refund policy applies within the first 14 days from the enrollment date.</li>
+      </ul>
+      <h4>4. Academic Obligations</h4>
+      <p>The student is required to maintain a minimum GPA of 6.0/10 to remain in good academic standing and to comply with attendance policies as defined by each faculty.</p>
+      <h4>5. Termination</h4>
+      <p>Either party may terminate this agreement in accordance with the institutional withdrawal procedure. Financial obligations for completed terms remain applicable.</p>
+      <h4>6. Governing Law</h4>
+      <p>This agreement is governed by the applicable education laws of the jurisdiction where UNAB operates.</p>
+    `
+  },
+  {
+    key:'privacy',
+    title:'Privacy Policy & GDPR',
+    icon:'fa-shield-halved',
+    purposeKey:'cfgPurpose1',
+    summary:'UNAB acts as Data Controller and processes personal data in accordance with GDPR and applicable data protection laws. This document informs you about how your data is collected, used, stored and protected.',
+    fullText:`
+      <h4>1. Data Controller</h4>
+      <p>Universidad UNAB is the Data Controller responsible for the processing of your personal data.</p>
+      <h4>2. Categories of Data Collected</h4>
+      <ul>
+        <li>Identification data: name, national ID, date of birth.</li>
+        <li>Contact data: email, phone, postal address.</li>
+        <li>Academic data: transcripts, grades, program enrollment.</li>
+        <li>Financial data: payment method and billing information.</li>
+        <li>Technical data: IP address, browser and device data for platform access.</li>
+      </ul>
+      <h4>3. Purposes of Processing</h4>
+      <ul>
+        <li>Managing your enrollment and providing academic services.</li>
+        <li>Issuing certificates, diplomas and official transcripts.</li>
+        <li>Communicating institutional information relevant to your studies.</li>
+        <li>Compliance with legal and regulatory obligations.</li>
+      </ul>
+      <h4>4. Legal Basis</h4>
+      <p>Processing is based on the performance of the enrollment contract, compliance with legal obligations, and — where applicable — your explicit consent.</p>
+      <h4>5. Retention Period</h4>
+      <p>Academic records are retained indefinitely as required by education regulations. Other data is retained only for the period necessary to fulfil each purpose.</p>
+      <h4>6. Your Rights</h4>
+      <p>You have the right to access, rectify, erase, restrict, port or object to the processing of your personal data by contacting <strong>dpo@unab.edu</strong>. You may also lodge a complaint with the relevant supervisory authority.</p>
+      <h4>7. Data Transfers</h4>
+      <p>Data may be shared with academic partners, accreditation bodies, and technology providers under strict data protection agreements.</p>
+    `
+  },
+  {
+    key:'conduct',
+    title:'Student Code of Conduct',
+    icon:'fa-scale-balanced',
+    purposeKey:'cfgPurpose2',
+    summary:'The Student Code of Conduct establishes the ethical, academic and behavioural standards expected of all UNAB students, both on campus, online, and during any UNAB-sponsored activity.',
+    fullText:`
+      <h4>1. Core Principles</h4>
+      <p>All UNAB students must act with integrity, respect, honesty and responsibility in all academic and personal interactions within the institution.</p>
+      <h4>2. Academic Integrity</h4>
+      <ul>
+        <li>Plagiarism, cheating, fabrication of data and unauthorised collaboration are strictly prohibited.</li>
+        <li>All submitted work must be original and properly cited.</li>
+        <li>AI-generated content must be disclosed according to the AI usage policy of each course.</li>
+      </ul>
+      <h4>3. Respect and Non-Discrimination</h4>
+      <p>UNAB has a zero-tolerance policy toward harassment, discrimination, bullying, or any behaviour that undermines the dignity of students, staff or faculty on the grounds of race, gender, religion, sexual orientation, disability or any other protected characteristic.</p>
+      <h4>4. Campus and Digital Behaviour</h4>
+      <ul>
+        <li>Respect the physical facilities and digital platforms of the University.</li>
+        <li>Do not misuse credentials or attempt to access unauthorised systems.</li>
+        <li>Follow the acceptable use policy for the UNAB LMS and Wi-Fi network.</li>
+      </ul>
+      <h4>5. Disciplinary Measures</h4>
+      <p>Breaches of this Code may result in warnings, academic sanctions, suspension or expulsion, following the disciplinary procedure established by UNAB.</p>
+      <h4>6. Reporting</h4>
+      <p>Any incident may be reported confidentially through <strong>conduct@unab.edu</strong> or the anonymous whistleblowing channel.</p>
+    `
+  },
+  {
+    key:'background',
+    title:'Background Check Authorization',
+    icon:'fa-user-shield',
+    purposeKey:'cfgPurpose3',
+    summary:'By signing this authorization, you allow UNAB and its authorised partners to conduct a background verification, including academic records, prior institutions attended and — where legally applicable — criminal record checks required for enrollment.',
+    fullText:`
+      <h4>1. Purpose of Background Check</h4>
+      <p>UNAB conducts background checks to verify the authenticity of the information provided during the application process and to ensure compliance with regulatory requirements for specific programs (e.g. Medicine, Education, Psychology).</p>
+      <h4>2. Scope of Verification</h4>
+      <ul>
+        <li>Verification of prior academic degrees and transcripts.</li>
+        <li>Identity verification with official documents.</li>
+        <li>Where legally required, criminal record checks for programs involving contact with vulnerable populations (minors, patients, etc.).</li>
+        <li>Contact with previous educational institutions to confirm enrollment status.</li>
+      </ul>
+      <h4>3. Authorised Providers</h4>
+      <p>UNAB may engage certified background check providers under a Data Processor Agreement compliant with GDPR.</p>
+      <h4>4. Data Handling</h4>
+      <p>Background check results are stored securely, accessed only by authorised admissions personnel and deleted after 5 years unless legal obligations require otherwise.</p>
+      <h4>5. Your Rights</h4>
+      <ul>
+        <li>You may request to view the report obtained through the background check.</li>
+        <li>You may dispute inaccuracies through the admissions office.</li>
+        <li>You may withdraw this authorization at any time, understanding that withdrawal may prevent completion of the enrollment.</li>
+      </ul>
+      <h4>6. Consent</h4>
+      <p>This authorization is voluntary and represents your explicit consent under Article 6 and Article 9 (where applicable) of the GDPR.</p>
+    `
+  }
+];
+
+const state = {
+  currentStep: 0,
+  contracts: CONTRACTS.map(c => ({ key:c.key, accepted:null, signature:'', timestamp:null }))
+};
+
+function renderContractSteps(){
+  const wrap = document.getElementById('contractSteps');
+  wrap.innerHTML = '';
+  CONTRACTS.forEach((c, idx) => {
+    const stepNum = idx + 1;
+    const view = document.createElement('div');
+    view.className = 'card step-view';
+    view.dataset.view = stepNum;
+    view.style.display = 'none';
+    view.innerHTML = `
+      <div class="contract-header">
+        <div class="ico"><i class="fa-solid ${c.icon}"></i></div>
+        <div>
+          <h2>${c.title}</h2>
+          <span class="badge">Document ${stepNum} of ${CONTRACTS.length}</span>
+        </div>
+      </div>
+
+      <div class="contract-summary">${c.summary}</div>
+
+      <button class="view-full-btn" onclick="openModal(${idx})">
+        <i class="fa-solid fa-eye"></i> View full document
+      </button>
+
+      <div class="consent-choice" id="choice_${idx}">
+        <div class="choice-row" onclick="setChoice(${idx}, true)">
+          <input type="radio" name="choice_${idx}" id="accept_${idx}">
+          <label for="accept_${idx}"><i class="fa-solid fa-check-circle" style="color:var(--green);margin-right:6px"></i>I accept and agree to sign this document
+            <span class="c-desc">Consent will be recorded as CONFIRMED.</span>
+          </label>
+        </div>
+        <div class="choice-row" onclick="setChoice(${idx}, false)">
+          <input type="radio" name="choice_${idx}" id="decline_${idx}">
+          <label for="decline_${idx}"><i class="fa-solid fa-xmark-circle" style="color:var(--red);margin-right:6px"></i>I decline this document
+            <span class="c-desc">Consent will be recorded as HARD_OPT_OUT. Enrollment may not proceed.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="sig-block" id="sig_${idx}" style="display:none">
+        <label><i class="fa-solid fa-pen-nib"></i> Digital Signature</label>
+        <div class="sig-hint">Confirm your acceptance by ticking the box and typing your full name below. Your name will be used as your legally binding electronic signature.</div>
+        <div class="sig-checkbox-row">
+          <input type="checkbox" id="sigCheck_${idx}" onchange="updateNav(${stepNum})">
+          <label for="sigCheck_${idx}">I confirm that I have read, understood and agree to the terms of the <strong>${c.title}</strong>, and that typing my name below constitutes my legally binding electronic signature.</label>
+        </div>
+        <input type="text" class="sig-input" id="sigName_${idx}" placeholder="Type your full name here" oninput="updateNav(${stepNum})">
+        <div class="sig-meta">
+          <span><i class="fa-solid fa-clock"></i>Signed at: <span id="sigTs_${idx}">--</span></span>
+          <span><i class="fa-solid fa-fingerprint"></i>Purpose ID: <code>${c.key}</code></span>
+        </div>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="btn btn-secondary" onclick="goToStep(${stepNum-1})"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="btn btn-primary" id="nextBtn_${stepNum}" onclick="nextFromContract(${idx})" disabled>${stepNum===CONTRACTS.length ? 'Submit & Finish' : 'Continue'} <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
+    `;
+    wrap.appendChild(view);
+  });
+}
+
+function goToStep(n){
+  state.currentStep = n;
+  document.querySelectorAll('.step-view').forEach(v => v.style.display = 'none');
+  const view = document.querySelector(`.step-view[data-view="${n}"]`);
+  if (view) view.style.display = 'block';
+  document.querySelectorAll('.step').forEach((s, i) => {
+    s.classList.remove('active','done');
+    if (i < n) s.classList.add('done');
+    else if (i === n) s.classList.add('active');
+  });
+  if (n === 0) refreshWelcome();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setChoice(idx, accepted){
+  state.contracts[idx].accepted = accepted;
+  const container = document.getElementById(`choice_${idx}`);
+  const rows = container.querySelectorAll('.choice-row');
+  rows[0].classList.toggle('active-accept', accepted);
+  rows[1].classList.toggle('active-decline', !accepted);
+  document.getElementById(`accept_${idx}`).checked = accepted;
+  document.getElementById(`decline_${idx}`).checked = !accepted;
+  document.getElementById(`sig_${idx}`).style.display = accepted ? 'block' : 'none';
+  updateNav(idx + 1);
+}
+
+function updateNav(stepNum){
+  const idx = stepNum - 1;
+  const contract = state.contracts[idx];
+  const nextBtn = document.getElementById(`nextBtn_${stepNum}`);
+  if (contract.accepted === null) { nextBtn.disabled = true; return; }
+  if (contract.accepted === false) { nextBtn.disabled = false; return; }
+  const checked = document.getElementById(`sigCheck_${idx}`).checked;
+  const name = document.getElementById(`sigName_${idx}`).value.trim();
+  nextBtn.disabled = !(checked && name.length >= 3);
+}
+
+function nextFromContract(idx){
+  const c = state.contracts[idx];
+  if (c.accepted) {
+    c.signature = document.getElementById(`sigName_${idx}`).value.trim();
+    c.timestamp = new Date().toISOString();
+    document.getElementById(`sigTs_${idx}`).textContent = new Date().toLocaleString();
+  }
+  const nextStep = idx + 2;
+  if (nextStep > CONTRACTS.length) {
+    submitConsent();
+  } else {
+    goToStep(nextStep);
+  }
+}
+
+function openModal(idx){
+  const c = CONTRACTS[idx];
+  document.getElementById('modalTitle').textContent = c.title;
+  document.getElementById('modalBody').innerHTML = c.fullText;
+  document.getElementById('contractModal').classList.add('show');
+}
+function closeModal(){ document.getElementById('contractModal').classList.remove('show'); }
+
+function openConfig(){ document.getElementById('cfgOverlay').classList.add('show'); }
+function closeConfig(){ document.getElementById('cfgOverlay').classList.remove('show'); }
+function saveConfig(){
+  refreshWelcome();
+  toast('Configuration saved', 'success');
+  closeConfig();
+}
+
+function refreshWelcome(){
+  const name = document.getElementById('cfgName').value || 'Student';
+  const email = document.getElementById('cfgEmail').value || 'student@unab.edu';
+  const first = name.split(' ')[0];
+  document.getElementById('welcomeName').textContent = first;
+  document.getElementById('welcomeFullName').textContent = name;
+  document.getElementById('welcomeEmail').textContent = email;
+  document.getElementById('welcomeInitial').textContent = (first[0] || 'S').toUpperCase();
+}
+
+function toast(msg, type='info'){
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = `<i class="fa-solid fa-${type==='success'?'circle-check':type==='error'?'circle-xmark':'circle-info'}"></i> ${msg}`;
+  document.getElementById('toasts').appendChild(el);
+  setTimeout(() => el.remove(), 4000);
+}
+
+async function submitConsent(){
+  const email = document.getElementById('cfgEmail').value.trim();
+  const name  = document.getElementById('cfgName').value.trim();
+  const age   = document.getElementById('cfgAge').value.trim();
+  const url   = document.getElementById('cfgUrl').value.trim();
+  const token = document.getElementById('cfgToken').value.trim();
+  const jwt   = document.getElementById('cfgJwt').value.trim();
+
+  const purposes = CONTRACTS.map((c, idx) => ({
+    Id: document.getElementById(c.purposeKey).value.trim(),
+    TransactionType: state.contracts[idx].accepted ? 'CONFIRMED' : 'HARD_OPT_OUT'
+  }));
+
+  const payload = {
+    identifier: email,
+    identifierType: 'Email',
+    requestInformation: jwt,
+    purposes: purposes,
+    dsDataElements: {
+      Age: age,
+      Name: name
+    }
+  };
+
+  console.group('📤 UNAB — Consent Submission');
+  console.log('Endpoint:', url);
+  console.log('Payload:', payload);
+
+  document.getElementById('dbgPayload').textContent = JSON.stringify(payload, null, 2);
+
+  goToStep(5);
+  document.getElementById('finalName').textContent = name;
+  document.getElementById('finalEmail').textContent = email;
+  document.getElementById('finalEmail2').textContent = email;
+  document.getElementById('finalAge').textContent = age;
+  document.getElementById('finalReceipt').textContent = 'Processing…';
+
+  try{
+    const headers = {'Content-Type':'application/json','Accept':'application/json'};
+    if (token) headers['Authorization'] = token;
+    const resp = await fetch(url, {method:'POST', headers, body: JSON.stringify(payload)});
+    const respText = await resp.text();
+    let respJson = null;
+    try { respJson = JSON.parse(respText); } catch(e){}
+    console.log('Status:', resp.status, resp.statusText);
+    console.log('Response:', respJson || respText);
+
+    document.getElementById('dbgResponse').innerHTML =
+      `<span class="${resp.ok?'ok':'err'}">HTTP ${resp.status} ${resp.statusText}</span>\n\n` +
+      (respJson ? JSON.stringify(respJson, null, 2) : respText || '(empty body)');
+
+    if (resp.ok) {
+      const receipt = respJson && respJson.receipt ? respJson.receipt : ('UNAB-'+Date.now());
+      document.getElementById('finalReceipt').textContent = receipt.substring(0, 40) + (receipt.length>40?'…':'');
+      toast('Consent recorded successfully', 'success');
+    } else {
+      document.getElementById('finalReceipt').textContent = 'Error — see debug info';
+      toast('API returned an error: ' + resp.status, 'error');
+    }
+  }catch(e){
+    console.error('Network error:', e);
+    document.getElementById('dbgResponse').innerHTML = `<span class="err">NETWORK ERROR</span>\n\n${e.message}`;
+    document.getElementById('finalReceipt').textContent = 'Network error — see debug info';
+    toast('Network error: ' + e.message, 'error');
+  }
+  console.groupEnd();
+}
+
+function toggleDebug(){
+  document.getElementById('debugPanel').classList.toggle('show');
+}
+
+renderContractSteps();
+goToStep(0);
+</script>
+
+</body>
+</html>
