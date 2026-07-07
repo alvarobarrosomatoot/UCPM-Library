@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Proceso de Inscripción | Universidad Andrés Bello</title>
 
-  <!-- Google Fonts – Source Sans / Roboto (institucional) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- OneTrust SDK – Command Queue -->
   <script>
     window.OtSdk = window.OtSdk || function () {
       (OtSdk.q = OtSdk.q || []).push(arguments);
     };
   </script>
 
-  <!-- OneTrust – Embedded Collection Point Stub Loader -->
   <script
     src="https://privacyportaltrial.onetrust.com/consent-embedded-forms/consent-receipt-scripts/OtFormStub.js"
     data-id="0ceb7c0c-d27e-43c6-9c9c-877694285648"
@@ -26,16 +23,14 @@
 
   <style>
     :root {
-      /* UNAB brand palette (Manual de marca – Pantone 296 + Pantone 187) */
-      --unab-red:        #A6192E;  /* Pantone 187 – rojo institucional */
+      --unab-red:        #A6192E;
       --unab-red-dark:   #7F0F22;
       --unab-red-tint:   #fbe9ec;
-      --unab-navy:       #041E42;  /* Pantone 296 – azul institucional */
+      --unab-navy:       #041E42;
       --unab-navy-soft:  #0e2f5e;
-      --unab-gold:       #C9A227;  /* acento cálido opcional */
+      --unab-gold:       #C9A227;
       --unab-gold-tint:  #fbf3d8;
-
-      --ink:        #0D0D0D;   /* Cod Gray */
+      --ink:        #0D0D0D;
       --ink-soft:   #33384a;
       --muted:      #6b7280;
       --border:     #dfe3ea;
@@ -43,7 +38,6 @@
       --page-bg:    #f4f6fa;
       --card-bg:    #ffffff;
       --panel-bg:   #fafbfd;
-
       --radius: 12px;
       --radius-sm: 8px;
       --shadow-sm: 0 1px 2px rgba(4, 30, 66, 0.08);
@@ -69,264 +63,131 @@
       outline-offset: 3px;
     }
 
-    /* ============ TOP BAR (huincha institucional) ============ */
-    .huincha {
-      background: var(--unab-red);
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .huincha-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 8px 28px;
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 20px;
-    }
+    /* HUINCHA */
+    .huincha { background: var(--unab-red); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    .huincha-inner { max-width: var(--max-width); margin: 0 auto; padding: 8px 28px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
     .huincha a { color: #fff; text-decoration: none; }
     .huincha a:hover { text-decoration: underline; }
 
+    /* TOPBAR */
     .topbar { background: var(--card-bg); border-bottom: 3px solid var(--unab-red); }
-    .topbar-inner {
-      max-width: var(--max-width); margin: 0 auto;
-      padding: 16px 28px;
-      display: flex; align-items: center; justify-content: space-between; gap: 24px;
-    }
-    .logo-wrap {
-      display: flex; align-items: center; gap: 14px;
-    }
-    .logo-img {
-      height: 48px; width: auto;
-      display: block;
-    }
-    .logo-sub {
-      display: flex; flex-direction: column;
-      border-left: 2px solid var(--unab-navy);
-      padding-left: 14px;
-      font-size: 13px; color: var(--unab-navy);
-      font-weight: 700; line-height: 1.2;
-      text-transform: uppercase; letter-spacing: 0.04em;
-    }
+    .topbar-inner { max-width: var(--max-width); margin: 0 auto; padding: 16px 28px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-img { height: 48px; width: auto; display: block; }
+    .logo-sub { display: flex; flex-direction: column; border-left: 2px solid var(--unab-navy); padding-left: 14px; font-size: 13px; color: var(--unab-navy); font-weight: 700; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.04em; }
     .logo-sub strong { color: var(--unab-red); font-size: 14px; }
-    .top-nav {
-      display: flex; align-items: center; gap: 24px;
-      font-size: 14px; font-weight: 700; color: var(--unab-navy);
-    }
+    .top-nav { display: flex; align-items: center; gap: 24px; font-size: 14px; font-weight: 700; color: var(--unab-navy); }
     .top-nav a { color: var(--unab-navy); }
-    .top-nav .cta {
-      background: var(--unab-red); color: #fff;
-      padding: 10px 20px; border-radius: 4px;
-    }
+    .top-nav .cta { background: var(--unab-red); color: #fff; padding: 10px 20px; border-radius: 4px; }
     .top-nav .cta:hover { background: var(--unab-red-dark); text-decoration: none; }
 
-    /* ============ HERO ============ */
-    .hero {
-      background:
-        linear-gradient(135deg, var(--unab-navy) 0%, #0a2b5a 60%, var(--unab-navy-soft) 100%);
-      color: #fff;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(circle at 90% 10%, rgba(166, 25, 46, 0.35) 0%, transparent 50%),
-        radial-gradient(circle at 10% 90%, rgba(201, 162, 39, 0.15) 0%, transparent 45%);
-      pointer-events: none;
-    }
-    .hero-inner {
-      max-width: var(--max-width); margin: 0 auto;
-      padding: 48px 28px 28px;
-      position: relative; z-index: 1;
-    }
-    .hero-badge {
-      display: inline-block;
-      padding: 5px 14px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 999px;
-      font-size: 12px; font-weight: 800;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-    .hero h1 {
-      margin: 0 0 10px;
-      font-size: clamp(28px, 4vw, 44px); line-height: 1.1;
-      font-weight: 900; letter-spacing: -0.02em; color: #fff;
-    }
-    .hero p {
-      margin: 0 0 8px;
-      color: rgba(255,255,255,0.85);
-      font-size: 17px; max-width: 660px;
-    }
+    /* HERO */
+    .hero { background: linear-gradient(135deg, var(--unab-navy) 0%, #0a2b5a 60%, var(--unab-navy-soft) 100%); color: #fff; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 90% 10%, rgba(166, 25, 46, 0.35) 0%, transparent 50%), radial-gradient(circle at 10% 90%, rgba(201, 162, 39, 0.15) 0%, transparent 45%); pointer-events: none; }
+    .hero-inner { max-width: var(--max-width); margin: 0 auto; padding: 48px 28px 28px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-block; padding: 5px 14px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 999px; font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 18px; }
+    .hero h1 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 44px); line-height: 1.1; font-weight: 900; letter-spacing: -0.02em; color: #fff; }
+    .hero p { margin: 0 0 8px; color: rgba(255,255,255,0.85); font-size: 17px; max-width: 660px; }
 
-    /* ============ STEPPER ============ */
+    /* STEPPER */
     .stepper { display: flex; align-items: center; gap: 8px; margin: 32px 0 0; flex-wrap: wrap; }
-    .stepper-item {
-      display: flex; align-items: center; gap: 10px;
-      color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.04em;
-    }
-    .stepper-num {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.75);
-      display: grid; place-items: center;
-      font-size: 14px; font-weight: 900;
-      transition: background .3s, color .3s, transform .3s; flex-shrink: 0;
-      border: 2px solid transparent;
-    }
-    .stepper-item.active .stepper-num {
-      background: var(--unab-red); color: #fff; transform: scale(1.08);
-      box-shadow: 0 4px 14px rgba(166, 25, 46, 0.55);
-      border-color: rgba(255,255,255,0.4);
-    }
+    .stepper-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+    .stepper-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.75); display: grid; place-items: center; font-size: 14px; font-weight: 900; transition: background .3s, color .3s, transform .3s; flex-shrink: 0; border: 2px solid transparent; }
+    .stepper-item.active .stepper-num { background: var(--unab-red); color: #fff; transform: scale(1.08); box-shadow: 0 4px 14px rgba(166, 25, 46, 0.55); border-color: rgba(255,255,255,0.4); }
     .stepper-item.active { color: #fff; }
-    .stepper-item.done .stepper-num {
-      background: var(--unab-gold); color: var(--unab-navy);
-    }
+    .stepper-item.done .stepper-num { background: var(--unab-gold); color: var(--unab-navy); }
     .stepper-item.done { color: var(--unab-gold); }
     .stepper-divider { flex: 0 0 40px; height: 2px; background: rgba(255,255,255,0.2); transition: background .3s; }
     .stepper-divider.done { background: var(--unab-gold); }
 
-    /* ============ LAYOUT ============ */
-    .layout {
-      max-width: var(--max-width); margin: 0 auto;
-      padding: 32px 28px 90px;
-      display: grid; grid-template-columns: minmax(0, 1fr) 340px;
-      gap: 32px; align-items: start;
-    }
+    /* LAYOUT */
+    .layout { max-width: var(--max-width); margin: 0 auto; padding: 32px 28px 90px; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 32px; align-items: start; }
     .main-col { min-width: 0; }
     .side-col { position: sticky; top: 24px; }
 
-    /* ============ CARDS ============ */
-    .card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 32px;
-      position: relative;
-    }
-    .card::before {
-      content: '';
-      position: absolute; top: 0; left: 0;
-      height: 4px; width: 60px;
-      background: var(--unab-red);
-      border-radius: var(--radius) 0 var(--radius) 0;
-    }
+    /* CARDS */
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 32px; position: relative; }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; height: 4px; width: 60px; background: var(--unab-red); border-radius: var(--radius) 0 var(--radius) 0; }
     .card + .card { margin-top: 20px; }
-    .card h2 {
-      margin: 0 0 6px; font-size: 26px; font-weight: 900;
-      letter-spacing: -0.015em; color: var(--unab-navy);
-    }
+    .card h2 { margin: 0 0 6px; font-size: 26px; font-weight: 900; letter-spacing: -0.015em; color: var(--unab-navy); }
     .card-kicker { margin: 0 0 24px; color: var(--ink-soft); font-size: 16px; max-width: 640px; }
 
-    /* ============ FORMS ============ */
+    /* FORMS */
     .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
     .field { display: flex; flex-direction: column; gap: 6px; }
     .field.full { grid-column: 1 / -1; }
     .field label { font-size: 14px; font-weight: 800; color: var(--unab-navy); }
     .field label .req { color: var(--unab-red); margin-left: 3px; }
     .field .hint { font-size: 13px; color: var(--muted); }
-    .field input, .field select {
-      padding: 13px 14px; background: #fff;
-      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
-      color: var(--ink); font-size: 15px;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .field input:focus, .field select:focus {
-      outline: none; border-color: var(--unab-red);
-      box-shadow: 0 0 0 3px rgba(166, 25, 46, 0.15);
-    }
+    .field input, .field select { padding: 13px 14px; background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius-sm); color: var(--ink); font-size: 15px; transition: border-color .2s, box-shadow .2s; }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--unab-red); box-shadow: 0 0 0 3px rgba(166, 25, 46, 0.15); }
 
-    .btn {
-      border: 0; border-radius: 6px; padding: 14px 28px; cursor: pointer;
-      font-size: 15px; font-weight: 800;
-      transition: background 160ms ease, transform 160ms ease, opacity .2s;
-      font-family: inherit; letter-spacing: 0.02em;
-    }
-    .btn-primary {
-      background: var(--unab-red); color: #fff;
-      box-shadow: 0 4px 14px rgba(166, 25, 46, 0.35);
-    }
+    .btn { border: 0; border-radius: 6px; padding: 14px 28px; cursor: pointer; font-size: 15px; font-weight: 800; transition: background 160ms ease, transform 160ms ease, opacity .2s; font-family: inherit; letter-spacing: 0.02em; }
+    .btn-primary { background: var(--unab-red); color: #fff; box-shadow: 0 4px 14px rgba(166, 25, 46, 0.35); }
     .btn-primary:hover:not([disabled]) { background: var(--unab-red-dark); transform: translateY(-1px); }
     .btn-ghost { background: transparent; color: var(--unab-navy); border: 1.5px solid var(--border); }
     .btn-ghost:hover { background: var(--border-soft); border-color: var(--unab-navy); }
-
     .actions { margin-top: 26px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .actions.end { justify-content: flex-end; }
 
-    /* ============ INFO / BENEFIT NOTES ============ */
-    .info-note {
-      margin-top: 18px; display: flex; align-items: flex-start; gap: 12px;
-      padding: 14px 16px; background: var(--unab-red-tint);
-      border-left: 4px solid var(--unab-red); border-radius: var(--radius-sm);
-      color: var(--ink-soft); font-size: 14px;
-    }
-    .info-note .icon {
-      flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
-      background: var(--unab-red); color: #fff;
-      display: grid; place-items: center; font-weight: 900; font-size: 14px;
-    }
+    /* INFO NOTES */
+    .info-note { margin-top: 18px; display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--unab-red-tint); border-left: 4px solid var(--unab-red); border-radius: var(--radius-sm); color: var(--ink-soft); font-size: 14px; }
+    .info-note .icon { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--unab-red); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 14px; }
 
-    /* ============ CARRERA CARDS (step 1) ============ */
-    .facultad-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 14px; margin-top: 6px;
-    }
-    .fac-card {
-      padding: 16px 18px;
-      border: 2px solid var(--border);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: border-color .2s, background .2s, transform .2s;
-      background: #fff;
-    }
-    .fac-card:hover {
-      border-color: var(--unab-red);
-      background: var(--unab-red-tint);
-      transform: translateY(-2px);
-    }
-    .fac-card.selected {
-      border-color: var(--unab-red);
-      background: var(--unab-red-tint);
-      box-shadow: 0 4px 14px rgba(166, 25, 46, 0.15);
-    }
-    .fac-card .fac-name {
-      font-weight: 900; color: var(--unab-navy);
-      font-size: 15px; margin-bottom: 4px;
-    }
+    /* FACULTAD */
+    .facultad-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 6px; }
+    .fac-card { padding: 16px 18px; border: 2px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color .2s, background .2s, transform .2s; background: #fff; }
+    .fac-card:hover { border-color: var(--unab-red); background: var(--unab-red-tint); transform: translateY(-2px); }
+    .fac-card.selected { border-color: var(--unab-red); background: var(--unab-red-tint); box-shadow: 0 4px 14px rgba(166, 25, 46, 0.15); }
+    .fac-card .fac-name { font-weight: 900; color: var(--unab-navy); font-size: 15px; margin-bottom: 4px; }
     .fac-card .fac-desc { color: var(--muted); font-size: 13px; }
 
-    /* ============ SUMMARY BLOCK ============ */
-    .summary-block {
-      background: var(--panel-bg); border: 1px solid var(--border-soft);
-      border-left: 4px solid var(--unab-navy);
-      border-radius: var(--radius-sm); padding: 18px 20px; margin-bottom: 22px;
-    }
-    .summary-block h3 {
-      margin: 0 0 12px; font-size: 14px; font-weight: 800; color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.05em;
-    }
+    /* SUMMARY */
+    .summary-block { background: var(--panel-bg); border: 1px solid var(--border-soft); border-left: 4px solid var(--unab-navy); border-radius: var(--radius-sm); padding: 18px 20px; margin-bottom: 22px; }
+    .summary-block h3 { margin: 0 0 12px; font-size: 14px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
     .summary-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px; }
     .summary-list dt { font-size: 13px; color: var(--muted); font-weight: 700; margin-bottom: 2px; }
     .summary-list dd { margin: 0; font-size: 15px; font-weight: 700; color: var(--ink); word-break: break-word; }
-    .summary-block .edit {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: transparent; border: 0; padding: 0;
-      color: var(--unab-red); font-weight: 800; font-size: 14px;
-      cursor: pointer; text-decoration: underline; margin-top: 14px;
-    }
+    .summary-block .edit { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 0; padding: 0; color: var(--unab-red); font-weight: 800; font-size: 14px; cursor: pointer; text-decoration: underline; margin-top: 14px; }
 
-    /* ============ ONETRUST — UNAB LIGHT THEME ============ */
-    #ot-container { min-height: 140px; margin: 0; }
+    /* ============================================================
+       ONETRUST — UNAB LIGHT THEME
+       ------------------------------------------------------------
+       IMPORTANT: OT stub uses box-sizing:content-box which causes
+       overflow. We force border-box + max-width:100% on everything.
+       ============================================================ */
+    #ot-container {
+      min-height: 140px;
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;                    /* contiene todo dentro */
+    }
+    /* Reset del box-sizing del stub OT */
+    #ot-container,
+    #ot-container *,
+    #ot-container *::before,
+    #ot-container *::after {
+      box-sizing: border-box !important;
+      max-width: 100% !important;
+    }
+    /* Root del CP y contenedores internos */
     #ot-container .ot-consent-inline,
     #ot-container .otwf-content,
     #ot-container .ot-form,
     #ot-container .ot-form.ot-scroll,
-    #ot-container .ot-form-content {
-      background: transparent !important; border: none !important;
-      border-radius: 0 !important; box-shadow: none !important;
-      padding: 0 !important; margin: 0 !important;
+    #ot-container .ot-form-content,
+    #ot-container [class^="ot-webform"] {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow: visible !important;
     }
     #ot-container .otwf-close-cntr { display: none !important; }
 
@@ -336,9 +197,15 @@
       font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, Arial, sans-serif !important;
       color: var(--ink) !important;
     }
+
     #ot-container .ot-el {
-      background: transparent !important; border: none !important;
-      box-shadow: none !important; padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+      float: none !important;
+      clear: both !important;
+      width: 100% !important;
     }
     #ot-container .ot-form-content > .ot-el,
     #ot-container .ot-form-content > .ot-email,
@@ -347,21 +214,29 @@
 
     /* Email field */
     #ot-container .ot-email {
-      background: #fff !important; border: 1.5px solid var(--border) !important;
-      border-radius: var(--radius-sm) !important; padding: 18px 20px !important;
+      background: #fff !important;
+      border: 1.5px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      padding: 18px 20px !important;
       margin-bottom: 14px !important;
+      width: 100% !important;
+      overflow: hidden !important;
     }
     #ot-container .ot-email .ot-label {
-      display: block !important; font-weight: 800 !important; font-size: 14px !important;
+      display: block !important; float: none !important; clear: both !important;
+      font-weight: 800 !important; font-size: 14px !important;
       margin-bottom: 8px !important; color: var(--unab-navy) !important;
+      width: 100% !important;
     }
     #ot-container .ot-email input[type="email"] {
-      width: 100% !important; padding: 13px 14px !important;
+      width: 100% !important; max-width: 100% !important;
+      padding: 13px 14px !important;
       background: #fff !important; border: 1.5px solid var(--border) !important;
       border-radius: var(--radius-sm) !important; color: var(--ink) !important;
       font-family: inherit !important; font-size: 15px !important;
       transition: border-color .2s, box-shadow .2s !important;
       -webkit-appearance: none !important;
+      display: block !important;
     }
     #ot-container .ot-email input[type="email"]:focus {
       outline: none !important; border-color: var(--unab-red) !important;
@@ -369,57 +244,201 @@
     }
     #ot-container .ot-email input[type="email"]::placeholder { color: #97a0b0 !important; }
 
+    /* Text inputs (Name, etc) */
+    #ot-container .ot-txt {
+      background: #fff !important;
+      border: 1.5px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      padding: 18px 20px !important;
+      margin-bottom: 14px !important;
+      width: 100% !important;
+      overflow: hidden !important;
+    }
+    #ot-container .ot-txt .ot-label {
+      display: block !important; float: none !important; clear: both !important;
+      font-weight: 800 !important; font-size: 14px !important;
+      margin-bottom: 8px !important; color: var(--unab-navy) !important;
+      width: 100% !important;
+    }
+    #ot-container .ot-txt input[type="text"] {
+      width: 100% !important; max-width: 100% !important;
+      padding: 13px 14px !important;
+      background: #fff !important; border: 1.5px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important; color: var(--ink) !important;
+      font-family: inherit !important; font-size: 15px !important;
+      display: block !important;
+    }
+
+    /* Phone field */
+    #ot-container .ot-phone {
+      background: #fff !important;
+      border: 1.5px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      padding: 18px 20px !important;
+      margin-bottom: 14px !important;
+      width: 100% !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 10px !important;
+    }
+    #ot-container .ot-phone .country_code_field {
+      flex: 0 0 140px !important;
+      width: 140px !important;
+      max-width: 100% !important;
+      display: block !important;
+    }
+    #ot-container .ot-phone .phone_field {
+      flex: 1 1 220px !important;
+      min-width: 0 !important;
+      width: auto !important;
+      display: block !important;
+    }
+    #ot-container .ot-phone label {
+      display: block !important; float: none !important;
+      font-weight: 800 !important; font-size: 14px !important;
+      margin-bottom: 6px !important; color: var(--unab-navy) !important;
+      width: 100% !important;
+    }
+    #ot-container .ot-phone select,
+    #ot-container .ot-phone input[type="tel"] {
+      width: 100% !important; max-width: 100% !important;
+      padding: 13px 14px !important;
+      background: #fff !important;
+      border: 1.5px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      color: var(--ink) !important; font-size: 15px !important;
+      display: block !important;
+    }
+
     /* Checkboxes */
     #ot-container .otwf-chkbox {
-      display: flex !important; align-items: flex-start !important; gap: 14px !important;
-      padding: 18px 20px !important; background: #fff !important;
-      border: 1.5px solid var(--border) !important; border-radius: var(--radius-sm) !important;
-      margin-bottom: 12px !important; transition: border-color .2s, background .2s !important;
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 18px 20px !important;
+      background: #fff !important;
+      border: 1.5px solid var(--border) !important;
+      border-radius: var(--radius-sm) !important;
+      margin-bottom: 12px !important;
+      transition: border-color .2s, background .2s !important;
+      overflow: hidden !important;
+      position: relative !important;
     }
     #ot-container .otwf-chkbox:hover {
       border-color: var(--unab-red) !important; background: #fffbfc !important;
     }
-    #ot-container .otwf-chkbox input[type="checkbox"] {
-      flex-shrink: 0 !important; width: 20px !important; height: 20px !important;
-      margin-top: 2px !important; accent-color: var(--unab-red) !important; cursor: pointer !important;
+    #ot-container .otwf-chkbox label {
+      cursor: pointer !important;
+      line-height: 1.5 !important;
+      display: block !important;
+      float: none !important;
+      padding-left: 32px !important;
+      position: relative !important;
+      width: 100% !important;
+      min-height: 22px !important;
     }
-    #ot-container .otwf-chkbox label { cursor: pointer !important; line-height: 1.5 !important; }
+    /* Custom checkbox visual (marca UNAB rojo) */
+    #ot-container .otwf-chkbox label::before {
+      content: "" !important;
+      position: absolute !important;
+      left: 0 !important; top: 1px !important;
+      width: 20px !important; height: 20px !important;
+      border: 2px solid #b8bcc7 !important;
+      border-radius: 4px !important;
+      background: #fff !important;
+      display: block !important;
+    }
+    #ot-container .otwf-chkbox input:checked + label::before {
+      background: var(--unab-red) !important;
+      border-color: var(--unab-red) !important;
+    }
+    #ot-container .otwf-chkbox label::after {
+      left: 6px !important; top: 5px !important;
+      width: 6px !important; height: 10px !important;
+      border-left: 0 !important;
+      border-bottom: 3px solid #fff !important;
+      border-right: 3px solid #fff !important;
+      border-top: 0 !important;
+      transform: rotate(45deg) !important;
+      display: block !important;
+    }
     #ot-container .otwf-chkbox .ot-label {
       font-weight: 700 !important; font-size: 15px !important; color: var(--ink) !important;
     }
     #ot-container .otwf-chkbox .ot-asterisk,
     #ot-container .ot-asterisk { color: var(--unab-red) !important; margin-left: 4px !important; }
     #ot-container .otwf-chkbox .ot-desc {
+      padding-left: 0 !important;
       font-size: 13px !important; color: var(--muted) !important;
       margin-top: 4px !important; line-height: 1.45 !important; font-weight: 400 !important;
     }
 
-    /* Radios */
+    /* Radios – Fix del legend y wrap correcto */
     #ot-container .ot-radiogrp {
-      border: 1.5px solid var(--border) !important; background: #fff !important;
-      border-radius: var(--radius-sm) !important; padding: 18px 20px !important;
+      border: 1.5px solid var(--border) !important;
+      background: #fff !important;
+      border-radius: var(--radius-sm) !important;
+      padding: 18px 20px !important;
       margin-bottom: 12px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      overflow: hidden !important;
+      display: block !important;
     }
     #ot-container .ot-radiogrp legend,
     #ot-container .ot-radiogrp legend.ot-label {
+      display: block !important;
+      float: none !important;
+      clear: both !important;
+      width: 100% !important;
       font-weight: 800 !important; font-size: 15px !important;
-      color: var(--unab-navy) !important; margin-bottom: 12px !important; padding: 0 !important;
+      color: var(--unab-navy) !important;
+      margin-bottom: 14px !important;
+      padding: 0 !important;
     }
+    /* Wrapper para los radios */
     #ot-container .ot-radiogrp > .ot-el {
-      display: inline-flex !important; align-items: center !important; gap: 8px !important;
-      padding: 8px 16px !important; background: var(--panel-bg) !important;
-      border: 1.5px solid var(--border) !important; border-radius: 4px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 8px 16px !important;
+      background: var(--panel-bg) !important;
+      border: 1.5px solid var(--border) !important;
+      border-radius: 4px !important;
       margin: 0 8px 8px 0 !important;
-      transition: border-color .2s, background .2s !important; cursor: pointer !important;
+      transition: border-color .2s, background .2s !important;
+      cursor: pointer !important;
+      width: auto !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      float: none !important;
+      clear: none !important;
     }
     #ot-container .ot-radiogrp > .ot-el:hover {
       border-color: var(--unab-red) !important; background: var(--unab-red-tint) !important;
     }
     #ot-container .ot-radiogrp input[type="radio"] {
-      flex-shrink: 0 !important; width: 17px !important; height: 17px !important;
+      flex-shrink: 0 !important;
+      width: 17px !important; height: 17px !important;
       accent-color: var(--unab-red) !important; cursor: pointer !important;
+      float: none !important;
+      margin: 0 !important;
+      -webkit-appearance: radio !important;
+      appearance: radio !important;
+      border: 1.5px solid #b8bcc7 !important;
+      background: #fff !important;
+      position: static !important;
     }
-    #ot-container .ot-radiogrp label { cursor: pointer !important; }
+    #ot-container .ot-radiogrp input[type="radio"]::before { content: none !important; }
+    #ot-container .ot-radiogrp label {
+      cursor: pointer !important;
+      display: inline !important;
+      float: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
     #ot-container .ot-radiogrp label .ot-label {
       font-weight: 700 !important; font-size: 14px !important; color: var(--ink) !important;
     }
@@ -434,15 +453,18 @@
     #ot-container .ot-btns {
       margin-top: 22px !important; padding: 0 !important;
       background: transparent !important; border: none !important;
+      display: block !important; width: 100% !important;
     }
     #ot-container .ot-submit {
-      width: 100% !important; padding: 15px 28px !important;
+      width: 100% !important; max-width: 100% !important;
+      padding: 15px 28px !important;
       background: var(--unab-red) !important; color: #fff !important;
       font-weight: 800 !important; font-size: 15px !important; font-family: inherit !important;
       border: 0 !important; border-radius: 6px !important; cursor: pointer !important;
       transition: background 160ms ease, transform 160ms ease !important;
       box-shadow: 0 4px 14px rgba(166, 25, 46, 0.35) !important;
       letter-spacing: 0.02em !important;
+      margin: 0 !important;
     }
     #ot-container .ot-submit:hover:not([disabled]) {
       background: var(--unab-red-dark) !important; transform: translateY(-1px) !important;
@@ -452,90 +474,40 @@
 
     .prefs-footnote { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
 
-    /* ============ STEP 4 – SUCCESS ============ */
+    /* STEP 4 */
     .success-card { text-align: center; padding: 60px 32px; }
-    .success-icon {
-      width: 96px; height: 96px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--unab-gold) 0%, #b8901c 100%);
-      color: var(--unab-navy);
-      display: grid; place-items: center;
-      margin: 0 auto 24px; font-size: 48px; font-weight: 900;
-      animation: pop .5s ease;
-      box-shadow: 0 8px 24px rgba(201, 162, 39, 0.35);
-    }
-    @keyframes pop {
-      0%   { transform: scale(0); opacity: 0; }
-      70%  { transform: scale(1.12); }
-      100% { transform: scale(1); opacity: 1; }
-    }
+    .success-icon { width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(135deg, var(--unab-gold) 0%, #b8901c 100%); color: var(--unab-navy); display: grid; place-items: center; margin: 0 auto 24px; font-size: 48px; font-weight: 900; animation: pop .5s ease; box-shadow: 0 8px 24px rgba(201, 162, 39, 0.35); }
+    @keyframes pop { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.12); } 100% { transform: scale(1); opacity: 1; } }
     .success-card h2 { font-size: 32px; margin: 0 0 12px; color: var(--unab-navy); }
     .success-card p { color: var(--ink-soft); font-size: 17px; max-width: 540px; margin: 0 auto 28px; }
-    .matricula-info {
-      display: inline-block;
-      background: var(--unab-red-tint);
-      border: 1px solid rgba(166, 25, 46, 0.3);
-      padding: 12px 22px;
-      border-radius: var(--radius-sm);
-      margin: 0 auto 28px;
-      color: var(--unab-red-dark);
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
+    .matricula-info { display: inline-block; background: var(--unab-red-tint); border: 1px solid rgba(166, 25, 46, 0.3); padding: 12px 22px; border-radius: var(--radius-sm); margin: 0 auto 28px; color: var(--unab-red-dark); font-weight: 800; letter-spacing: 0.04em; }
     .success-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-    /* ============ SIDE COL ============ */
-    .side-card {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 22px 24px;
-      box-shadow: var(--shadow-sm); margin-bottom: 18px;
-    }
-    .side-card h3 {
-      margin: 0 0 6px; font-size: 17px; font-weight: 900; color: var(--unab-navy);
-    }
+    /* SIDE */
+    .side-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm); margin-bottom: 18px; }
+    .side-card h3 { margin: 0 0 6px; font-size: 17px; font-weight: 900; color: var(--unab-navy); }
     .side-card p { margin: 0 0 12px; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
     .side-card ul { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
     .side-card li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--ink-soft); }
-    .side-card li::before {
-      content: "\2713"; flex-shrink: 0;
-      width: 20px; height: 20px; border-radius: 50%;
-      background: var(--unab-red); color: #fff;
-      display: grid; place-items: center;
-      font-weight: 900; font-size: 12px; margin-top: 1px;
-    }
-    .side-card.gold-card {
-      background: var(--unab-gold-tint);
-      border-color: rgba(201, 162, 39, 0.4);
-    }
+    .side-card li::before { content: "\2713"; flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--unab-red); color: #fff; display: grid; place-items: center; font-weight: 900; font-size: 12px; margin-top: 1px; }
+    .side-card.gold-card { background: var(--unab-gold-tint); border-color: rgba(201, 162, 39, 0.4); }
     .side-card.gold-card h3 { color: var(--unab-navy); }
     .side-card.gold-card a { color: var(--unab-navy); text-decoration: underline; }
 
-    /* ============ FOOTER ============ */
+    /* FOOTER */
     .footer { background: var(--unab-navy); color: rgba(255,255,255,0.85); padding: 32px 28px 24px; }
-    .footer-inner {
-      max-width: var(--max-width); margin: 0 auto;
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-      gap: 20px; font-size: 13px;
-    }
+    .footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; font-size: 13px; }
     .footer a { color: #fff; font-weight: 700; }
     .footer-links { display: flex; flex-wrap: wrap; gap: 14px 22px; }
-    .footer-legal {
-      margin: 18px auto 0; max-width: var(--max-width);
-      color: rgba(255,255,255,0.55); font-size: 12px; line-height: 1.5;
-    }
-    .footer-brand {
-      display: flex; align-items: center; gap: 12px;
-    }
+    .footer-legal { margin: 18px auto 0; max-width: var(--max-width); color: rgba(255,255,255,0.55); font-size: 12px; line-height: 1.5; }
+    .footer-brand { display: flex; align-items: center; gap: 12px; }
     .footer-brand img { height: 40px; filter: brightness(0) invert(1); }
 
-    /* ============ VISIBILITY ============ */
     .hidden { display: none !important; }
     .fade-in { animation: fadeIn .4s ease both; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ============ RESPONSIVE ============ */
+    /* RESPONSIVE */
     @media (max-width: 1000px) {
       .layout { grid-template-columns: 1fr; }
       .side-col { position: static; order: -1; }
@@ -556,15 +528,19 @@
       .stepper-divider { flex: 0 0 18px; }
       .actions { flex-direction: column-reverse; }
       .actions .btn { width: 100%; }
+      /* Radios en móvil ocupan ancho completo */
       #ot-container .ot-radiogrp > .ot-el {
-        display: flex !important; margin-right: 0 !important;
+        display: flex !important;
+        width: 100% !important;
+        margin: 0 0 8px 0 !important;
       }
+      /* Phone en móvil se apila */
+      #ot-container .ot-phone .country_code_field { flex: 1 1 100% !important; width: 100% !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ============ HUINCHA INSTITUCIONAL ============ -->
   <div class="huincha">
     <div class="huincha-inner">
       <span>Universidad Andrés Bello · Admisión 2027</span>
@@ -572,7 +548,6 @@
     </div>
   </div>
 
-  <!-- ============ TOP BAR ============ -->
   <header class="topbar" aria-label="Cabecera UNAB">
     <div class="topbar-inner">
       <div class="logo-wrap">
@@ -593,15 +568,11 @@
     </div>
   </header>
 
-  <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="hero-inner">
       <span class="hero-badge">Proceso de Inscripción</span>
       <h1 id="hero-heading">Comienza tu camino en la UNAB</h1>
-      <p id="hero-copy">
-        Completa tu inscripción en pocos pasos. Somos una universidad comprometida con la
-        calidad y la excelencia en cada uno de sus quehaceres.
-      </p>
+      <p id="hero-copy">Completa tu inscripción en pocos pasos. Somos una universidad comprometida con la calidad y la excelencia en cada uno de sus quehaceres.</p>
 
       <div class="stepper" aria-label="Progreso de inscripción">
         <div id="step-item-1" class="stepper-item active">
@@ -626,45 +597,19 @@
   <div class="layout">
     <div class="main-col">
 
-      <!-- ============ STEP 1 – SELECCIÓN DE CARRERA ============ -->
       <section id="step-1" class="card fade-in" aria-labelledby="s1-title">
         <h2 id="s1-title">Selecciona tu carrera y sede</h2>
-        <p class="card-kicker">
-          Elige la facultad, carrera y sede en la que te gustaría iniciar tu formación en la
-          Universidad Andrés Bello.
-        </p>
-
+        <p class="card-kicker">Elige la facultad, carrera y sede en la que te gustaría iniciar tu formación en la Universidad Andrés Bello.</p>
         <form id="carrera-form" novalidate>
-          <div style="margin-bottom: 8px; font-size: 14px; font-weight: 800; color: var(--unab-navy);">
-            Facultad
-          </div>
+          <div style="margin-bottom: 8px; font-size: 14px; font-weight: 800; color: var(--unab-navy);">Facultad</div>
           <div class="facultad-grid" id="facultad-grid">
-            <div class="fac-card selected" data-fac="Ingeniería">
-              <div class="fac-name">Facultad de Ingeniería</div>
-              <div class="fac-desc">Civil, Informática, Industrial, Ciberseguridad</div>
-            </div>
-            <div class="fac-card" data-fac="Medicina">
-              <div class="fac-name">Facultad de Medicina</div>
-              <div class="fac-desc">Medicina, Kinesiología, Nutrición</div>
-            </div>
-            <div class="fac-card" data-fac="Derecho">
-              <div class="fac-name">Facultad de Derecho</div>
-              <div class="fac-desc">Derecho, Ciencia Política</div>
-            </div>
-            <div class="fac-card" data-fac="Economía y Negocios">
-              <div class="fac-name">Economía y Negocios</div>
-              <div class="fac-desc">Ing. Comercial, Auditoría, Contador</div>
-            </div>
-            <div class="fac-card" data-fac="Ciencias de la Vida">
-              <div class="fac-name">Ciencias de la Vida</div>
-              <div class="fac-desc">Biología, Biotecnología, Bioquímica</div>
-            </div>
-            <div class="fac-card" data-fac="Educación y Ciencias Sociales">
-              <div class="fac-name">Educación y Cs. Sociales</div>
-              <div class="fac-desc">Psicología, Pedagogías, Trabajo Social</div>
-            </div>
+            <div class="fac-card selected" data-fac="Ingeniería"><div class="fac-name">Facultad de Ingeniería</div><div class="fac-desc">Civil, Informática, Industrial, Ciberseguridad</div></div>
+            <div class="fac-card" data-fac="Medicina"><div class="fac-name">Facultad de Medicina</div><div class="fac-desc">Medicina, Kinesiología, Nutrición</div></div>
+            <div class="fac-card" data-fac="Derecho"><div class="fac-name">Facultad de Derecho</div><div class="fac-desc">Derecho, Ciencia Política</div></div>
+            <div class="fac-card" data-fac="Economía y Negocios"><div class="fac-name">Economía y Negocios</div><div class="fac-desc">Ing. Comercial, Auditoría, Contador</div></div>
+            <div class="fac-card" data-fac="Ciencias de la Vida"><div class="fac-name">Ciencias de la Vida</div><div class="fac-desc">Biología, Biotecnología, Bioquímica</div></div>
+            <div class="fac-card" data-fac="Educación y Ciencias Sociales"><div class="fac-name">Educación y Cs. Sociales</div><div class="fac-desc">Psicología, Pedagogías, Trabajo Social</div></div>
           </div>
-
           <div class="form-grid" style="margin-top: 20px;">
             <div class="field">
               <label for="carrera">Carrera <span class="req">*</span></label>
@@ -706,62 +651,29 @@
               </select>
             </div>
           </div>
-
           <div class="info-note">
             <span class="icon" aria-hidden="true">i</span>
-            <span>
-              Puedes simular tus beneficios y aranceles en el <a href="#">Simulador UNAB</a>.
-              Contamos con becas y descuentos para las modalidades vespertina y online.
-            </span>
+            <span>Puedes simular tus beneficios y aranceles en el <a href="#">Simulador UNAB</a>. Contamos con becas y descuentos para las modalidades vespertina y online.</span>
           </div>
-
           <div class="actions end">
             <button type="submit" class="btn btn-primary">Continuar &rarr;</button>
           </div>
         </form>
       </section>
 
-      <!-- ============ STEP 2 – DATOS PERSONALES ============ -->
       <section id="step-2" class="card hidden" aria-labelledby="s2-title">
         <h2 id="s2-title">Cuéntanos sobre ti</h2>
-        <p class="card-kicker">
-          Estos datos nos permitirán confirmar tu inscripción y mantenernos en contacto contigo
-          durante tu proceso de admisión.
-        </p>
-
+        <p class="card-kicker">Estos datos nos permitirán confirmar tu inscripción y mantenernos en contacto contigo durante tu proceso de admisión.</p>
         <form id="datos-form" novalidate>
           <div class="form-grid">
-            <div class="field">
-              <label for="first-name">Nombres <span class="req">*</span></label>
-              <input type="text" id="first-name" name="firstName" autocomplete="given-name" placeholder="Ej. María José" />
-            </div>
-            <div class="field">
-              <label for="last-name">Apellidos <span class="req">*</span></label>
-              <input type="text" id="last-name" name="lastName" autocomplete="family-name" placeholder="Ej. González Pérez" />
-            </div>
-            <div class="field">
-              <label for="rut">RUT <span class="req">*</span></label>
-              <input type="text" id="rut" name="rut" placeholder="Ej. 12.345.678-9" />
-            </div>
-            <div class="field">
-              <label for="dob">Fecha de nacimiento</label>
-              <input type="date" id="dob" name="dob" />
-            </div>
-            <div class="field full">
-              <label for="email">Correo electrónico <span class="req">*</span></label>
-              <input type="email" id="email" name="email" autocomplete="email" placeholder="tu@correo.com" />
-              <span class="hint">Aquí enviaremos la confirmación de tu inscripción y las próximas comunicaciones.</span>
-            </div>
-            <div class="field">
-              <label for="phone">Teléfono / Celular</label>
-              <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+56 9 1234 5678" />
-            </div>
-            <div class="field">
-              <label for="colegio">Colegio de egreso</label>
-              <input type="text" id="colegio" name="colegio" placeholder="Ej. Instituto Nacional" />
-            </div>
+            <div class="field"><label for="first-name">Nombres <span class="req">*</span></label><input type="text" id="first-name" name="firstName" autocomplete="given-name" placeholder="Ej. María José" /></div>
+            <div class="field"><label for="last-name">Apellidos <span class="req">*</span></label><input type="text" id="last-name" name="lastName" autocomplete="family-name" placeholder="Ej. González Pérez" /></div>
+            <div class="field"><label for="rut">RUT <span class="req">*</span></label><input type="text" id="rut" name="rut" placeholder="Ej. 12.345.678-9" /></div>
+            <div class="field"><label for="dob">Fecha de nacimiento</label><input type="date" id="dob" name="dob" /></div>
+            <div class="field full"><label for="email">Correo electrónico <span class="req">*</span></label><input type="email" id="email" name="email" autocomplete="email" placeholder="tu@correo.com" /><span class="hint">Aquí enviaremos la confirmación de tu inscripción y las próximas comunicaciones.</span></div>
+            <div class="field"><label for="phone">Teléfono / Celular</label><input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+56 9 1234 5678" /></div>
+            <div class="field"><label for="colegio">Colegio de egreso</label><input type="text" id="colegio" name="colegio" placeholder="Ej. Instituto Nacional" /></div>
           </div>
-
           <div class="actions">
             <button type="button" class="btn btn-ghost" data-back="1">&larr; Volver</button>
             <button type="submit" class="btn btn-primary">Continuar &rarr;</button>
@@ -769,14 +681,9 @@
         </form>
       </section>
 
-      <!-- ============ STEP 3 – PREFERENCIAS (ONETRUST) ============ -->
       <section id="step-3" class="card hidden" aria-labelledby="s3-title">
         <h2 id="s3-title">Autorizaciones y preferencias de contacto</h2>
-        <p class="card-kicker">
-          Autoriza el tratamiento de tus datos personales y elige cómo te gustaría que la
-          Universidad Andrés Bello se mantenga en contacto contigo.
-        </p>
-
+        <p class="card-kicker">Autoriza el tratamiento de tus datos personales y elige cómo te gustaría que la Universidad Andrés Bello se mantenga en contacto contigo.</p>
         <div class="summary-block">
           <h3>Resumen de tu inscripción</h3>
           <dl class="summary-list">
@@ -787,29 +694,16 @@
           </dl>
           <button type="button" class="edit" data-back="2">&larr; Editar mis datos</button>
         </div>
-
         <div id="ot-container" aria-live="polite">
-          <p style="text-align:center;color:var(--muted);padding:40px 0;margin:0;">
-            Cargando formulario de preferencias&hellip;
-          </p>
+          <p style="text-align:center;color:var(--muted);padding:40px 0;margin:0;">Cargando formulario de preferencias&hellip;</p>
         </div>
-
-        <p class="prefs-footnote">
-          Puedes actualizar tus preferencias en cualquier momento desde el Portal Alumno.
-          Consulta nuestra <a href="#">Política de Privacidad</a>.
-        </p>
+        <p class="prefs-footnote">Puedes actualizar tus preferencias en cualquier momento desde el Portal Alumno. Consulta nuestra <a href="#">Política de Privacidad</a>.</p>
       </section>
 
-      <!-- ============ STEP 4 – ÉXITO ============ -->
       <section id="step-4" class="card success-card hidden" aria-labelledby="s4-title">
         <div class="success-icon" aria-hidden="true">&check;</div>
         <h2 id="s4-title">¡Bienvenido/a a la UNAB!</h2>
-        <p>
-          <strong id="welcome-name">Postulante</strong>, tu inscripción ha sido registrada
-          exitosamente. Hemos enviado la confirmación a
-          <strong id="welcome-email">tu correo</strong> con los próximos pasos del proceso
-          de matrícula.
-        </p>
+        <p><strong id="welcome-name">Postulante</strong>, tu inscripción ha sido registrada exitosamente. Hemos enviado la confirmación a <strong id="welcome-email">tu correo</strong> con los próximos pasos del proceso de matrícula.</p>
         <div class="matricula-info">Nº de solicitud: <span id="solicitud-num">UNAB-2027-104839</span></div>
         <div class="success-actions">
           <a href="#" class="btn btn-primary">Ir al Portal Alumno</a>
@@ -833,88 +727,49 @@
       <section class="side-card gold-card">
         <h3>¿Necesitas ayuda?</h3>
         <p>Nuestro equipo de admisión está para orientarte.</p>
-        <p style="margin:0;">
-          <a href="#">Contactar admisión</a> &middot; <a href="#">Preguntas frecuentes</a>
-        </p>
+        <p style="margin:0;"><a href="#">Contactar admisión</a> &middot; <a href="#">Preguntas frecuentes</a></p>
       </section>
     </aside>
   </div>
 
-  <!-- ============ FOOTER ============ -->
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="https://unabwps3.s3.amazonaws.com/unab/assets/uploads/2023/02/logo.png" alt="UNAB" />
-      </div>
+      <div class="footer-brand"><img src="https://unabwps3.s3.amazonaws.com/unab/assets/uploads/2023/02/logo.png" alt="UNAB" /></div>
       <nav class="footer-links" aria-label="Enlaces institucionales">
-        <a href="#">Inicio</a>
-        <a href="#">Admisión</a>
-        <a href="#">Sedes</a>
-        <a href="#">Aranceles</a>
-        <a href="#">Política de Privacidad</a>
-        <a href="#">Términos y Condiciones</a>
+        <a href="#">Inicio</a><a href="#">Admisión</a><a href="#">Sedes</a>
+        <a href="#">Aranceles</a><a href="#">Política de Privacidad</a><a href="#">Términos y Condiciones</a>
       </nav>
     </div>
-    <p class="footer-legal">
-      &copy; 2026 Universidad Andrés Bello. Todos los derechos reservados.
-      Institución acreditada por la Comisión Nacional de Acreditación (CNA) por 6 años.
-      Sedes en Santiago, Viña del Mar y Concepción.
-    </p>
+    <p class="footer-legal">&copy; 2026 Universidad Andrés Bello. Todos los derechos reservados. Institución acreditada por la Comisión Nacional de Acreditación (CNA) por 6 años. Sedes en Santiago, Viña del Mar y Concepción.</p>
   </footer>
 
-  <!-- ============ APPLICATION LOGIC ============ -->
   <script>
-    /* CONFIG */
     const CP_ID = '6ed87545-c4ba-4dc1-ac8a-17fb30a4f110';
+    let cpInstalled = false;
+    let userFirstName = '', userLastName = '', userEmail = '';
+    let userCarrera = '', userSede = '', userJornada = '';
 
-    /* STATE */
-    let cpInstalled  = false;
-    let userFirstName = '';
-    let userLastName  = '';
-    let userEmail     = '';
-    let userCarrera   = '';
-    let userSede      = '';
-    let userJornada   = '';
-
-    /* DOM */
     const heroHeading = document.getElementById('hero-heading');
-    const heroCopy    = document.getElementById('hero-copy');
-    const steps = {
-      1: document.getElementById('step-1'),
-      2: document.getElementById('step-2'),
-      3: document.getElementById('step-3'),
-      4: document.getElementById('step-4'),
-    };
-    const stepItems = {
-      1: document.getElementById('step-item-1'),
-      2: document.getElementById('step-item-2'),
-      3: document.getElementById('step-item-3'),
-      4: document.getElementById('step-item-4'),
-    };
-    const stepDividers = {
-      1: document.getElementById('step-divider-1'),
-      2: document.getElementById('step-divider-2'),
-      3: document.getElementById('step-divider-3'),
-    };
-    const carreraForm  = document.getElementById('carrera-form');
-    const datosForm    = document.getElementById('datos-form');
-    const firstNameEl  = document.getElementById('first-name');
-    const lastNameEl   = document.getElementById('last-name');
-    const emailEl      = document.getElementById('email');
-    const carreraEl    = document.getElementById('carrera');
-    const sedeEl       = document.getElementById('sede');
-    const jornadaEl    = document.getElementById('jornada');
-
-    const summaryName    = document.getElementById('summary-name');
-    const summaryEmail   = document.getElementById('summary-email');
+    const heroCopy = document.getElementById('hero-copy');
+    const steps = { 1: document.getElementById('step-1'), 2: document.getElementById('step-2'), 3: document.getElementById('step-3'), 4: document.getElementById('step-4') };
+    const stepItems = { 1: document.getElementById('step-item-1'), 2: document.getElementById('step-item-2'), 3: document.getElementById('step-item-3'), 4: document.getElementById('step-item-4') };
+    const stepDividers = { 1: document.getElementById('step-divider-1'), 2: document.getElementById('step-divider-2'), 3: document.getElementById('step-divider-3') };
+    const carreraForm = document.getElementById('carrera-form');
+    const datosForm = document.getElementById('datos-form');
+    const firstNameEl = document.getElementById('first-name');
+    const lastNameEl = document.getElementById('last-name');
+    const emailEl = document.getElementById('email');
+    const carreraEl = document.getElementById('carrera');
+    const sedeEl = document.getElementById('sede');
+    const jornadaEl = document.getElementById('jornada');
+    const summaryName = document.getElementById('summary-name');
+    const summaryEmail = document.getElementById('summary-email');
     const summaryCarrera = document.getElementById('summary-carrera');
-    const summarySede    = document.getElementById('summary-sede');
-
-    const welcomeName  = document.getElementById('welcome-name');
+    const summarySede = document.getElementById('summary-sede');
+    const welcomeName = document.getElementById('welcome-name');
     const welcomeEmail = document.getElementById('welcome-email');
-    const otContainer  = document.getElementById('ot-container');
+    const otContainer = document.getElementById('ot-container');
 
-    /* Facultad cards → visual selection only */
     document.querySelectorAll('.fac-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.fac-card').forEach(c => c.classList.remove('selected'));
@@ -922,14 +777,11 @@
       });
     });
 
-    /* STEP TRANSITIONS */
     function goToStep(target) {
       Object.entries(steps).forEach(([k, el]) => {
         const n = Number(k);
         el.classList.toggle('hidden', n !== target);
-        if (n === target) {
-          el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in');
-        }
+        if (n === target) { el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in'); }
       });
       Object.entries(stepItems).forEach(([k, el]) => {
         const n = Number(k);
@@ -939,52 +791,38 @@
         else if (n === target) { el.classList.add('active'); numEl.textContent = String(n); }
         else { numEl.textContent = String(n); }
       });
-      Object.entries(stepDividers).forEach(([k, el]) => {
-        el.classList.toggle('done', Number(k) < target);
-      });
+      Object.entries(stepDividers).forEach(([k, el]) => { el.classList.toggle('done', Number(k) < target); });
       const heroTexts = {
-        1: { h: 'Comienza tu camino en la UNAB',
-             p: 'Completa tu inscripción en pocos pasos. Somos una universidad comprometida con la calidad y la excelencia en cada uno de sus quehaceres.' },
-        2: { h: 'Cuéntanos sobre ti',
-             p: 'Solo un paso más. Con estos datos aseguramos tu inscripción y podemos acompañarte en tu proceso de admisión.' },
-        3: { h: '¿Cómo prefieres que te contactemos?',
-             p: 'Autoriza el uso de tus datos y elige tus canales de comunicación preferidos con la UNAB.' },
-        4: { h: '¡Bienvenido/a a la UNAB!',
-             p: 'Tu inscripción está registrada. Ahora eres parte de la comunidad UNAB.' },
+        1: { h: 'Comienza tu camino en la UNAB', p: 'Completa tu inscripción en pocos pasos. Somos una universidad comprometida con la calidad y la excelencia en cada uno de sus quehaceres.' },
+        2: { h: 'Cuéntanos sobre ti', p: 'Solo un paso más. Con estos datos aseguramos tu inscripción y podemos acompañarte en tu proceso de admisión.' },
+        3: { h: '¿Cómo prefieres que te contactemos?', p: 'Autoriza el uso de tus datos y elige tus canales de comunicación preferidos con la UNAB.' },
+        4: { h: '¡Bienvenido/a a la UNAB!', p: 'Tu inscripción está registrada. Ahora eres parte de la comunidad UNAB.' },
       }[target];
-      if (heroTexts) {
-        heroHeading.textContent = heroTexts.h;
-        heroCopy.textContent    = heroTexts.p;
-      }
+      if (heroTexts) { heroHeading.textContent = heroTexts.h; heroCopy.textContent = heroTexts.p; }
       window.scrollTo({ top: 0, behavior: 'smooth' });
       if (target === 3 && !cpInstalled) waitForOneTrust();
     }
 
-    /* STEP 1 → 2 (sin validación) */
     carreraForm.addEventListener('submit', function (ev) {
       ev.preventDefault();
       userCarrera = carreraEl.value || 'Ingeniería Civil Informática';
-      userSede    = sedeEl.value    || 'Casona Las Condes';
+      userSede = sedeEl.value || 'Casona Las Condes';
       userJornada = jornadaEl.value || 'Diurna';
       goToStep(2);
     });
 
-    /* STEP 2 → 3 (sin validación, valores demo si están vacíos) */
     datosForm.addEventListener('submit', function (ev) {
       ev.preventDefault();
       userFirstName = firstNameEl.value.trim() || 'María José';
-      userLastName  = lastNameEl.value.trim()  || 'González Pérez';
-      userEmail     = emailEl.value.trim()     || 'mj.gonzalez@correo.cl';
-
-      summaryName.textContent    = `${userFirstName} ${userLastName}`;
-      summaryEmail.textContent   = userEmail;
+      userLastName = lastNameEl.value.trim() || 'González Pérez';
+      userEmail = emailEl.value.trim() || 'mj.gonzalez@correo.cl';
+      summaryName.textContent = `${userFirstName} ${userLastName}`;
+      summaryEmail.textContent = userEmail;
       summaryCarrera.textContent = userCarrera;
-      summarySede.textContent    = `${userSede} · ${userJornada}`;
-
+      summarySede.textContent = `${userSede} · ${userJornada}`;
       goToStep(3);
     });
 
-    /* BACK BUTTONS */
     document.addEventListener('click', function (ev) {
       const btn = ev.target.closest('[data-back]');
       if (!btn) return;
@@ -992,7 +830,6 @@
       if (target >= 1 && target <= 4) goToStep(target);
     });
 
-    /* ONETRUST INSTALL + PREFILL */
     function installCP() {
       if (cpInstalled) return;
       try {
@@ -1005,64 +842,47 @@
       }
     }
     function waitForOneTrust(retries = 40) {
-      if (typeof OneTrust !== 'undefined' && OneTrust.webform && OneTrust.webform.InstallCP) {
-        installCP();
-      } else if (retries > 0) {
-        setTimeout(() => waitForOneTrust(retries - 1), 200);
-      } else {
-        console.warn('[UNAB] OneTrust SDK no se cargó a tiempo.');
-        otContainer.innerHTML =
-          '<p style="text-align:center;color:var(--muted);padding:40px 0;margin:0;">' +
-          'No se pudo cargar el formulario de preferencias. Actualiza la página o permite scripts de terceros.</p>';
+      if (typeof OneTrust !== 'undefined' && OneTrust.webform && OneTrust.webform.InstallCP) { installCP(); }
+      else if (retries > 0) { setTimeout(() => waitForOneTrust(retries - 1), 200); }
+      else {
+        otContainer.innerHTML = '<p style="text-align:center;color:var(--muted);padding:40px 0;margin:0;">No se pudo cargar el formulario de preferencias. Actualiza la página o permite scripts de terceros.</p>';
       }
     }
 
-    /* PREFILL Name + Email al cargar el form OT */
     window.addEventListener('OnetrustFormLoaded', (evt) => {
       console.log('[UNAB] OnetrustFormLoaded:', evt && evt.detail);
       try {
         OneTrust.webform.preFill({
-          "Email":      userEmail,
-          "First Name": userFirstName,
-          "Last Name":  userLastName,
-          "Name":       `${userFirstName} ${userLastName}`.trim(),
-          "Nombre":     userFirstName,
-          "Apellido":   userLastName
+          "Email": userEmail, "First Name": userFirstName, "Last Name": userLastName,
+          "Name": `${userFirstName} ${userLastName}`.trim(),
+          "Nombre": userFirstName, "Apellido": userLastName
         }, CP_ID);
-        console.log('[UNAB] preFill API aplicado — Email:', userEmail,
-                    '| Nombre:', `${userFirstName} ${userLastName}`);
-      } catch (e) {
-        console.warn('[UNAB] preFill API falló:', e);
-      }
+      } catch (e) { console.warn('[UNAB] preFill API falló:', e); }
       setTimeout(() => {
         const otEmailInput = otContainer.querySelector('.ot-email input[type="email"]');
         if (otEmailInput && userEmail) {
           otEmailInput.value = userEmail;
-          otEmailInput.dispatchEvent(new Event('input',  { bubbles: true }));
+          otEmailInput.dispatchEvent(new Event('input', { bubbles: true }));
           otEmailInput.dispatchEvent(new Event('change', { bubbles: true }));
-          console.log('[UNAB] preFill DOM aplicado:', userEmail);
         }
         const allInputs = otContainer.querySelectorAll('input[type="text"]');
         allInputs.forEach(inp => {
           const lbl = (inp.closest('.ot-el')?.querySelector('.ot-label')?.textContent || '').toLowerCase();
           if (!inp.value) {
-            if (lbl.includes('first') || lbl.includes('nombre'))      { inp.value = userFirstName; }
+            if (lbl.includes('first') || lbl.includes('nombre')) { inp.value = userFirstName; }
             else if (lbl.includes('last') || lbl.includes('apellido')) { inp.value = userLastName; }
-            else if (lbl === 'name' || lbl.includes('full name'))      { inp.value = `${userFirstName} ${userLastName}`.trim(); }
+            else if (lbl === 'name' || lbl.includes('full name')) { inp.value = `${userFirstName} ${userLastName}`.trim(); }
             else { return; }
-            inp.dispatchEvent(new Event('input',  { bubbles: true }));
+            inp.dispatchEvent(new Event('input', { bubbles: true }));
             inp.dispatchEvent(new Event('change', { bubbles: true }));
           }
         });
       }, 500);
     });
 
-    /* ============================================================
-       WEB FORM SUBMITTED → avanzar al STEP 4
-       ============================================================ */
     window.addEventListener('OneTrustWebFormSubmitted', (event) => {
       console.log('[UNAB] OneTrustWebFormSubmitted event triggered', event.detail);
-      welcomeName.textContent  = `${userFirstName} ${userLastName}`.trim() || 'Postulante';
+      welcomeName.textContent = `${userFirstName} ${userLastName}`.trim() || 'Postulante';
       welcomeEmail.textContent = userEmail || 'tu correo';
       goToStep(4);
     });
